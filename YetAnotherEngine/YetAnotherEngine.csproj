@@ -45,11 +45,13 @@
     <Compile Include="AnimationOfPlayer.cs" />
     <Compile Include="Brush.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameObjects\World.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="MovingObject.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Texture.cs" />
     <Compile Include="TimeManager.cs" />
+    <Compile Include="Utils\TextureLoader.cs" />
     <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -123,76 +125,79 @@
     <Content Include="bin\Debug\textures\TextureMan\9.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Textures\Tiles\terrain_tile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="map\map.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="obj\Debug\YetAnotherEngine.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\YetAnotherEngine.exe" />
     <Content Include="obj\Debug\YetAnotherEngine.pdb" />
-    <None Include="textures\background.png">
+    <None Include="Textures\background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\Guns\universelogo.png">
+    <None Include="Textures\Guns\universelogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\Guns\weapon1.png">
+    <None Include="Textures\Guns\weapon1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\1.png">
+    <None Include="Textures\TextureMan\1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\10.png">
+    <None Include="Textures\TextureMan\10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\11.png">
+    <None Include="Textures\TextureMan\11.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\12.png">
+    <None Include="Textures\TextureMan\12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\13.png">
+    <None Include="Textures\TextureMan\13.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\14.png">
+    <None Include="Textures\TextureMan\14.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\15.png">
+    <None Include="Textures\TextureMan\15.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\16.png">
+    <None Include="Textures\TextureMan\16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\17.png">
+    <None Include="Textures\TextureMan\17.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\18.png">
+    <None Include="Textures\TextureMan\18.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\19.png">
+    <None Include="Textures\TextureMan\19.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\2.png">
+    <None Include="Textures\TextureMan\2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\3.png">
+    <None Include="Textures\TextureMan\3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\4.png">
+    <None Include="Textures\TextureMan\4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\5.png">
+    <None Include="Textures\TextureMan\5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\6.png">
+    <None Include="Textures\TextureMan\6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\7.png">
+    <None Include="Textures\TextureMan\7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\8.png">
+    <None Include="Textures\TextureMan\8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="textures\TextureMan\9.png">
+    <None Include="Textures\TextureMan\9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
