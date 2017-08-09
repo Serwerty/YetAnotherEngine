@@ -1,40 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using OpenTK.Graphics;
+﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 using OpenTK;
 
 namespace YetAnotherEngine
 {
-    class Gun
+    public class Gun
     {
-        private Vector2 Location;
-        private Vector2 Size;
-        private Texture Gun1 = new Texture(new Bitmap(@"textures\Guns\weapon1.png"));
+        private Vector2 _location;
+        private Vector2 _size;
+        private readonly Texture _gunTexture = new Texture(new Bitmap(@"textures\Guns\weapon1.png"));
         public Gun(Vector2 location, Vector2 size)
         {
-            Location = location;
-            Size = size;
+            _location = location;
+            _size = size;
         }
 
-        public Gun(float locationx, float locationy,float sizex , float sizey)
+        public Gun(float locationx, float locationy, float sizex, float sizey)
         {
-            Location.X = locationx;
-            Location.Y = locationy;
-            Size.X = sizex;
-            Size.Y = sizey;
+            _location.X = locationx;
+            _location.Y = locationy;
+            _size.X = sizex;
+            _size.Y = sizey;
         }
 
-        public void Draw(Vector2 location,int direction)
+        public void Draw(Vector2 location, int direction)
         {
-            Location = location;
+            _location = location;
 
-            Gun1.Bind();
-            GL.Begin(BeginMode.Quads);
+            _gunTexture.Bind();
+            GL.Begin(PrimitiveType.Quads);
             GL.Color4(Color.White);
 
             //draw gun in same direction as player
@@ -42,25 +36,25 @@ namespace YetAnotherEngine
             {
                 //-> direction
                 GL.TexCoord2(0, 0);
-                GL.Vertex2(Location);
+                GL.Vertex2(_location);
                 GL.TexCoord2(1, 0);
-                GL.Vertex2(Location.X + Size.X, Location.Y);
+                GL.Vertex2(_location.X + _size.X, _location.Y);
                 GL.TexCoord2(1, 1);
-                GL.Vertex2(Location.X + Size.X, Location.Y + Size.Y);
+                GL.Vertex2(_location.X + _size.X, _location.Y + _size.Y);
                 GL.TexCoord2(0, 1);
-                GL.Vertex2(Location.X, Location.Y + Size.Y);
+                GL.Vertex2(_location.X, _location.Y + _size.Y);
             }
             else
             {
                 //<- direction
                 GL.TexCoord2(1, 0);
-                GL.Vertex2(Location);
+                GL.Vertex2(_location);
                 GL.TexCoord2(0, 0);
-                GL.Vertex2(Location.X + Size.X, Location.Y);
+                GL.Vertex2(_location.X + _size.X, _location.Y);
                 GL.TexCoord2(0, 1);
-                GL.Vertex2(Location.X + Size.X, Location.Y + Size.Y);
+                GL.Vertex2(_location.X + _size.X, _location.Y + _size.Y);
                 GL.TexCoord2(1, 1);
-                GL.Vertex2(Location.X, Location.Y + Size.Y);
+                GL.Vertex2(_location.X, _location.Y + _size.Y);
             }
             GL.End();
         }

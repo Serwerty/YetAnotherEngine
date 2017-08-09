@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
-using OpenTK;
+﻿using System.Collections.Generic;
 
 namespace YetAnotherEngine
 {
-    abstract class MovingObject
+    public abstract class MovingObject
     {
-        private Vector2 Location;
-        private Vector2 Size;
-        private float constSpeed;
-
+        //private Vector2 Location;
+        //private Vector2 Size;
+        //private float constSpeed;
 
         public abstract void Move(List<Brush> world);
     }
