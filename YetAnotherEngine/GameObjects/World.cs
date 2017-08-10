@@ -14,7 +14,7 @@ namespace YetAnotherEngine.GameObjects
         private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
 
         private readonly int[] _groundTextures = new int[5]; // for now it wil be one(random) of 5
-        private readonly int[,] _groundTexturesMap = new int[WorldWidth, WorldHeight];
+        private readonly int[,] _groundTexturesMap = new int[WorldHeight, WorldWidth];
 
         public World()
         {
@@ -67,9 +67,9 @@ namespace YetAnotherEngine.GameObjects
             _groundTextures[4] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth,
                                  Constants.WorldConstants.TileWidth, 64, 64);
 
-            for (var i = 0; i < WorldWidth; i++)
+            for (var i = 0; i < WorldHeight; i++)
             {
-                for (var j = 0; j < WorldHeight; j++)
+                for (var j = 0; j <  WorldWidth; j++)
                 {
                     var random = new Random(unchecked((int)DateTime.Now.Ticks));
                     _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
