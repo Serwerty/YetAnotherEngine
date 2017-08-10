@@ -64,7 +64,7 @@ namespace YetAnotherEngine
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
-            _camera = new Camera(Keyboard);
+            _camera = new Camera(Keyboard, Mouse, this);
 
             //_gameWorld.LoadMap("map.txt");
         }
@@ -86,7 +86,6 @@ namespace YetAnotherEngine
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
             var multiplier = GameClock.GetMultiplier(e.Time);
             _camera.Move(multiplier);
             //_player.Move(_gameWorld.GetWorldObjects());
