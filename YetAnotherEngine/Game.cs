@@ -20,12 +20,12 @@ namespace YetAnotherEngine
         //Window header
         private const string WindowsHeader = "Tower Defence";
 
-        //game world instance
-        //private static World _gameWorld;
+        private float _avgFps;
+        private float _avgCnt;
 
-        //private readonly Player _player;
+        private static World _gameWorld;
 
-        private static World GameWorld;
+        private static TextLine _fpsText;
 
         //application entry point
         [STAThread]
@@ -44,8 +44,8 @@ namespace YetAnotherEngine
             //turning vertical sync on
             VSync = VSyncMode.On;
 
-            GameWorld = new World();
-
+            _gameWorld = new World();
+            _fpsText = new TextLine("big-outline.png");
 
             //_gameWorld = World.CreateInstance();
             //_player = Player.SetInstance(Keyboard);
@@ -54,8 +54,12 @@ namespace YetAnotherEngine
         protected override void OnLoad(EventArgs E)
         {
             base.OnLoad(E);
+
+            GL.Disable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
@@ -81,9 +85,9 @@ namespace YetAnotherEngine
             //_player.Move(_gameWorld.GetWorldObjects());
         }
 
-        protected override void OnRenderFrame(FrameEventArgs E)
+        protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnRenderFrame(E);
+            base.OnRenderFrame(e);
             GL.ClearColor(Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -103,9 +107,22 @@ namespace YetAnotherEngine
             // _gameWorld.DrawWorld();
             //_player.Draw();
 
-            GameWorld.RenderGround();
+            _gameWorld.RenderGround();
+
+            var curFps = (float)(1.0 / e.Time);
+            if (_avgCnt <= 10.0F)
+                _avgFps = curFps;
+            else
+            {
+                _avgFps += (curFps - _avgFps) / _avgCnt;
+            }
+            _avgCnt++;
+
+            _fpsText.WriteText("FPS average: " + _avgFps.ToString("F2") + " - FPS current: " + curFps.ToString("F2"));
+
+
             SwapBuffers();
-            TimeManager.SetFrameInterval();
+            //TimeManager.SetFrameInterval();
         }
     }
 }
