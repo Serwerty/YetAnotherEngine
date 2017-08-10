@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -9,7 +9,7 @@ namespace YetAnotherEngine
 {
     class Game : GameWindow
     {
-        //asdfDefault windows size
+        //Default windows size
         private const int NominalWidth = 1024;
         private const int NominalHeight = 780;
         
