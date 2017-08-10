@@ -64,7 +64,6 @@ namespace YetAnotherEngine
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
 
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             _camera = new Camera(Keyboard);
 
             //_gameWorld.LoadMap("map.txt");
@@ -76,11 +75,11 @@ namespace YetAnotherEngine
 
             GL.Viewport(0, 0, (int)_projectionWidth, (int)_projectionHeight);
             _projectionWidth = NominalWidth;
-            _projectionHeight = (float)ClientRectangle.Height / (float)ClientRectangle.Width * _projectionWidth;
+            _projectionHeight = ClientRectangle.Height / (float)ClientRectangle.Width * _projectionWidth;
             if (_projectionHeight < NominalHeight)
             {
                 _projectionHeight = NominalHeight;
-                _projectionWidth = (float)ClientRectangle.Width / (float)ClientRectangle.Height * _projectionHeight;
+                _projectionWidth = ClientRectangle.Width / (float)ClientRectangle.Height * _projectionHeight;
             }
         }
 
@@ -116,6 +115,7 @@ namespace YetAnotherEngine
             //_player.Draw();
 
             _gameWorld.RenderGround();
+            _gameWorld.RenderTowers();
 
             var curFps = (float)(1.0 / e.Time);
             if (_avgCnt <= 10.0F)
