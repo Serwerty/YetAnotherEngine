@@ -9,7 +9,7 @@ namespace YetAnotherEngine
 {
     class Game : GameWindow
     {
-        //Default windows size
+        //asdfDefault windows size
         private const int NominalWidth = 1024;
         private const int NominalHeight = 780;
         
