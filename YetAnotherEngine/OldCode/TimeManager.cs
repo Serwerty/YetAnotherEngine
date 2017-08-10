@@ -8,7 +8,7 @@ namespace YetAnotherEngine
         static float frameTime = 0.0f;  // Время последнего кадра
         public static void  SetFrameInterval()
         {
-            float currentTime = (float)Convert.ToInt64(System.DateTime.Now.Millisecond);
+            float currentTime = (float)Convert.ToInt64(DateTime.Now.Millisecond);
 
             // Интервал времени, прошедшего с прошлого кадра
             if (currentTime > frameTime)

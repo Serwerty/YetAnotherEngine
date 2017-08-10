@@ -21,25 +21,25 @@ namespace YetAnotherEngine.GameObjects
             _position = new Vector2(0f,0f);
         }
 
-        public void Move()
+        public void Move(double multiplier)
         {
             if (!_isLocked)
             {
-                if (_keyboardDevice[Constants.KeyboardConstants.UpKey])
+                if (_keyboardDevice[KeyboardConstants.UpKey])
                 {
-                    _position.Y += WorldConstants.CameraScrollSpeed;
+                    _position.Y += (float)multiplier * WorldConstants.CameraScrollSpeed;
                 }
-                if (_keyboardDevice[Constants.KeyboardConstants.DownKey])
+                if (_keyboardDevice[KeyboardConstants.DownKey])
                 {
-                    _position.Y -= WorldConstants.CameraScrollSpeed;
+                    _position.Y -= (float)multiplier * WorldConstants.CameraScrollSpeed;
                 }
-                if (_keyboardDevice[Constants.KeyboardConstants.RightKey])
+                if (_keyboardDevice[KeyboardConstants.RightKey])
                 {
-                    _position.X += WorldConstants.CameraScrollSpeed;
+                    _position.X += (float)multiplier * WorldConstants.CameraScrollSpeed;
                 }
-                if (_keyboardDevice[Constants.KeyboardConstants.LeftKey])
+                if (_keyboardDevice[KeyboardConstants.LeftKey])
                 {
-                    _position.X -= WorldConstants.CameraScrollSpeed;
+                    _position.X -= (float)multiplier * WorldConstants.CameraScrollSpeed;
                 }
             }
         }
