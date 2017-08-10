@@ -84,7 +84,7 @@ namespace YetAnotherEngine
         protected override void OnRenderFrame(FrameEventArgs E)
         {
             base.OnRenderFrame(E);
-            GL.ClearColor(Color.Black);
+            GL.ClearColor(Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             var projection = Matrix4.CreateOrthographic(-NominalWidth, -NominalHeight, -1, 1);

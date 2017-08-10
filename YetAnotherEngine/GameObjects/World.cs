@@ -8,8 +8,8 @@ namespace YetAnotherEngine.GameObjects
 {
     public class World
     {
-        private const int WorldWidth = 64;
-        private const int WorldHeight = 64;
+        private const int WorldWidth = 6;
+        private const int WorldHeight = 6;
 
         private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
 
@@ -25,15 +25,14 @@ namespace YetAnotherEngine.GameObjects
         {
             int globalOffsetX = 0;
             int globalOffsetY = 0;
-            for (var i = 0; i < WorldWidth; i++)
+            for (var i = 0; i < WorldHeight; i++)
             {
                 globalOffsetX = i * 32;
-                globalOffsetY = i * -16;
+                globalOffsetY = i * 16;
 
-                for (var j = 0; j < WorldHeight; j++)
+                for (var j = 0; j < WorldWidth; j++)
                 {
                     var location = new Vector2(globalOffsetX, globalOffsetY);
-
                     GL.BindTexture(TextureTarget.Texture2D, _groundTexturesMap[i, j]);
 
                     GL.Begin(PrimitiveType.Quads);
@@ -50,7 +49,7 @@ namespace YetAnotherEngine.GameObjects
 
                     GL.End();
 
-                    globalOffsetX += 32;
+                    globalOffsetX -= 32;
                     globalOffsetY += 16;
                 }
             }
@@ -59,18 +58,18 @@ namespace YetAnotherEngine.GameObjects
         private void LoadMapTextures()
         {
             var backGroundTexture = new Bitmap(GroundTileFilePath);
-            _groundTextures[0] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 0, 0);
-            _groundTextures[1] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 0, 64);
-            _groundTextures[2] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 0, 128);
-            _groundTextures[3] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 0, 192);
-            _groundTextures[4] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 0, 256);
+            _groundTextures[0] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 64, 0);
+            _groundTextures[1] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 64, 128);
+            _groundTextures[2] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 128, 128);
+            _groundTextures[3] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 192, 256);
+            _groundTextures[4] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 256, 128);
 
             for (var i = 0; i < WorldWidth; i++)
             {
                 for (var j = 0; j < WorldHeight; j++)
                 {
                     var random = new Random(unchecked((int)DateTime.Now.Ticks));
-                    _groundTexturesMap[i, j] = random.Next(0, 5);
+                    _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
                 }
             }
         }

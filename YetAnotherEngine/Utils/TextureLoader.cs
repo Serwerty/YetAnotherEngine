@@ -13,7 +13,7 @@ namespace YetAnotherEngine.Utils
             GL.BindTexture(TextureTarget.Texture2D, glHandle);
 
             var bitmapData = textureImage.LockBits(new Rectangle(offsetx, offsety, width, height),
-                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmapData.Width,
                 bitmapData.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
