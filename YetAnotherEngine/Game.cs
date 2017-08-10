@@ -22,6 +22,7 @@ namespace YetAnotherEngine
 
         //game world instance
         //private static World _gameWorld;
+        private Camera _camera;
 
         //private readonly Player _player;
 
@@ -58,6 +59,7 @@ namespace YetAnotherEngine
             GL.Enable(EnableCap.Blend);
 
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            _camera = new Camera(Keyboard);
 
             //_gameWorld.LoadMap("map.txt");
         }
@@ -78,6 +80,7 @@ namespace YetAnotherEngine
         protected override void OnUpdateFrame(FrameEventArgs E)
         {
             base.OnUpdateFrame(E);
+            _camera.Move();
             //_player.Move(_gameWorld.GetWorldObjects());
         }
 
@@ -90,7 +93,7 @@ namespace YetAnotherEngine
             var projection = Matrix4.CreateOrthographic(-NominalWidth, -NominalHeight, -1, 1);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
-            //GL.Translate(_player.GetPlayerLocation().X, -_player.GetPlayerLocation().Y, 0);
+            GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
             GL.Translate(200, 100, 0);
 
             var modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);

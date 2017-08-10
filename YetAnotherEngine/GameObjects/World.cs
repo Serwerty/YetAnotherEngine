@@ -8,8 +8,8 @@ namespace YetAnotherEngine.GameObjects
 {
     public class World
     {
-        private const int WorldWidth = 6;
-        private const int WorldHeight = 6;
+        private const int WorldWidth = Constants.WorldConstants.WorldWidth;
+        private const int WorldHeight = Constants.WorldConstants.WorldHeight;
 
         private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
 
@@ -58,11 +58,16 @@ namespace YetAnotherEngine.GameObjects
         private void LoadMapTextures()
         {
             var backGroundTexture = new Bitmap(GroundTileFilePath);
-            _groundTextures[0] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 64, 0);
-            _groundTextures[1] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 64, 128);
-            _groundTextures[2] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 128, 128);
-            _groundTextures[3] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 192, 256);
-            _groundTextures[4] = TextureLoader.GenerateTexture(backGroundTexture, 64, 64, 256, 128);
+            _groundTextures[0] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth, 
+                                 Constants.WorldConstants.TileWidth, 64, 64);
+            _groundTextures[1] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth,
+                                 Constants.WorldConstants.TileWidth, 64, 64);
+            _groundTextures[2] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth,
+                                 Constants.WorldConstants.TileWidth, 64, 64);
+            _groundTextures[3] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth,
+                                 Constants.WorldConstants.TileWidth, 64, 64);
+            _groundTextures[4] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth,
+                                 Constants.WorldConstants.TileWidth, 64, 64);
 
             for (var i = 0; i < WorldWidth; i++)
             {

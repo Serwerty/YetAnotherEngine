@@ -44,7 +44,10 @@
   <ItemGroup>
     <Compile Include="AnimationOfPlayer.cs" />
     <Compile Include="Brush.cs" />
+    <Compile Include="Constants\KeyboardConstants.cs" />
+    <Compile Include="Constants\WorldConstants.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\World.cs" />
     <Compile Include="Gun.cs" />
     <Compile Include="MovingObject.cs" />
@@ -123,9 +126,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="bin\Debug\textures\TextureMan\9.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Textures\terrain.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Textures\Tiles\terrain_tile.png">
