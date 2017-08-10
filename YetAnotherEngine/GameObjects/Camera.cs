@@ -26,10 +26,10 @@ namespace YetAnotherEngine.GameObjects
         {
             if (!_isLocked)
             {
-                bool mouseMoveRight = _mouseDevice.X >= (_gameWindow.Width - 10);
-                bool mouseMoveLeft = _mouseDevice.X <= (10);
-                bool mouseMoveUp = _mouseDevice.Y <= (10);
-                bool mouseMoveDown = _mouseDevice.Y >= (_gameWindow.Height - 10);
+                bool mouseMoveRight = _mouseDevice.X >= (_gameWindow.Width - _gameWindow.Width* 0.10);
+                bool mouseMoveLeft = _mouseDevice.X <= (_gameWindow.Width * 0.10);
+                bool mouseMoveUp = _mouseDevice.Y <= (_gameWindow.Width * 0.10);
+                bool mouseMoveDown = _mouseDevice.Y >= (_gameWindow.Height - _gameWindow.Width * 0.10);
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {

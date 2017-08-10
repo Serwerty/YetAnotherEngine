@@ -61,8 +61,16 @@ namespace YetAnotherEngine
             GL.Disable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
+            //GL.Enable(EnableCap.Multisample);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+            GL.DepthMask(false);
+
+            GL.Enable(EnableCap.LineSmooth);
+            GL.Enable(EnableCap.PointSmooth);
+            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
+            GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
+
 
             _camera = new Camera(Keyboard, Mouse, this);
 
