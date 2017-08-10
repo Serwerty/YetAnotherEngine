@@ -13,8 +13,8 @@ namespace YetAnotherEngine.GameObjects
 
         private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
 
-        private int[] _groundTextures = new int[5]; // for now it wil be one(random) of 5
-        private int[,] _groundTexturesMap = new int[WorldWidth, WorldHeight];
+        private readonly int[] _groundTextures = new int[5]; // for now it wil be one(random) of 5
+        private readonly int[,] _groundTexturesMap = new int[WorldWidth, WorldHeight];
 
         public World()
         {
@@ -23,12 +23,10 @@ namespace YetAnotherEngine.GameObjects
 
         public void RenderGround()
         {
-            int globalOffsetX = 0;
-            int globalOffsetY = 0;
             for (var i = 0; i < WorldHeight; i++)
             {
-                globalOffsetX = i * 32;
-                globalOffsetY = i * 16;
+                var globalOffsetX = i * 32;
+                var globalOffsetY = i * 16;
 
                 for (var j = 0; j < WorldWidth; j++)
                 {

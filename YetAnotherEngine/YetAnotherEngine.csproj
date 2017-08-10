@@ -42,20 +42,23 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnimationOfPlayer.cs" />
-    <Compile Include="Brush.cs" />
+    <Compile Include="GameObjects\TextLine.cs" />
+    <Compile Include="OldCode\AnimationOfPlayer.cs" />
+    <Compile Include="OldCode\Brush.cs" />
     <Compile Include="Constants\KeyboardConstants.cs" />
     <Compile Include="Constants\WorldConstants.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\World.cs" />
-    <Compile Include="Gun.cs" />
-    <Compile Include="MovingObject.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Texture.cs" />
-    <Compile Include="TimeManager.cs" />
+    <Compile Include="OldCode\Gun.cs" />
+    <Compile Include="OldCode\MovingObject.cs" />
+    <Compile Include="OldCode\Player.cs" />
+    <Compile Include="OldCode\Texture.cs" />
+    <Compile Include="OldCode\TimeManager.cs" />
+    <Compile Include="OpenGL\TextureFont.cs" />
     <Compile Include="Utils\TextureLoader.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="OldCode\World.cs" />
+    <Compile Include="Utils\TextUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
@@ -131,89 +134,87 @@
     <None Include="Textures\Tiles\terrain_tile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="map\map.txt">
+    <None Include="OldCode\map\map.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="obj\Debug\YetAnotherEngine.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\YetAnotherEngine.exe" />
-    <Content Include="obj\Debug\YetAnotherEngine.pdb" />
     <None Include="Textures\background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\Guns\universelogo.png">
+    <None Include="OldCode\Guns\universelogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\Guns\weapon1.png">
+    <None Include="OldCode\Guns\weapon1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\1.png">
+    <None Include="OldCode\TextureMan\1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\10.png">
+    <None Include="OldCode\TextureMan\10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\11.png">
+    <None Include="OldCode\TextureMan\11.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\12.png">
+    <None Include="OldCode\TextureMan\12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\13.png">
+    <None Include="OldCode\TextureMan\13.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\14.png">
+    <None Include="OldCode\TextureMan\14.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\15.png">
+    <None Include="OldCode\TextureMan\15.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\16.png">
+    <None Include="OldCode\TextureMan\16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\17.png">
+    <None Include="OldCode\TextureMan\17.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\18.png">
+    <None Include="OldCode\TextureMan\18.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\19.png">
+    <None Include="OldCode\TextureMan\19.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\2.png">
+    <None Include="OldCode\TextureMan\2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\3.png">
+    <None Include="OldCode\TextureMan\3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\4.png">
+    <None Include="OldCode\TextureMan\4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\5.png">
+    <None Include="OldCode\TextureMan\5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\6.png">
+    <None Include="OldCode\TextureMan\6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\7.png">
+    <None Include="OldCode\TextureMan\7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\8.png">
+    <None Include="OldCode\TextureMan\8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Textures\TextureMan\9.png">
+    <None Include="OldCode\TextureMan\9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\YetAnotherEngine.csprojResolveAssemblyReference.cache" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="obj\Debug\TempPE\" />
+    <None Include="Textures\Fonts\big-outline.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

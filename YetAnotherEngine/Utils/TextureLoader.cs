@@ -9,7 +9,7 @@ namespace YetAnotherEngine.Utils
     {
         public static int GenerateTexture(Bitmap textureImage, int width, int height, int offsetx, int offsety)
         {
-            int glHandle = GL.GenTexture();
+            var glHandle = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, glHandle);
 
             var bitmapData = textureImage.LockBits(new Rectangle(offsetx, offsety, width, height),
