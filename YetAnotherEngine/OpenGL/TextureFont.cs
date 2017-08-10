@@ -91,7 +91,7 @@ namespace YetAnotherEngine.OpenGL
             GL.GetInteger(GetPName.Viewport, viewport);
             var w = viewport[2];
             var h = viewport[3];
-            double aspectRatio = (float)h / (float)w;
+            double aspectRatio = h / (float)w;
             return aspectRatio;
         }
 

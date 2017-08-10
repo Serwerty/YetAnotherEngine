@@ -22,82 +22,52 @@ namespace YetAnotherEngine.GameObjects
             _position = new Vector2(0f, 0f);
         }
 
-        public void BindEvents()
+        public void Move(double multiplier)
         {
-            _mouseDevice.Move += _mouseDevice_Move;
-            _keyboardDevice.KeyDown += _keyboardDevice_KeyDown;
-        }
-
-        private void _mouseDevice_Move(object sender, MouseMoveEventArgs e)
-        {
-            bool shouldMoveRight = e.X >= (_gameWindow.Width - 10);
-            bool shouldMoveLeft = e.X <= (10);
-            bool shouldMoveUp = e.Y <= (10);
-            bool shouldMoveDown = e.Y >= (_gameWindow.Height - 10);
-
-
-            if (shouldMoveRight) //Should we move camera right
+            if (!_isLocked)
             {
-                MoveRight();
-            }
+                bool mouseMoveRight = _mouseDevice.X >= (_gameWindow.Width - 10);
+                bool mouseMoveLeft = _mouseDevice.X <= (10);
+                bool mouseMoveUp = _mouseDevice.Y <= (10);
+                bool mouseMoveDown = _mouseDevice.Y >= (_gameWindow.Height - 10);
 
-            if (shouldMoveLeft) //Should we move camera left
-            {
-                MoveLeft();
-            }
-
-            if (shouldMoveDown) //Should we move camera down
-            {
-                MoveDown();
-            }
-
-            if (shouldMoveUp) //Should we move camera up
-            {
-                MoveUp();
+                if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
+                {
+                    MoveUp(multiplier);
+                }
+                if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
+                {
+                    MoveDown(multiplier);
+                }
+                if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
+                {
+                    MoveRight(multiplier);
+                }
+                if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
+                {
+                    MoveLeft(multiplier);
+                }
             }
         }
 
-        private void _keyboardDevice_KeyDown(object sender, KeyboardKeyEventArgs e)
+        private void MoveRight(double multiplier)
         {
-            if (e.Key == KeyboardConstants.UpKey)
-            {
-                MoveUp();
-            }
-
-            if (e.Key == KeyboardConstants.DownKey)
-            {
-                MoveDown();
-            }
-
-            if (e.Key == KeyboardConstants.RightKey)
-            {
-                MoveRight();
-            }
-
-            if (e.Key == KeyboardConstants.LeftKey)
-            {
-                MoveLeft();
-            }
+            _position.X += (float)multiplier * WorldConstants.CameraScrollSpeed;
         }
 
-        private void MoveRight()
+        private void MoveLeft(double multiplier)
         {
-            _position.X += WorldConstants.CameraScrollSpeed;
+            _position.X -= (float)multiplier * WorldConstants.CameraScrollSpeed;
         }
 
-        private void MoveLeft()
+        private void MoveUp(double multiplier)
         {
-            _position.X -= WorldConstants.CameraScrollSpeed;
+            _position.Y += (float)multiplier * WorldConstants.CameraScrollSpeed;
         }
 
-        private void MoveUp()
+        private void MoveDown(double multiplier)
         {
-            _position.Y += WorldConstants.CameraScrollSpeed;
-        }
-
-        private void MoveDown()
-        {
-            _position.Y -= WorldConstants.CameraScrollSpeed;
+            _position.Y -= (float)multiplier * WorldConstants.CameraScrollSpeed;
         }
 
         public Vector2 GetPosition()

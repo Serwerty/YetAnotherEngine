@@ -4,6 +4,8 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using YetAnotherEngine.GameObjects;
+using YetAnotherEngine.Utils;
+using YetAnotherEngine.Constants;
 
 namespace YetAnotherEngine
 {
@@ -35,7 +37,7 @@ namespace YetAnotherEngine
             //Launching new game window
             using (var game = new Game())
             {
-                game.Run(200,200);
+                game.Run(WorldConstants.TargetUpdateRate, 0);
             }
         }
 
@@ -64,7 +66,6 @@ namespace YetAnotherEngine
 
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             _camera = new Camera(Keyboard, Mouse, this);
-            _camera.BindEvents();
 
             //_gameWorld.LoadMap("map.txt");
         }
@@ -72,6 +73,7 @@ namespace YetAnotherEngine
         protected override void OnResize(EventArgs E)
         {
             base.OnResize(E);
+
             GL.Viewport(0, 0, (int)_projectionWidth, (int)_projectionHeight);
             _projectionWidth = NominalWidth;
             _projectionHeight = (float)ClientRectangle.Height / (float)ClientRectangle.Width * _projectionWidth;
@@ -82,9 +84,11 @@ namespace YetAnotherEngine
             }
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs E)
+        protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(E);
+            base.OnUpdateFrame(e);
+            var multiplier = GameClock.GetMultiplier(e.Time);
+            _camera.Move(multiplier);
             //_player.Move(_gameWorld.GetWorldObjects());
         }
 
@@ -121,7 +125,7 @@ namespace YetAnotherEngine
             }
             _avgCnt++;
 
-            _fpsText.WriteText("FPS average: " + _avgFps.ToString("F2") + " - FPS current: " + curFps.ToString("F2"));
+            _fpsText.WriteText("FPS average: " + string.Format("{0:0}", _avgFps) + " - FPS current: " + string.Format("{0:0}", curFps));
 
 
             SwapBuffers();

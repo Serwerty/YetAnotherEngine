@@ -15,7 +15,7 @@ namespace YetAnotherEngine.GameObjects
         public void WriteText(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtAbsolutePosition(text, 15, 0, 0);
+            _textFont.WriteStringAtRelativePosition(text, 2, 25, 95, 0);
             _textFont.Stop();
         }
     }
