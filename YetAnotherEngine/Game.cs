@@ -42,7 +42,7 @@ namespace YetAnotherEngine
         }
 
         public Game()
-            : base(NominalWidth, NominalHeight, GraphicsMode.Default, WindowsHeader)
+            : base(NominalWidth, NominalHeight, new GraphicsMode(32,16,8,16), WindowsHeader)
         {
             //turning vertical sync on
             VSync = VSyncMode.On;

@@ -6,7 +6,7 @@
         public const int WorldWidth = 20;
         public const int TileHeight = 64;
         public const int TileWidth = 64;
-        public const float CameraScrollSpeed = 2f;
+        public const float CameraScrollSpeed = 4f;
 
         public const int TargetUpdateRate = 60;
         public const int TargetRanderRate = 60;
