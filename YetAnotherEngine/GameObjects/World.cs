@@ -12,9 +12,12 @@ namespace YetAnotherEngine.GameObjects
         private const int WorldHeight = Constants.WorldConstants.WorldHeight;
 
         private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
+        private const string TowersTileFilePath = "Textures/Tiles/towers.png";
 
         private readonly int[] _groundTextures = new int[5]; // for now it wil be one(random) of 5
         private readonly int[,] _groundTexturesMap = new int[WorldHeight, WorldWidth];
+
+        private int _towerTest;
 
         public World()
         {
@@ -34,7 +37,7 @@ namespace YetAnotherEngine.GameObjects
                     GL.BindTexture(TextureTarget.Texture2D, _groundTexturesMap[i, j]);
 
                     GL.Begin(PrimitiveType.Quads);
-                    GL.Color4(Color.White);
+                    //GL.Color4(Color.White);
 
                     GL.TexCoord2(0, 0);
                     GL.Vertex2(location);
@@ -67,6 +70,9 @@ namespace YetAnotherEngine.GameObjects
             _groundTextures[4] = TextureLoader.GenerateTexture(backGroundTexture, Constants.WorldConstants.TileWidth,
                                  Constants.WorldConstants.TileWidth, 64, 64);
 
+            var towerTexture = new Bitmap(TowersTileFilePath);
+            _towerTest = TextureLoader.GenerateTexture(towerTexture, 128, 192, 14, 0);
+
             for (var i = 0; i < WorldHeight; i++)
             {
                 for (var j = 0; j <  WorldWidth; j++)
@@ -75,6 +81,26 @@ namespace YetAnotherEngine.GameObjects
                     _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
                 }
             }
+        }
+
+        internal void RenderTowers()
+        {
+            var location = new Vector2(67, 62);
+            GL.BindTexture(TextureTarget.Texture2D, _towerTest);
+
+            GL.Begin(PrimitiveType.Quads);
+            //GL.Color4(Color.White);
+
+            GL.TexCoord2(0, 0);
+            GL.Vertex2(location);
+            GL.TexCoord2(1, 0);
+            GL.Vertex2(location.X + 64, location.Y);
+            GL.TexCoord2(1, 1);
+            GL.Vertex2(location.X + 64, location.Y + 96);
+            GL.TexCoord2(0, 1);
+            GL.Vertex2(location.X, location.Y + 96);
+
+            GL.End();
         }
     }
 }

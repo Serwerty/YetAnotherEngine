@@ -61,11 +61,18 @@ namespace YetAnotherEngine
             GL.Disable(EnableCap.CullFace);
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
+            //GL.Enable(EnableCap.Multisample);
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             GL.PixelStore(PixelStoreParameter.UnpackAlignment, 1);
+            GL.DepthMask(false);
 
-            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            _camera = new Camera(Keyboard);
+            GL.Enable(EnableCap.LineSmooth);
+            GL.Enable(EnableCap.PointSmooth);
+            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
+            GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
+
+
+            _camera = new Camera(Keyboard, Mouse, this);
 
             //_gameWorld.LoadMap("map.txt");
         }
@@ -76,18 +83,17 @@ namespace YetAnotherEngine
 
             GL.Viewport(0, 0, (int)_projectionWidth, (int)_projectionHeight);
             _projectionWidth = NominalWidth;
-            _projectionHeight = (float)ClientRectangle.Height / (float)ClientRectangle.Width * _projectionWidth;
+            _projectionHeight = ClientRectangle.Height / (float)ClientRectangle.Width * _projectionWidth;
             if (_projectionHeight < NominalHeight)
             {
                 _projectionHeight = NominalHeight;
-                _projectionWidth = (float)ClientRectangle.Width / (float)ClientRectangle.Height * _projectionHeight;
+                _projectionWidth = ClientRectangle.Width / (float)ClientRectangle.Height * _projectionHeight;
             }
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
             var multiplier = GameClock.GetMultiplier(e.Time);
             _camera.Move(multiplier);
             //_player.Move(_gameWorld.GetWorldObjects());
@@ -116,6 +122,7 @@ namespace YetAnotherEngine
             //_player.Draw();
 
             _gameWorld.RenderGround();
+            _gameWorld.RenderTowers();
 
             var curFps = (float)(1.0 / e.Time);
             if (_avgCnt <= 10.0F)
