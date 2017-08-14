@@ -125,10 +125,26 @@ namespace YetAnotherEngine.GameObjects
         {
             if (_isTowerShouldBeRendered)
             {
-                _towerToBePlaced.Location = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth/2 - BasicTower.TowerCenterX,
-                    -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight/2 - BasicTower.TowerCenterY); 
+                
                 if (_keyboardDevice[Key.T])
-                _towerToBePlaced.Draw(WorldConstants.RedColor);
+                {
+                    _towerToBePlaced.Location = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth / 2 - BasicTower.TowerCenterX,
+                    -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight / 2 - BasicTower.TowerCenterY);
+
+                    var roughLocation = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth / 2,
+                      -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight / 2);
+
+                    roughLocation.X -= roughLocation.X % 64;
+                    roughLocation.Y -= roughLocation.Y % 32;
+
+                    Vector2 location = getSelectionPosition(currentOffset, roughLocation);
+
+
+                    if (CheckIfTowerCanBePlaced(location))
+                        _towerToBePlaced.Draw(WorldConstants.GreenColor);
+                    else
+                        _towerToBePlaced.Draw(WorldConstants.RedColor);
+                }
             }
         }
 
@@ -145,7 +161,7 @@ namespace YetAnotherEngine.GameObjects
                     roughLocation.Y -= roughLocation.Y % 32;
 
                     Vector2 location = getSelectionPosition(currentOffset, roughLocation);
-
+                
                     GL.BindTexture(TextureTarget.Texture2D, _selectionTextureID);
 
                     GL.Begin(PrimitiveType.Quads);
@@ -167,9 +183,16 @@ namespace YetAnotherEngine.GameObjects
 
         private bool CheckIfTowerCanBePlaced(Vector2 corner)
         {
-            bool canBePlaced = false;
-            //if (_towerToBePlaced.Location.X-BasicTower.TowerCenterX <)
-            return true;
+            bool canBePlaced = true;
+            int i, j;
+            j = (int)((2*corner.Y-corner.X - WorldWidth * 32)/64);
+            i = (int) ((corner.Y - 16 * j) / 16);
+            j += WorldWidth;
+            i -= WorldHeight;
+           // Game._fpsText.WriteFps(i + ":" + j);
+            if (i < 0 || i >= WorldHeight) canBePlaced = false;
+            if (j < 0 || j >= WorldWidth) canBePlaced = false;
+            return canBePlaced;
         }
 
         private Vector2 getSelectionPosition(Vector2 currentOffset, Vector2 corner)

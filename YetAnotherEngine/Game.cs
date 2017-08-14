@@ -29,7 +29,7 @@ namespace YetAnotherEngine
         private static World _gameWorld;
         private static MainMenu _gameMenu;
 
-        private static TextLine _fpsText;
+        public static TextLine _fpsText;
 
         private GameState _gameState = GameState.InGame;
 
