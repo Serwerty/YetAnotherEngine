@@ -83,6 +83,7 @@ namespace YetAnotherEngine
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
+            if (Keyboard[Key.T])
             _gameWorld.AddTower();
         }
 
@@ -141,7 +142,7 @@ namespace YetAnotherEngine
             }
             _avgCnt++;
 
-            //_fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
+            _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
 
 
             SwapBuffers();

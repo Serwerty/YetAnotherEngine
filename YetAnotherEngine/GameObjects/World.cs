@@ -24,7 +24,7 @@ namespace YetAnotherEngine.GameObjects
 
         private int _basicTowerTextureID;
         private int _selectionTextureID;
-        private List<TowerBase> _towersList;
+        private SortedList<int, TowerBase> _towersList;
 
         private MouseDevice _mouseDevice;
         private KeyboardDevice _keyboardDevice;
@@ -37,7 +37,7 @@ namespace YetAnotherEngine.GameObjects
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
             LoadMapTextures();
-            _towersList = new List<TowerBase>();
+            _towersList = new SortedList<int, TowerBase>();
             _towerToBePlaced = new BasicTower(new Vector2(0,0), _basicTowerTextureID);
         }
 
@@ -47,7 +47,8 @@ namespace YetAnotherEngine.GameObjects
             {
                 Vector2 location = MouseHelper.Instance.tileCoords - new Vector2(BasicTower.TowerCenterX - WorldConstants.TileWidth/2,BasicTower.TowerCenterY - WorldConstants.TileHeight / 4);
                 TowerBase _tower = new BasicTower(location, _basicTowerTextureID);
-                _towersList.Add(_tower);
+
+                _towersList.Add((int)MouseHelper.Instance.tilePosition.X*100 + (int)MouseHelper.Instance.tilePosition.Y, _tower);
             }
         }
 
@@ -118,7 +119,7 @@ namespace YetAnotherEngine.GameObjects
         {
             foreach (var tower in _towersList)
             {
-                tower.Draw(Color.White);
+                tower.Value.Draw(Color.White);
             }
            
         }
