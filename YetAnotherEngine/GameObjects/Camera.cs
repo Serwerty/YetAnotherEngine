@@ -18,8 +18,9 @@ namespace YetAnotherEngine.GameObjects
             _keyboardDevice = keyboardDevice;
             _mouseDevice = mouseDevice;
             _gameWindow = gameWindow;
-
-            _position = new Vector2(0f, 0f);
+            ;
+            _position = new Vector2(WorldConstants.WorldWidth * WorldConstants.TileWidth / 2,
+                -WorldConstants.WorldHeight * WorldConstants.TileHeight / 4);
         }
 
         public void Move(double multiplier)

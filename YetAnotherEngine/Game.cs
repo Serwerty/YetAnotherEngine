@@ -111,7 +111,6 @@ namespace YetAnotherEngine
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
-                    GL.Translate(0, 0, 0);
        
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();

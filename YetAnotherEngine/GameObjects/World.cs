@@ -38,7 +38,7 @@ namespace YetAnotherEngine.GameObjects
             _keyboardDevice = keyboardDevice;
             LoadMapTextures();
             _towersList = new List<TowerBase>();
-            TowerBase _tower = new BasicTower(new Vector2(67, 62), _basicTowerTextureID);
+            TowerBase _tower = new BasicTower(new Vector2(67+64*4, 62+32*4), _basicTowerTextureID);
             _towerToBePlaced = new BasicTower(new Vector2(_mouseDevice.X,_mouseDevice.Y), _basicTowerTextureID);
             _towersList.Add(_tower);
         }
@@ -53,7 +53,7 @@ namespace YetAnotherEngine.GameObjects
         {
             for (var i = 0; i < WorldHeight; i++)
             {
-                var globalOffsetX = i * 32;
+                var globalOffsetX = i * 32 + WorldWidth*32;
                 var globalOffsetY = i * 16;
 
                 for (var j = 0; j < WorldWidth; j++)
