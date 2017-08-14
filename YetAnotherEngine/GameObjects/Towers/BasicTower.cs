@@ -18,8 +18,8 @@ namespace YetAnotherEngine.GameObjects.Towers
         public const int TowerWidth = 128;
         public const int TowerHeight = 192;
 
-        public const int TowerCenterX = 32;
-        public const int TowerCenterY = 88;
+        public const int TowerCenterX = 30;
+        public const int TowerCenterY = 82;
 
         public BasicTower(Vector2 location, int textureId) : base(location, textureId)
         {

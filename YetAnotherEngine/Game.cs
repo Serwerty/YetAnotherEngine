@@ -3,6 +3,7 @@ using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
+using OpenTK.Input;
 using YetAnotherEngine.GameObjects;
 using YetAnotherEngine.Utils;
 using YetAnotherEngine.Enums;
@@ -62,6 +63,7 @@ namespace YetAnotherEngine
             GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
 
             _camera = new Camera(Keyboard, Mouse, this);
+            MouseHelper.Instance.Init(Mouse);
         }
 
         protected override void OnResize(EventArgs E)
@@ -78,11 +80,18 @@ namespace YetAnotherEngine
             }
         }
 
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+            _gameWorld.AddTower();
+        }
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
             var multiplier = GameClock.GetMultiplier(e.Time);
             _camera.Move(multiplier);
+            MouseHelper.Instance.Calculate(_camera.GetPosition());
             //_player.Move(_gameWorld.GetWorldObjects());
         }
 
@@ -114,7 +123,7 @@ namespace YetAnotherEngine
        
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();
-                    _gameWorld.RenderSelection(_camera.GetPosition());
+                    _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());       
                     break;
                 case GameState.InOptions:
@@ -132,7 +141,7 @@ namespace YetAnotherEngine
             }
             _avgCnt++;
 
-            _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
+            //_fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
 
 
             SwapBuffers();

@@ -16,6 +16,6 @@ namespace YetAnotherEngine.Constants
         public const int MillisecondsInSecond = 1000;
         
         public static Color RedColor = Color.FromArgb(178,245, 0, 0);
-        public static Color GreenColor = Color.FromArgb(140,24,240,0);
+        public static Color GreenColor = Color.FromArgb(178, 0,245,0);
     }
 }

@@ -63,6 +63,7 @@
     <Compile Include="OldCode\TimeManager.cs" />
     <Compile Include="OpenGL\TextureFont.cs" />
     <Compile Include="Utils\GameClock.cs" />
+    <Compile Include="Utils\MouseHelper.cs" />
     <Compile Include="Utils\TextureLoader.cs" />
     <Compile Include="OldCode\World.cs" />
     <Compile Include="Utils\TextUtil.cs" />
