@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using YetAnotherEngine.Utils;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
+using OpenTK.Input;
+using YetAnotherEngine.GameObjects.Towers;
 
 namespace YetAnotherEngine.GameObjects
 {
@@ -17,11 +20,21 @@ namespace YetAnotherEngine.GameObjects
         private readonly int[] _groundTextures = new int[5]; // for now it wil be one(random) of 5
         private readonly int[,] _groundTexturesMap = new int[WorldHeight, WorldWidth];
 
-        private int _towerTest;
+        private int _basicTowerTextureID;
+        private List<TowerBase> _towersList;
 
         public World()
         {
             LoadMapTextures();
+            _towersList = new List<TowerBase>();
+            TowerBase _tower = new BasicTower(new Vector2(67, 62), _basicTowerTextureID);
+            _towersList.Add(_tower);
+        }
+
+        public void AddTower(MouseDevice mouseDevice)
+        {
+            TowerBase _tower = new BasicTower(new Vector2(mouseDevice.X, mouseDevice.Y), _basicTowerTextureID);
+            _towersList.Add(_tower);
         }
 
         public void RenderGround()
@@ -37,7 +50,7 @@ namespace YetAnotherEngine.GameObjects
                     GL.BindTexture(TextureTarget.Texture2D, _groundTexturesMap[i, j]);
 
                     GL.Begin(PrimitiveType.Quads);
-                    //GL.Color4(Color.White);
+                    GL.Color4(Color.White);
 
                     GL.TexCoord2(0, 0);
                     GL.Vertex2(location);
@@ -71,7 +84,9 @@ namespace YetAnotherEngine.GameObjects
                                  Constants.WorldConstants.TileWidth, 64, 64);
 
             var towerTexture = new Bitmap(TowersTileFilePath);
-            _towerTest = TextureLoader.GenerateTexture(towerTexture, 128, 192, 14, 0);
+            _basicTowerTextureID = TextureLoader.GenerateTexture(towerTexture, BasicTower.TowerWidth, BasicTower.TowerHeight, BasicTower.TextureOffsetX, BasicTower.TextureOffsetY);
+
+
 
             for (var i = 0; i < WorldHeight; i++)
             {
@@ -85,22 +100,11 @@ namespace YetAnotherEngine.GameObjects
 
         internal void RenderTowers()
         {
-            var location = new Vector2(67, 62);
-            GL.BindTexture(TextureTarget.Texture2D, _towerTest);
-
-            GL.Begin(PrimitiveType.Quads);
-            //GL.Color4(Color.White);
-
-            GL.TexCoord2(0, 0);
-            GL.Vertex2(location);
-            GL.TexCoord2(1, 0);
-            GL.Vertex2(location.X + 64, location.Y);
-            GL.TexCoord2(1, 1);
-            GL.Vertex2(location.X + 64, location.Y + 96);
-            GL.TexCoord2(0, 1);
-            GL.Vertex2(location.X, location.Y + 96);
-
-            GL.End();
+            foreach (var tower in _towersList)
+            {
+                tower.Draw();
+            }
+           
         }
     }
 }

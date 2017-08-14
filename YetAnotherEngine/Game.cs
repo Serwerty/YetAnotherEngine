@@ -123,7 +123,7 @@ namespace YetAnotherEngine
 
             _gameWorld.RenderGround();
             _gameWorld.RenderTowers();
-
+            GL.Color4(Color.White);
             var curFps = (float)(1.0 / e.Time);
             if (_avgCnt <= 10.0F)
                 _avgFps = curFps;
