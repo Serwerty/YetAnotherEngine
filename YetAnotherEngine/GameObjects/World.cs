@@ -55,8 +55,8 @@ namespace YetAnotherEngine.GameObjects
         {
             for (var i = 0; i < WorldHeight; i++)
             {
-                var globalOffsetX = i * 32 + WorldWidth*32;
-                var globalOffsetY = i * 16;
+                var globalOffsetX = i * WorldConstants.TileWidth / 2 + WorldWidth * WorldConstants.TileWidth / 2;
+                var globalOffsetY = i * WorldConstants.TileHeight / 4;
 
                 for (var j = 0; j < WorldWidth; j++)
                 {
@@ -69,16 +69,16 @@ namespace YetAnotherEngine.GameObjects
                     GL.TexCoord2(0, 0);
                     GL.Vertex2(location);
                     GL.TexCoord2(1, 0);
-                    GL.Vertex2(location.X + 64, location.Y);
+                    GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y);
                     GL.TexCoord2(1, 1);
-                    GL.Vertex2(location.X + 64, location.Y + 64);
+                    GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y + WorldConstants.TileHeight);
                     GL.TexCoord2(0, 1);
-                    GL.Vertex2(location.X, location.Y + 64);
+                    GL.Vertex2(location.X, location.Y + WorldConstants.TileHeight);
 
                     GL.End();
 
-                    globalOffsetX -= 32;
-                    globalOffsetY += 16;
+                    globalOffsetX -= WorldConstants.TileWidth / 2;
+                    globalOffsetY += WorldConstants.TileHeight / 4;
                 }
             }
         }
@@ -159,11 +159,11 @@ namespace YetAnotherEngine.GameObjects
                     GL.TexCoord2(0, 0);
                     GL.Vertex2(location);
                     GL.TexCoord2(1, 0);
-                    GL.Vertex2(location.X + 64, location.Y);
+                    GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y);
                     GL.TexCoord2(1, 1);
-                    GL.Vertex2(location.X + 64, location.Y + 64);
+                    GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y + WorldConstants.TileHeight);
                     GL.TexCoord2(0, 1);
-                    GL.Vertex2(location.X, location.Y + 64);
+                    GL.Vertex2(location.X, location.Y + WorldConstants.TileHeight);
 
                     GL.End();
                 }
