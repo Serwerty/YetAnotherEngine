@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace YetAnotherEngine.GameObjects.Towers
 {
     abstract class TowerBase
     {
-        protected Vector2 Location;
+        public Vector2 Location { get; set; }
 
         protected int TextureId { get; set; }
 
-        public abstract void Draw();
+        public abstract void Draw(Color color);
 
         protected TowerBase(Vector2 location, int textureId)
         {

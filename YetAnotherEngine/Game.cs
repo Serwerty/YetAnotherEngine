@@ -12,8 +12,8 @@ namespace YetAnotherEngine
     class Game : GameWindow
     {
         //Default windows size
-        private const int NominalWidth = 1024;
-        private const int NominalHeight = 780;
+        public const int NominalWidth = 1024;
+        public const int NominalHeight = 780;
 
         //for resize purpose
         private float _projectionWidth;
@@ -31,7 +31,7 @@ namespace YetAnotherEngine
 
         private static TextLine _fpsText;
 
-        private GameState _gameState = GameState.InMainMenu;
+        private GameState _gameState = GameState.InGame;
 
         public Game() : base(NominalWidth, NominalHeight, new GraphicsMode(32, 16, 8, 16), WindowsHeader)
         {
@@ -40,7 +40,7 @@ namespace YetAnotherEngine
 
             WindowBorder = WindowBorder.Fixed;
 
-            _gameWorld = new World();
+            _gameWorld = new World(Mouse,Keyboard);
             _gameMenu = new MainMenu();
             _fpsText = new TextLine("big-outline.png");
         }
@@ -111,16 +111,18 @@ namespace YetAnotherEngine
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
-                    GL.Translate(200, 100, 0);
-            GL.Color4(Color.White);
+                    GL.Translate(0, 0, 0);
+       
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();
+                    _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();
                     break;
             }
 
+            GL.Color4(Color.White);
             var curFps = (float)(1.0 / e.Time);
             if (_avgCnt <= 10.0F)
                 _avgFps = curFps;

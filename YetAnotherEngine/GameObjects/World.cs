@@ -5,6 +5,7 @@ using YetAnotherEngine.Utils;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
 using OpenTK.Input;
+using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Towers;
 
 namespace YetAnotherEngine.GameObjects
@@ -23,11 +24,20 @@ namespace YetAnotherEngine.GameObjects
         private int _basicTowerTextureID;
         private List<TowerBase> _towersList;
 
-        public World()
+        private MouseDevice _mouseDevice;
+        private KeyboardDevice _keyboardDevice;
+
+        private TowerBase _towerToBePlaced;
+        private bool _isTowerShouldBeRendered = true;
+
+        public World(MouseDevice mouseDevice, KeyboardDevice keyboardDevice)
         {
+            _mouseDevice = mouseDevice;
+            _keyboardDevice = keyboardDevice;
             LoadMapTextures();
             _towersList = new List<TowerBase>();
             TowerBase _tower = new BasicTower(new Vector2(67, 62), _basicTowerTextureID);
+            _towerToBePlaced = new BasicTower(new Vector2(_mouseDevice.X,_mouseDevice.Y), _basicTowerTextureID);
             _towersList.Add(_tower);
         }
 
@@ -102,9 +112,26 @@ namespace YetAnotherEngine.GameObjects
         {
             foreach (var tower in _towersList)
             {
-                tower.Draw();
+                tower.Draw(Color.White);
             }
            
         }
+
+        internal void RenderTowerToBePlaced(Vector2 currentOffset)
+        {
+            if (_isTowerShouldBeRendered)
+            {
+                _towerToBePlaced.Location = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth/2, -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight/2); 
+                if (_keyboardDevice[Key.T])
+                _towerToBePlaced.Draw(WorldConstants.RedColor);
+            }
+        }
+
+        private bool CheckIfTowerCanBePlaced()
+        {
+            bool canBePlaced = false;
+            return true;
+        }
+
     }
 }

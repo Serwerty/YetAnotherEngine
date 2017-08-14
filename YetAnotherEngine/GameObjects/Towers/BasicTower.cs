@@ -23,12 +23,12 @@ namespace YetAnotherEngine.GameObjects.Towers
         
         }
 
-        public override void Draw()
+        public override void Draw(Color color)
         {
             GL.BindTexture(TextureTarget.Texture2D, TextureId);
 
             GL.Begin(PrimitiveType.Quads);
-            GL.Color4(Color.FromArgb(140,24,240,0));
+            GL.Color4(color);
 
             GL.TexCoord2(0, 0);
             GL.Vertex2(base.Location);

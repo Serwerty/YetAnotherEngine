@@ -1,4 +1,6 @@
-﻿namespace YetAnotherEngine.Constants
+﻿using System.Drawing;
+
+namespace YetAnotherEngine.Constants
 {
     static class WorldConstants
     {
@@ -12,5 +14,8 @@
         public const int TargetRanderRate = 60;
 
         public const int MillisecondsInSecond = 1000;
+        
+        public static Color RedColor = Color.FromArgb(192,245, 0, 0);
+        public static Color GreenColor = Color.FromArgb(140,24,240,0);
     }
 }
