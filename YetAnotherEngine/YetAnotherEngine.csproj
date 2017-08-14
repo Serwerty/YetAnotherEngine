@@ -42,6 +42,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
+    <Compile Include="Configs\GameConfigModel.cs" />
+    <Compile Include="Enums\GameState.cs" />
+    <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Towers\BasicTower.cs" />
     <Compile Include="GameObjects\Towers\TowerBase.cs" />
@@ -157,6 +161,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Textures\Tiles\towers.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\Backgrounds\menu-background.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

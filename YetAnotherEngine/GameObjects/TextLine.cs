@@ -12,10 +12,17 @@ namespace YetAnotherEngine.GameObjects
             _textFont = new TextureFont(TextUtil.CreateTextureFromFile($"Textures/Fonts/{textureFileName}"));
         }
 
-        public void WriteText(string text)
+        public void WriteFps(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 2, 25, 95, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 20, 98, 0);
+            _textFont.Stop();
+        }
+
+        public void WriteText(string text, double height, double x, double y)
+        {
+            _textFont.Start();
+            _textFont.WriteStringAtAbsolutePosition(text, height, x, y);
             _textFont.Stop();
         }
     }

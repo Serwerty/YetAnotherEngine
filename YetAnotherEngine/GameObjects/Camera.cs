@@ -35,15 +35,15 @@ namespace YetAnotherEngine.GameObjects
                 {
                     MoveUp(multiplier);
                 }
-                if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
+                else if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
                 {
                     MoveDown(multiplier);
                 }
-                if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
+                else if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
                 {
                     MoveRight(multiplier);
                 }
-                if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
+                else if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
                 {
                     MoveLeft(multiplier);
                 }
