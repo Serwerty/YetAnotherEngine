@@ -17,11 +17,13 @@ namespace YetAnotherEngine.GameObjects
 
         private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
         private const string TowersTileFilePath = "Textures/Tiles/towers.png";
+        private const string SelectionTileFilePath = "Textures/Selection.png";
 
         private readonly int[] _groundTextures = new int[5]; // for now it wil be one(random) of 5
         private readonly int[,] _groundTexturesMap = new int[WorldHeight, WorldWidth];
 
         private int _basicTowerTextureID;
+        private int _selectionTextureID;
         private List<TowerBase> _towersList;
 
         private MouseDevice _mouseDevice;
@@ -96,6 +98,8 @@ namespace YetAnotherEngine.GameObjects
             var towerTexture = new Bitmap(TowersTileFilePath);
             _basicTowerTextureID = TextureLoader.GenerateTexture(towerTexture, BasicTower.TowerWidth, BasicTower.TowerHeight, BasicTower.TextureOffsetX, BasicTower.TextureOffsetY);
 
+            var selectionTexture = new Bitmap(SelectionTileFilePath);
+            _selectionTextureID = TextureLoader.GenerateTexture(selectionTexture, 64, 64, 0, 0);
 
 
             for (var i = 0; i < WorldHeight; i++)
@@ -127,9 +131,43 @@ namespace YetAnotherEngine.GameObjects
             }
         }
 
+        internal void RenderSelection(Vector2 currentOffset)
+        {
+            if (_isTowerShouldBeRendered)
+            {
+                if (_keyboardDevice[Key.T])
+                {
+                    var location = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth / 2,
+                        -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight / 2);
+
+                    if (location.X / 64 > 32) location.X -= location.X % 64 - 32;
+                    else if (location.X / 64 < 32) location.X -= location.X % 64;
+                    if (location.Y / 32 > 16) location.Y -= location.Y % 32 - 16;
+                    else if (location.Y / 32 < 16) location.Y -= location.Y % 32;
+
+                    GL.BindTexture(TextureTarget.Texture2D, _selectionTextureID);
+
+                    GL.Begin(PrimitiveType.Quads);
+                    GL.Color4(Color.White);
+
+                    GL.TexCoord2(0, 0);
+                    GL.Vertex2(location);
+                    GL.TexCoord2(1, 0);
+                    GL.Vertex2(location.X + 64, location.Y);
+                    GL.TexCoord2(1, 1);
+                    GL.Vertex2(location.X + 64, location.Y + 64);
+                    GL.TexCoord2(0, 1);
+                    GL.Vertex2(location.X, location.Y + 64);
+
+                    GL.End();
+                }
+            }
+        }
+
         private bool CheckIfTowerCanBePlaced()
         {
             bool canBePlaced = false;
+            //if (_towerToBePlaced.Location.X-BasicTower.TowerCenterX <)
             return true;
         }
 

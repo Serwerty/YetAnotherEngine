@@ -115,7 +115,8 @@ namespace YetAnotherEngine
        
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();
-                    _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
+                    _gameWorld.RenderSelection(_camera.GetPosition());
+                    _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());       
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();
