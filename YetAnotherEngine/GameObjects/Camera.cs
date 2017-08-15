@@ -4,14 +4,14 @@ using YetAnotherEngine.Constants;
 
 namespace YetAnotherEngine.GameObjects
 {
-    class Camera
+    public class Camera
     {
         private Vector2 _position;
-        private KeyboardDevice _keyboardDevice;
-        private MouseDevice _mouseDevice;
-        private GameWindow _gameWindow;
+        private readonly KeyboardDevice _keyboardDevice;
+        private readonly MouseDevice _mouseDevice;
+        private readonly GameWindow _gameWindow;
 
-        private bool _isLocked { get; set; } = false;
+        private bool IsLocked { get; set; } = false;
 
         public Camera(KeyboardDevice keyboardDevice, MouseDevice mouseDevice, GameWindow gameWindow)
         {
@@ -19,18 +19,18 @@ namespace YetAnotherEngine.GameObjects
             _mouseDevice = mouseDevice;
             _gameWindow = gameWindow;
             ;
-            _position = new Vector2(WorldConstants.WorldWidth * WorldConstants.TileWidth / 2,
-                -WorldConstants.WorldHeight * WorldConstants.TileHeight / 4);
+            _position = new Vector2(WorldConstants.WorldWidth * WorldConstants.TileWidth / 2f,
+                -WorldConstants.WorldHeight * WorldConstants.TileHeight / 4f);
         }
 
         public void Move(double multiplier)
         {
-            if (!_isLocked)
+            if (!IsLocked)
             {
-                bool mouseMoveRight = _mouseDevice.X >= (_gameWindow.Width - _gameWindow.Width* 0.10);
-                bool mouseMoveLeft = _mouseDevice.X <= (_gameWindow.Width * 0.10);
-                bool mouseMoveUp = _mouseDevice.Y <= (_gameWindow.Width * 0.10);
-                bool mouseMoveDown = _mouseDevice.Y >= (_gameWindow.Height - _gameWindow.Width * 0.10);
+                var mouseMoveRight = _mouseDevice.X >= (_gameWindow.Width - _gameWindow.Width* 0.10);
+                var mouseMoveLeft = _mouseDevice.X <= (_gameWindow.Width * 0.10);
+                var mouseMoveUp = _mouseDevice.Y <= (_gameWindow.Width * 0.10);
+                var mouseMoveDown = _mouseDevice.Y >= (_gameWindow.Height - _gameWindow.Width * 0.10);
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {
