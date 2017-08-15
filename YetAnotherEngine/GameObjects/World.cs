@@ -174,13 +174,14 @@ namespace YetAnotherEngine.GameObjects
         private bool CheckIfTowerCanBePlaced()
         {
             bool canBePlaced = true;
+            
             int i = (int)MouseHelper.Instance.tilePosition.X;
             int j = (int)MouseHelper.Instance.tilePosition.Y;
             Game._fpsText.WriteCoords("i: " + i + " j:" + j +" x:" +  MouseHelper.Instance.tileCoords.X + " y:" + MouseHelper.Instance.tileCoords.Y);
 
             if (i < 0 || i >= WorldHeight) canBePlaced = false;
             if (j < 0 || j >= WorldWidth) canBePlaced = false;
-
+            if (_towersList.ContainsKey(i * 100 + j)) canBePlaced = false;
             return canBePlaced;
         }
     }
