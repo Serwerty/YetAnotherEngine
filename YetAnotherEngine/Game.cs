@@ -141,9 +141,8 @@ namespace YetAnotherEngine
                 _avgFps += (curFps - _avgFps) / _avgCnt;
             }
             _avgCnt++;
-
             _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
-
+            
 
             SwapBuffers();
             //TimeManager.SetFrameInterval();

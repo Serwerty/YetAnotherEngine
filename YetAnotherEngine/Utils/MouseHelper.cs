@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
 
@@ -85,10 +87,9 @@ namespace YetAnotherEngine.Utils
             j = (int)((2 * tileCoords.Y - tileCoords.X -  WorldConstants.WorldWidth * WorldConstants.TileWidth /2f) / WorldConstants.TileWidth);
             i = (int)((tileCoords.Y - WorldConstants.TileHeight / 4f * j) / (WorldConstants.TileHeight / 4f));
             j += WorldConstants.WorldWidth;
-            i -= WorldConstants.WorldHeight;
+            i -= WorldConstants.WorldWidth;
 
             tilePosition = new Vector2(i,j);
-            //Game._fpsText.WriteFps(i + ":" + j);
         }
 
     }

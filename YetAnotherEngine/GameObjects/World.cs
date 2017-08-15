@@ -176,6 +176,7 @@ namespace YetAnotherEngine.GameObjects
             bool canBePlaced = true;
             int i = (int)MouseHelper.Instance.tilePosition.X;
             int j = (int)MouseHelper.Instance.tilePosition.Y;
+            Game._fpsText.WriteCoords("i: " + i + " j:" + j +" x:" +  MouseHelper.Instance.tileCoords.X + " y:" + MouseHelper.Instance.tileCoords.Y);
 
             if (i < 0 || i >= WorldHeight) canBePlaced = false;
             if (j < 0 || j >= WorldWidth) canBePlaced = false;

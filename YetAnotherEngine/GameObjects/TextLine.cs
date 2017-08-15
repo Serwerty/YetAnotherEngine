@@ -19,6 +19,13 @@ namespace YetAnotherEngine.GameObjects
             _textFont.Stop();
         }
 
+        public void WriteCoords(string text)
+        {
+            _textFont.Start();
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 13, 96, 0);
+            _textFont.Stop();
+        }
+
         public void WriteText(string text, double height, double x, double y)
         {
             _textFont.Start();
