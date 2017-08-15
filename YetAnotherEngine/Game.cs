@@ -92,6 +92,9 @@ namespace YetAnotherEngine
             base.OnUpdateFrame(e);
             var multiplier = GameClock.GetMultiplier(e.Time);
             _camera.Move(multiplier);
+
+            _gameWorld.MoveUnits(multiplier);
+
             MouseHelper.Instance.Calculate(_camera.GetPosition());
             //_player.Move(_gameWorld.GetWorldObjects());
         }

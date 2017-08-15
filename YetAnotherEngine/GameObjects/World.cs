@@ -9,6 +9,7 @@ using YetAnotherEngine.Constants;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.GameObjects.Towers;
 using YetAnotherEngine.Utils;
+using YetAnotherEngine.GameObjects.Units;
 
 namespace YetAnotherEngine.GameObjects
 {
@@ -34,6 +35,8 @@ namespace YetAnotherEngine.GameObjects
 
         private readonly TowerBase _towerToBePlaced;
         private readonly bool _isTowerShouldBeRendered;
+
+        private List<UnitBase> Units = new List<UnitBase>();
 
         public World(MouseDevice mouseDevice, KeyboardDevice keyboardDevice)
         {
@@ -91,6 +94,20 @@ namespace YetAnotherEngine.GameObjects
                     globalOffsetY += WorldConstants.TileHeight / 4;
                 }
             }
+        }
+
+        public void MoveUnits(double speedMultiplier)
+        {
+            foreach(var unit in Units)
+            {
+                var targetLocation = UnitTargetLocation(unit.Location);
+                unit.Move(targetLocation, speedMultiplier);
+            }
+        }
+
+        private Vector2 UnitTargetLocation(Vector2 unitCurrentLocation)
+        {
+            return new Vector2(0,0);
         }
 
         private void LoadMapTextures()
