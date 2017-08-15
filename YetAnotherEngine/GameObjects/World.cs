@@ -170,13 +170,12 @@ namespace YetAnotherEngine.GameObjects
         {
             var x = (int)MouseHelper.Instance.tilePosition.X;
             var y = (int)MouseHelper.Instance.tilePosition.Y;
-            Game._fpsText.WriteCoords("i: " + i + " j:" + j +" x:" +  MouseHelper.Instance.tileCoords.X + " y:" + MouseHelper.Instance.tileCoords.Y);
+            Game._fpsText.WriteCoords("i: " + x + " j:" + y +" x:" +  MouseHelper.Instance.tileCoords.X + " y:" + MouseHelper.Instance.tileCoords.Y);
 
             if (_towersList.ContainsKey(x * 100 + y))
             {
                 return false;
             }
-            if (_towersList.ContainsKey(i * 100 + j)) canBePlaced = false;
             if (x < 0 || x >= WorldHeight) return false;
 
             return y >= 0 && y < WorldWidth;
