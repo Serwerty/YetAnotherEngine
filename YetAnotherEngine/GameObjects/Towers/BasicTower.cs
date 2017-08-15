@@ -16,7 +16,7 @@ namespace YetAnotherEngine.GameObjects.Towers
         public const int TextureOffsetY = 0;
 
         public const int TowerWidth = 128;
-        public const int TowerHeight = 192;
+        public const int TowerHeight = 196;
 
         public const int TowerCenterX = 30;
         public const int TowerCenterY = 82;
