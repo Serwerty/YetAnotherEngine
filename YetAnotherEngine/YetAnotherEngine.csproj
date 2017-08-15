@@ -51,6 +51,8 @@
     <Compile Include="GameObjects\Tile.cs" />
     <Compile Include="GameObjects\Towers\BasicTower.cs" />
     <Compile Include="GameObjects\Towers\TowerBase.cs" />
+    <Compile Include="GameObjects\Units\BasicUnit.cs" />
+    <Compile Include="GameObjects\Units\UnitBase.cs" />
     <Compile Include="OldCode\AnimationOfPlayer.cs" />
     <Compile Include="OldCode\Brush.cs" />
     <Compile Include="Constants\KeyboardConstants.cs" />
