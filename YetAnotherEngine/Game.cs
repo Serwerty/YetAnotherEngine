@@ -7,6 +7,7 @@ using OpenTK.Input;
 using YetAnotherEngine.GameObjects;
 using YetAnotherEngine.Utils;
 using YetAnotherEngine.Enums;
+using YetAnotherEngine.Constants;
 
 namespace YetAnotherEngine
 {
@@ -30,6 +31,9 @@ namespace YetAnotherEngine
         private static World _gameWorld;
         private static MainMenu _gameMenu;
 
+        private double zScale = 1;
+        private double _gameClockMultiplyer = 1;
+
         public static TextLine _fpsText;
 
         private GameState _gameState = GameState.InGame;
@@ -41,7 +45,7 @@ namespace YetAnotherEngine
 
             WindowBorder = WindowBorder.Fixed;
 
-            _gameWorld = new World(Mouse,Keyboard);
+            _gameWorld = new World(Mouse, Keyboard);
             _gameMenu = new MainMenu();
             _fpsText = new TextLine("big-outline.png");
         }
@@ -66,6 +70,21 @@ namespace YetAnotherEngine
             MouseHelper.Instance.Init(Mouse);
         }
 
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnMouseWheel(e);
+
+            if (e.Delta > 0 && zScale > WorldConstants.ZoomInLimitation) // Zoom in
+            {
+                zScale -= WorldConstants.ZoomSpeed * _gameClockMultiplyer;
+            }
+            else if (e.Delta < 0 && zScale < WorldConstants.ZoomOutLimitation) // Zoom out
+            {
+                zScale += WorldConstants.ZoomSpeed * _gameClockMultiplyer;
+            }
+
+        }
+
         protected override void OnResize(EventArgs E)
         {
             base.OnResize(E);
@@ -84,16 +103,16 @@ namespace YetAnotherEngine
         {
             base.OnMouseUp(e);
             if (Keyboard[Key.T])
-            _gameWorld.AddTower();
+                _gameWorld.AddTower();
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            var multiplier = GameClock.GetMultiplier(e.Time);
-            _camera.Move(multiplier);
+            _gameClockMultiplyer = GameClock.GetMultiplier(e.Time);
+            _camera.Move(_gameClockMultiplyer);
 
-            _gameWorld.MoveUnits(multiplier);
+            _gameWorld.MoveUnits(_gameClockMultiplyer);
 
             MouseHelper.Instance.Calculate(_camera.GetPosition());
             //_player.Move(_gameWorld.GetWorldObjects());
@@ -124,11 +143,13 @@ namespace YetAnotherEngine
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
-       
+
+                    GL.Ortho(-zScale, 1, -zScale, 1, 1, -1);
+
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();
                     _gameWorld.RenderSelection();
-                    _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());       
+                    _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();
@@ -145,7 +166,7 @@ namespace YetAnotherEngine
             }
             _avgCnt++;
             _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
-            
+
 
             SwapBuffers();
             //TimeManager.SetFrameInterval();
