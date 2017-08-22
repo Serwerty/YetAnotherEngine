@@ -22,7 +22,7 @@ namespace YetAnotherEngine.GameObjects
         public void WriteCoords(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 13, 96, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 30, 96, 0);
             _textFont.Stop();
         }
 

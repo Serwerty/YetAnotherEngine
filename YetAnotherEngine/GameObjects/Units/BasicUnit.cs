@@ -42,7 +42,17 @@ namespace YetAnotherEngine.GameObjects.Units
 
         public override void Move(Vector2 targetLocation, double speedMultiplier)
         {
-            throw new NotImplementedException();
+            Vector2 path = Location + targetLocation;
+            if (path.Length < speed * speedMultiplier)
+            {
+                Location = targetLocation;
+            }
+            else
+            {
+                Vector2 endPoint = Vector2.Multiply(path.Normalized(), speed * (float)speedMultiplier);
+                Location.X += endPoint.X;
+                Location.Y += endPoint.Y;
+            }
         }
     }
 }

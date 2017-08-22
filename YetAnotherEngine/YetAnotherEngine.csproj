@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Configs\GameConfigModel.cs" />
+    <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\TileType.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="OldCode\Texture.cs" />
     <Compile Include="OldCode\TimeManager.cs" />
     <Compile Include="OpenGL\TextureFont.cs" />
+    <Compile Include="Utils\CoordsCalculator.cs" />
     <Compile Include="Utils\GameClock.cs" />
     <Compile Include="Utils\MouseHelper.cs" />
     <Compile Include="Utils\TextureLoader.cs" />

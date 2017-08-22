@@ -5,7 +5,7 @@ namespace YetAnotherEngine.GameObjects.Units
 {
     public abstract class UnitBase
     {
-        public Vector2 Location { get; set; }
+        public Vector2 Location; 
 
         protected int TextureId { get; set; }
 

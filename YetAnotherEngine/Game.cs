@@ -31,7 +31,7 @@ namespace YetAnotherEngine
         private static World _gameWorld;
         private static MainMenu _gameMenu;
 
-        private double zScale = 1;
+        public static double zScale = 1;
         private double _gameClockMultiplyer = 1;
 
         public static TextLine _fpsText;
@@ -136,7 +136,7 @@ namespace YetAnotherEngine
                 case GameState.InMainMenu:
                     _gameMenu.SetUpMenuProjection();
                     _gameMenu.RenderMenu();
-                    break;
+                    break; 
                 case GameState.InGame:
 
                     var projection = Matrix4.CreateOrthographic(-NominalWidth, -NominalHeight, -1, 1);
@@ -144,7 +144,7 @@ namespace YetAnotherEngine
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
 
-                    GL.Ortho(-zScale, 1, -zScale, 1, 1, -1);
+                    GL.Ortho(-zScale, 1, -zScale, 1, -1, 1);
 
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();

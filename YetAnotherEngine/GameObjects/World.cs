@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using OpenTK.Platform.Windows;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.GameObjects.Towers;
@@ -36,16 +38,20 @@ namespace YetAnotherEngine.GameObjects
         private readonly TowerBase _towerToBePlaced;
         private readonly bool _isTowerShouldBeRendered;
 
+        private List<Vector2> _roadList;
+
         private List<UnitBase> Units = new List<UnitBase>();
 
         public World(MouseDevice mouseDevice, KeyboardDevice keyboardDevice)
         {
+            _roadList =  new List<Vector2>();
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
             LoadMapTextures();
             LoadMap();
             _towersList = new SortedList<int, TowerBase>();
             _towerToBePlaced = new BasicTower(new Vector2(0, 0), _basicTowerTextureId);
+            CalculatePath();
             _isTowerShouldBeRendered = true;
         }
 
@@ -60,7 +66,7 @@ namespace YetAnotherEngine.GameObjects
                 TowerBase tower = new BasicTower(location, _basicTowerTextureId);
 
                 _towersList.Add(
-                    (int) MouseHelper.Instance.tilePosition.X * 100 + (int) MouseHelper.Instance.tilePosition.Y, tower);
+                    (int)MouseHelper.Instance.tilePosition.X * 100 + (int)MouseHelper.Instance.tilePosition.Y, tower);
             }
         }
 
@@ -98,16 +104,16 @@ namespace YetAnotherEngine.GameObjects
 
         public void MoveUnits(double speedMultiplier)
         {
-            foreach(var unit in Units)
+            foreach (var unit in Units)
             {
-                var targetLocation = UnitTargetLocation(unit.Location);
+                var targetLocation = GetUnitTargetLocation(unit.Location);
                 unit.Move(targetLocation, speedMultiplier);
             }
         }
 
-        private Vector2 UnitTargetLocation(Vector2 unitCurrentLocation)
+        private Vector2 GetUnitTargetLocation(Vector2 unitCurrentLocation)
         {
-            return new Vector2(0,0);
+            return new Vector2(0, 0);
         }
 
         private void LoadMapTextures()
@@ -133,11 +139,11 @@ namespace YetAnotherEngine.GameObjects
 
 
             for (var i = 0; i < WorldHeight; i++)
-            for (var j = 0; j < WorldWidth; j++)
-            {
-                var random = new Random(unchecked((int) DateTime.Now.Ticks));
-                _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
-            }
+                for (var j = 0; j < WorldWidth; j++)
+                {
+                    var random = new Random(unchecked((int)DateTime.Now.Ticks));
+                    _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
+                }
         }
 
         private void LoadMap()
@@ -145,8 +151,8 @@ namespace YetAnotherEngine.GameObjects
             var tilesTextureMap = new Bitmap(GroundTileFilePath);
 
             for (var i = 0; i < WorldHeight; i++)
-            for (var j = 0; j < WorldWidth; j++)
-                _tiles[i, j] = new Tile();
+                for (var j = 0; j < WorldWidth; j++)
+                    _tiles[i, j] = new Tile();
 
             try
             {
@@ -167,18 +173,23 @@ namespace YetAnotherEngine.GameObjects
                         _tiles[i, j].TextureOffsetX = textureOffsetX;
                         _tiles[i, j].TextureOffsetY = textureOffsetY;
                         _tiles[i, j].Type = type;
+
+                        if (type == TileType.Road)
+                        {
+                            _roadList.Add(new Vector2(i, j));
+                        }
                     }
                 }
             }
-            catch (Exception exp)
+            catch (Exception)
             {
                 //TODO: LOG OR SOME SHIT.
             }
 
             for (var i = 0; i < WorldHeight; i++)
-            for (var j = 0; j < WorldWidth; j++)
-                _tiles[i, j].TextureId = TextureLoader.GenerateTexture(tilesTextureMap, WorldConstants.TileWidth,
-                    WorldConstants.TileHeight, _tiles[i, j].TextureOffsetX, _tiles[i, j].TextureOffsetY);
+                for (var j = 0; j < WorldWidth; j++)
+                    _tiles[i, j].TextureId = TextureLoader.GenerateTexture(tilesTextureMap, WorldConstants.TileWidth,
+                        WorldConstants.TileHeight, _tiles[i, j].TextureOffsetX, _tiles[i, j].TextureOffsetY);
         }
 
         internal void RenderTowers()
@@ -229,10 +240,11 @@ namespace YetAnotherEngine.GameObjects
 
         private bool CheckIfTowerCanBePlaced()
         {
-            var x = (int) MouseHelper.Instance.tilePosition.X;
-            var y = (int) MouseHelper.Instance.tilePosition.Y;
-            Game._fpsText.WriteCoords("i: " + x + " j:" + y + " x:" + MouseHelper.Instance.tileCoords.X + " y:" +
-                                      MouseHelper.Instance.tileCoords.Y);
+            var x = (int)MouseHelper.Instance.tilePosition.X;
+            var y = (int)MouseHelper.Instance.tilePosition.Y;
+            Game._fpsText.WriteCoords("Position: [" + x + ":" + y + "] Location: [" + MouseHelper.Instance.tileCoords.X + ":" +
+                                      MouseHelper.Instance.tileCoords.Y + "] Mouse: [" + _mouseDevice.X + ":" +
+                                      _mouseDevice.Y + "]");
 
             if (_towersList.ContainsKey(x * 100 + y))
                 return false;
@@ -241,6 +253,57 @@ namespace YetAnotherEngine.GameObjects
             if (y < 0 || y >= WorldWidth) return false;
 
             return _tiles[x, y].Type == TileType.Tower;
+        }
+
+        private List<Vector2> CalculatePath()
+        {
+            var path = new List<Vector2>();
+            var lastRoadPosition = new Vector2(-1, -1);
+            Direction direction;
+            Direction lastDirection = Direction.Down;
+            foreach (var roadPostion in _roadList)
+            {
+                if (lastRoadPosition.X != -1)
+                {
+                    if (path.Count > 1)
+                    {
+                        direction = GetDirection(lastRoadPosition, roadPostion);
+
+                        if (lastDirection != direction)
+                        {
+                            path.Add(lastRoadPosition);
+                        }
+                    }
+                    else
+                    {
+                        lastDirection = GetDirection(lastRoadPosition, roadPostion);
+                    }
+                }
+                else path.Add(roadPostion);
+                lastRoadPosition = roadPostion;
+            }
+            path.Add(_roadList.Last());
+            return path;
+        }
+
+        private Direction GetDirection(Vector2 lastPosition, Vector2 currentPosition)
+        {
+            if (lastPosition.X - currentPosition.X == -1f)
+            {
+                return Direction.Down;
+            }
+
+            if (lastPosition.X - currentPosition.X == 1)
+            {
+                return Direction.Up;
+            }
+
+            if (lastPosition.Y - currentPosition.Y == -1)
+            {
+                return Direction.Right;
+            }
+
+            return Direction.Left;
         }
     }
 }
