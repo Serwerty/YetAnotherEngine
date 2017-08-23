@@ -150,6 +150,7 @@ namespace YetAnotherEngine
                     _gameWorld.RenderTowers();
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
+                    _gameWorld.RenderUnits();
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();
@@ -170,6 +171,18 @@ namespace YetAnotherEngine
 
             SwapBuffers();
             //TimeManager.SetFrameInterval();
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            _camera.IsLocked = true;
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            _camera.IsLocked = false;
         }
     }
 }
