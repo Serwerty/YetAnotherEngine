@@ -105,7 +105,7 @@ namespace YetAnotherEngine
             if (Keyboard[Key.T])
                 _gameWorld.AddTower();
         }
-
+        
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
@@ -115,6 +115,8 @@ namespace YetAnotherEngine
             _gameWorld.MoveUnits(_gameClockMultiplyer);
 
             MouseHelper.Instance.Calculate(_camera.GetPosition());
+            _gameWorld.SpawnWaves();
+            _gameWorld.DeleteDespawnedUnits();
             //_player.Move(_gameWorld.GetWorldObjects());
         }
 
@@ -170,7 +172,6 @@ namespace YetAnotherEngine
 
 
             SwapBuffers();
-            //TimeManager.SetFrameInterval();
         }
 
         protected override void OnMouseLeave(EventArgs e)

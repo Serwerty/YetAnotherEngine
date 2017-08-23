@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using YetAnotherEngine.Utils;
 
 namespace YetAnotherEngine.GameObjects.Units
 {
@@ -15,37 +9,37 @@ namespace YetAnotherEngine.GameObjects.Units
         public const int UnitWidth = 64;
         public const int UnitHeight = 64;
 
-        private const int speed = 3;
+        private const int speed = 2;
 
         public BasicUnit(Vector2 location, int textureId) : base(location, textureId)
         {
         }
 
-        public override void Draw(Color color)
+        public override void Draw()
         {
             GL.BindTexture(TextureTarget.Texture2D, TextureId);
 
             GL.Begin(PrimitiveType.Quads);
-            GL.Color4(color);
+            GL.Color4(Color.White);
 
             GL.TexCoord2(0, 0);
-            GL.Vertex2(Location);
+            GL.Vertex2(Location.X+16,Location.Y - 8);
             GL.TexCoord2(1, 0);
-            GL.Vertex2(Location.X + UnitWidth / 2f, Location.Y);
+            GL.Vertex2(Location.X + UnitWidth / 2f + 16, Location.Y - 8);
             GL.TexCoord2(1, 1);
-            GL.Vertex2(Location.X + UnitWidth / 2f, Location.Y + UnitHeight / 2f);
+            GL.Vertex2(Location.X + UnitWidth / 2f + 16, Location.Y + UnitHeight / 2f - 8);
             GL.TexCoord2(0, 1);
-            GL.Vertex2(Location.X, Location.Y + UnitHeight / 2f);
+            GL.Vertex2(Location.X + 16, Location.Y + UnitHeight / 2f - 8);
 
             GL.End();
         }
 
-        public override void Move(Vector2 targetLocation, double speedMultiplier)
+        public override void Move(double speedMultiplier)
         {
-            Vector2 path = Location + targetLocation;
+            Vector2 path = CurrentTargetLocation - Location;
             if (path.Length < speed * speedMultiplier)
             {
-                Location = targetLocation;
+                Location = CurrentTargetLocation;
             }
             else
             {

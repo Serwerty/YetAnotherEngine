@@ -11,7 +11,7 @@ namespace YetAnotherEngine.GameObjects
         private readonly MouseDevice _mouseDevice;
         private readonly GameWindow _gameWindow;
 
-        private bool IsLocked { get; set; } = false;
+        public bool IsLocked { get; set; } = false;
 
         public Camera(KeyboardDevice keyboardDevice, MouseDevice mouseDevice, GameWindow gameWindow)
         {

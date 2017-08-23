@@ -1,5 +1,4 @@
 ﻿using OpenTK;
-using OpenTK.Input;
 using YetAnotherEngine.Constants;
 
 namespace YetAnotherEngine.Utils

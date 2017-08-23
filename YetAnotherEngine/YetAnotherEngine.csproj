@@ -47,6 +47,7 @@
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\TileType.cs" />
+    <Compile Include="Enums\UnitType.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Tile.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="GameObjects\Towers\TowerBase.cs" />
     <Compile Include="GameObjects\Units\BasicUnit.cs" />
     <Compile Include="GameObjects\Units\UnitBase.cs" />
+    <Compile Include="GameObjects\Wave.cs" />
     <Compile Include="OldCode\AnimationOfPlayer.cs" />
     <Compile Include="OldCode\Brush.cs" />
     <Compile Include="Constants\KeyboardConstants.cs" />
@@ -181,6 +183,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Textures\Selection.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\Knowitall_Front_Point.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
