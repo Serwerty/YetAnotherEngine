@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System;
+using OpenTK;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
 
@@ -13,14 +14,20 @@ namespace YetAnotherEngine.GameObjects
 
         public bool IsLocked { get; set; } = false;
 
+        private const int WorldHeightInPixels = WorldConstants.WorldHeight * WorldConstants.TileHeight / 4 +
+                                        WorldConstants.WorldWidth * WorldConstants.TileHeight / 4;
+
+        private const int WorldWidthInPixels = WorldConstants.WorldHeight * WorldConstants.TileWidth / 2 +
+                                       WorldConstants.WorldWidth * WorldConstants.TileWidth / 2;
+
         public Camera(KeyboardDevice keyboardDevice, MouseDevice mouseDevice, GameWindow gameWindow)
         {
             _keyboardDevice = keyboardDevice;
             _mouseDevice = mouseDevice;
             _gameWindow = gameWindow;
-            ;
-            _position = new Vector2(WorldConstants.WorldWidth * WorldConstants.TileWidth / 2f,
-                -WorldConstants.WorldHeight * WorldConstants.TileHeight / 4f);
+          
+            _position = new Vector2(WorldWidthInPixels/2 + WorldConstants.TileWidth/2,
+                -WorldHeightInPixels/2);
         }
 
         public void Move(double multiplier)
@@ -34,18 +41,27 @@ namespace YetAnotherEngine.GameObjects
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {
-                    MoveUp(multiplier);
+                    if (WorldHeightInPixels > _gameWindow.Height &&
+                        _position.Y < -WorldHeightInPixels/2 + (WorldHeightInPixels / 2 - _gameWindow.Height/2))
+                        MoveUp(multiplier);
                 }
                 else if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
                 {
-                    MoveDown(multiplier);
+                    if (WorldHeightInPixels > _gameWindow.Height &&
+                        _position.Y > -(WorldHeightInPixels / 2 +
+                                        (WorldHeightInPixels / 2 - _gameWindow.Height / 2)) - WorldConstants.TileHeight/2) 
+                        MoveDown(multiplier); 
                 }
                 else if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
                 {
-                    MoveRight(multiplier);
+                    if (WorldWidthInPixels > _gameWindow.Width &&
+                        _position.X < WorldWidthInPixels / 2 + (WorldWidthInPixels / 2 - _gameWindow.Width / 2) + WorldConstants.TileWidth/2)
+                        MoveRight(multiplier);
                 }
                 else if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
                 {
+                    if (WorldWidthInPixels > _gameWindow.Width &&
+                         _position.X > WorldWidthInPixels / 2 - (WorldWidthInPixels / 2 - _gameWindow.Width / 2) + WorldConstants.TileWidth / 2)
                     MoveLeft(multiplier);
                 }
             }
