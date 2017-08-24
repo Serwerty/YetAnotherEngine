@@ -103,7 +103,9 @@ namespace YetAnotherEngine
         {
             base.OnMouseUp(e);
             if (Keyboard[Key.T])
+            {
                 _gameWorld.AddTower();
+            }
         }
         
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -117,7 +119,6 @@ namespace YetAnotherEngine
             MouseHelper.Instance.Calculate(_camera.GetPosition());
             _gameWorld.SpawnWaves();
             _gameWorld.DeleteDespawnedUnits();
-            //_player.Move(_gameWorld.GetWorldObjects());
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -125,8 +126,6 @@ namespace YetAnotherEngine
             base.OnRenderFrame(e);
             GL.ClearColor(Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-
 
             var modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
             GL.MatrixMode(MatrixMode.Modelview);
@@ -140,7 +139,6 @@ namespace YetAnotherEngine
                     _gameMenu.RenderMenu();
                     break; 
                 case GameState.InGame:
-
                     var projection = Matrix4.CreateOrthographic(-NominalWidth, -NominalHeight, -1, 1);
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
@@ -159,17 +157,7 @@ namespace YetAnotherEngine
                     break;
             }
 
-            GL.Color4(Color.White);
-            var curFps = (float)(1.0 / e.Time);
-            if (_avgCnt <= 10.0F)
-                _avgFps = curFps;
-            else
-            {
-                _avgFps += (curFps - _avgFps) / _avgCnt;
-            }
-            _avgCnt++;
-            _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
-
+            DisplayFps(e.Time);
 
             SwapBuffers();
         }
@@ -184,6 +172,22 @@ namespace YetAnotherEngine
         {
             base.OnMouseEnter(e);
             _camera.IsLocked = false;
+        }
+
+        private void DisplayFps(double eventTime)
+        {
+            GL.Color4(Color.White);
+            var curFps = (float)(1.0 / eventTime);
+            if (_avgCnt <= 10.0F)
+            {
+                _avgFps = curFps;
+            }
+            else
+            {
+                _avgFps += (curFps - _avgFps) / _avgCnt;
+            }
+            _avgCnt++;
+            _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
         }
     }
 }

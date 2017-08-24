@@ -19,12 +19,12 @@ namespace YetAnotherEngine.Utils
         public static int CreateTextureFromBitmap(Bitmap bitmap)
         {
             var data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            var tex = GenerateTexture();
-            GL.BindTexture(TextureTarget.Texture2D, tex);
+            var texture = GenerateTexture();
+            GL.BindTexture(TextureTarget.Texture2D, texture);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, data.Width, data.Height, 0,
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             bitmap.UnlockBits(data);
-            return tex;
+            return texture;
         }
 
         public static int CreateTextureFromFile(string path)
@@ -32,19 +32,18 @@ namespace YetAnotherEngine.Utils
             return CreateTextureFromBitmap(new Bitmap(Image.FromFile(path)));
         }
 
-
         private static int CreateTexture(int width, int height, bool alpha, byte[] bytes)
         {
-            var tex = GenerateTexture();
+            var texture = GenerateTexture();
             Upload(width, height, alpha, bytes);
-            return tex;
+            return texture;
         }
 
         private static int GenerateTexture()
         {
-            var tex = GL.GenTexture();
-            GL.BindTexture(TextureTarget.Texture2D, tex);
-            return tex;
+            var texture = GL.GenTexture();
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+            return texture;
         }
 
         internal static void SetParameters()

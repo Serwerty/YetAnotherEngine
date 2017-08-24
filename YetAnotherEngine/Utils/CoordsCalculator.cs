@@ -9,10 +9,8 @@ namespace YetAnotherEngine.Utils
         {
             //https://math.stackexchange.com/questions/312403/how-do-i-determine-if-a-point-is-within-a-rhombus
 
-            Vector2 tileCoords;
-
             var roughLocation = new Vector2(currentOffset.X + location.X - Game.NominalWidth / 2f,
-                                 -currentOffset.Y + location.Y  - Game.NominalHeight / 2f);
+                                            -currentOffset.Y + location.Y  - Game.NominalHeight / 2f);
 
             roughLocation.X -= roughLocation.X % WorldConstants.TileWidth;
             roughLocation.Y -= roughLocation.Y % (WorldConstants.TileHeight / 2f);
@@ -29,28 +27,40 @@ namespace YetAnotherEngine.Utils
             Vector2 V = (D - B) / (2 * b);         // unit vector in y-direction
 
             Vector2 P = new Vector2(currentOffset.X + location.X - Game.NominalWidth / 2f,
-                -currentOffset.Y + location.Y - Game.NominalHeight / 2f);
+                                    -currentOffset.Y + location.Y - Game.NominalHeight / 2f);
 
             Vector2 W = P - Q;
             float xabs = (W * U).Length;
             float yabs = (W * V).Length;
+            Vector2 tileCoords;
+
             if (xabs / a + yabs / b <= 1)
+            {
                 tileCoords = roughLocation;
+            }
             else
             {
                 if (W.X > 0)
                 {
                     if (W.Y > 0)
+                    {
                         tileCoords = roughLocation + new Vector2(WorldConstants.TileWidth / 2f, WorldConstants.TileHeight / 4f);
+                    }
                     else
+                    {
                         tileCoords = roughLocation + new Vector2(WorldConstants.TileWidth / 2f, -WorldConstants.TileHeight / 4f);
+                    }
                 }
                 else
                 {
                     if (W.Y > 0)
+                    {
                         tileCoords = roughLocation + new Vector2(-WorldConstants.TileWidth / 2f, WorldConstants.TileHeight / 4f);
+                    }
                     else
+                    {
                         tileCoords = roughLocation + new Vector2(-WorldConstants.TileWidth / 2f, -WorldConstants.TileHeight / 4f);
+                    }
                 }
             }
 
@@ -70,8 +80,8 @@ namespace YetAnotherEngine.Utils
 
         public static Vector2 CalculateLocationFromTilePosition(Vector2 position)
         {
-            return new Vector2((position.X) * WorldConstants.TileWidth / 2 + WorldConstants.WorldWidth * WorldConstants.TileWidth / 2 
-                - (position.Y) * WorldConstants.TileWidth / 2, (position.X) * WorldConstants.TileHeight / 4 + (position.Y) * WorldConstants.TileHeight / 4);
+            return new Vector2((position.X) * WorldConstants.TileWidth / 2 + WorldConstants.WorldWidth * WorldConstants.TileWidth / 2  - (position.Y) * WorldConstants.TileWidth / 2, 
+                               (position.X) * WorldConstants.TileHeight / 4 + (position.Y) * WorldConstants.TileHeight / 4);
         }
 
     }

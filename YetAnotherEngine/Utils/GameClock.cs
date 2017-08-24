@@ -1,19 +1,14 @@
-﻿using System;
-
-namespace YetAnotherEngine.Utils
+﻿namespace YetAnotherEngine.Utils
 {
     public static class GameClock
     {
-        private static int _lastTick = DateTime.Now.Millisecond;
+        private const double TargetFps = 60.0;
+        private const double MultiplierDivider = 1000 / TargetFps;
 
-        public static double GetMultiplier(double sec)
+        public static double GetMultiplier(double seconds)
         {
-            //var now = DateTime.Now.Millisecond;
-            var result = (sec * 1000) / (1000 / 60.0);
-            //_lastTick = now;
-
-            return result;
+            return seconds * 1000 / MultiplierDivider;
+            //todo: discuss the possibility to remove 1000
         }
-
     }
 }

@@ -38,7 +38,7 @@ namespace YetAnotherEngine.GameObjects
         private readonly KeyboardDevice _keyboardDevice;
 
         private readonly TowerBase _towerToBePlaced;
-        private readonly bool _isTowerShouldBeRendered;
+        private readonly bool _shouldTowerBeRendered;
 
         private List<Vector2> _roadList;
         private List<Vector2> _pathList;
@@ -49,7 +49,7 @@ namespace YetAnotherEngine.GameObjects
 
         public World(MouseDevice mouseDevice, KeyboardDevice keyboardDevice)
         {
-            _roadList =  new List<Vector2>();
+            _roadList = new List<Vector2>();
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
             LoadMapTextures();
@@ -58,8 +58,7 @@ namespace YetAnotherEngine.GameObjects
             _towerToBePlaced = new BasicTower(new Vector2(0, 0), _basicTowerTextureId);
             _pathList = CalculatePath();
             _wave = new Wave(UnitType.Basic, 5, 1);
-            // Units.Add(new BasicUnit(CoordsCalculator.CalculateLocationFromTilePosition(_pathList.First()), _basicUnitTextureId));
-            _isTowerShouldBeRendered = true;
+            _shouldTowerBeRendered = true;
         }
 
         private void LoadMapTextures()
@@ -87,10 +86,12 @@ namespace YetAnotherEngine.GameObjects
             _basicUnitTextureId = TextureLoader.GenerateTexture(basicUnitTexture, 64, 64, 0, 0);
 
             for (var i = 0; i < WorldHeight; i++)
-            for (var j = 0; j < WorldWidth; j++)
             {
-                var random = new Random(unchecked((int)DateTime.Now.Ticks));
-                _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
+                for (var j = 0; j < WorldWidth; j++)
+                {
+                    var random = new Random(unchecked((int)DateTime.Now.Ticks));
+                    _groundTexturesMap[i, j] = _groundTextures[random.Next(0, 5)];
+                }
             }
         }
 
@@ -99,8 +100,12 @@ namespace YetAnotherEngine.GameObjects
             var tilesTextureMap = new Bitmap(GroundTileFilePath);
 
             for (var i = 0; i < WorldHeight; i++)
-            for (var j = 0; j < WorldWidth; j++)
-                _tiles[i, j] = new Tile();
+            {
+                for (var j = 0; j < WorldWidth; j++)
+                {
+                    _tiles[i, j] = new Tile();
+                }
+            }
 
             try
             {
@@ -135,24 +140,29 @@ namespace YetAnotherEngine.GameObjects
             }
 
             for (var i = 0; i < WorldHeight; i++)
-            for (var j = 0; j < WorldWidth; j++)
-                _tiles[i, j].TextureId = TextureLoader.GenerateTexture(tilesTextureMap, WorldConstants.TileWidth,
-                    WorldConstants.TileHeight, _tiles[i, j].TextureOffsetX, _tiles[i, j].TextureOffsetY);
+            {
+                for (var j = 0; j < WorldWidth; j++)
+                {
+                    _tiles[i, j].TextureId = TextureLoader.GenerateTexture(tilesTextureMap, WorldConstants.TileWidth,
+                                                                           WorldConstants.TileHeight, _tiles[i, j].TextureOffsetX,
+                                                                           _tiles[i, j].TextureOffsetY);
+                }
+            }
         }
 
-        private bool CheckIfTowerCanBePlaced()
+        private bool IsTowerPlaceable()
         {
-            var x = (int)MouseHelper.Instance.tilePosition.X;
-            var y = (int)MouseHelper.Instance.tilePosition.Y;
-            Game._fpsText.WriteCoords("Position: [" + x + ":" + y + "] Location: [" + MouseHelper.Instance.tileCoords.X + ":" +
-                                      MouseHelper.Instance.tileCoords.Y + "] Mouse: [" + _mouseDevice.X + ":" +
-                                      _mouseDevice.Y + "]");
+            var x = (int)MouseHelper.Instance.TilePosition.X;
+            var y = (int)MouseHelper.Instance.TilePosition.Y;
+            Game._fpsText.WriteCoords($"Position: [{x}:{y}] " +
+                                      $"Location: [{MouseHelper.Instance.TileCoords.X}:{MouseHelper.Instance.TileCoords.Y}] " +
+                                      $"Mouse: [{_mouseDevice.X}:{_mouseDevice.Y}]");
 
-            if (_towersList.ContainsKey(x * 100 + y))
+            if (_towersList.ContainsKey(x * 100 + y) || x < 0 ||
+                x >= WorldHeight || y < 0 || y >= WorldWidth)
+            {
                 return false;
-
-            if (x < 0 || x >= WorldHeight) return false;
-            if (y < 0 || y >= WorldWidth) return false;
+            }
 
             return _tiles[x, y].Type == TileType.Tower;
         }
@@ -233,16 +243,16 @@ namespace YetAnotherEngine.GameObjects
 
         public void AddTower()
         {
-            if (CheckIfTowerCanBePlaced() && _isTowerShouldBeRendered)
+            if (IsTowerPlaceable() && _shouldTowerBeRendered)
             {
-                var location = MouseHelper.Instance.tileCoords -
-                               new Vector2(BasicTower.TowerCenterX - WorldConstants.TileWidth / 2,
-                                   BasicTower.TowerCenterY - WorldConstants.TileHeight / 4);
+                var tileOffset = new Vector2(BasicTower.TowerCenterX - WorldConstants.TileWidth / 2,
+                                             BasicTower.TowerCenterY - WorldConstants.TileHeight / 4);
 
+                var location = MouseHelper.Instance.TileCoords - tileOffset;
+                
                 TowerBase tower = new BasicTower(location, _basicTowerTextureId);
 
-                _towersList.Add(
-                    (int)MouseHelper.Instance.tilePosition.X * 100 + (int)MouseHelper.Instance.tilePosition.Y, tower);
+                _towersList.Add((int)MouseHelper.Instance.TilePosition.X * 100 + (int)MouseHelper.Instance.TilePosition.Y, tower);
             }
         }
 
@@ -265,17 +275,7 @@ namespace YetAnotherEngine.GameObjects
 
         public void DeleteDespawnedUnits()
         {
-            List<UnitBase> unitsToBeDeleted = new List<UnitBase>();
-
-            foreach (var unit in Units)
-            {
-                if (unit.IsDespawned) unitsToBeDeleted.Add(unit);
-            }
-
-            foreach (var unit in unitsToBeDeleted)
-            {
-                Units.Remove(unit);
-            }
+            Units.RemoveAll(u => u.IsDespawned);
         }
 
         internal void RenderGround()
@@ -309,59 +309,63 @@ namespace YetAnotherEngine.GameObjects
                 }
             }
         }
-        
+
         internal void RenderTowers()
         {
             foreach (var tower in _towersList)
+            {
                 tower.Value.Draw(Color.White);
+            }
         }
 
         internal void RenderTowerToBePlaced(Vector2 currentOffset)
         {
-            if (!_isTowerShouldBeRendered) return;
+            if (!_shouldTowerBeRendered || !_keyboardDevice[Key.T])
+            {
+                return;
+            }
 
-            if (!_keyboardDevice[Key.T]) return;
+            _towerToBePlaced.Location = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth / 2f - BasicTower.TowerCenterX,
+                                                    -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight / 2f - BasicTower.TowerCenterY);
 
-            _towerToBePlaced.Location =
-                new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth / 2f - BasicTower.TowerCenterX,
-                    -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight / 2f - BasicTower.TowerCenterY);
+            var towerColor = IsTowerPlaceable() ? WorldConstants.GreenColor : WorldConstants.RedColor;
 
-            _towerToBePlaced.Draw(CheckIfTowerCanBePlaced()
-                ? WorldConstants.GreenColor
-                : WorldConstants.RedColor);
+            _towerToBePlaced.Draw(towerColor);
         }
 
         internal void RenderUnits()
         {
             foreach (var unit in Units)
             {
-                if (!unit.IsDespawned) unit.Draw();
+                if (!unit.IsDespawned)
+                {
+                    unit.Draw();
+                }
             }
         }
 
         internal void RenderSelection()
         {
-            if (_isTowerShouldBeRendered)
-                if (_keyboardDevice[Key.T])
-                {
-                    var location = MouseHelper.Instance.tileCoords;
+            if (_shouldTowerBeRendered && _keyboardDevice[Key.T])
+            {
+                var location = MouseHelper.Instance.TileCoords;
 
-                    GL.BindTexture(TextureTarget.Texture2D, _selectionTextureId);
+                GL.BindTexture(TextureTarget.Texture2D, _selectionTextureId);
 
-                    GL.Begin(PrimitiveType.Quads);
-                    GL.Color4(Color.White);
+                GL.Begin(PrimitiveType.Quads);
+                GL.Color4(Color.White);
 
-                    GL.TexCoord2(0, 0);
-                    GL.Vertex2(location);
-                    GL.TexCoord2(1, 0);
-                    GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y);
-                    GL.TexCoord2(1, 1);
-                    GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y + WorldConstants.TileHeight);
-                    GL.TexCoord2(0, 1);
-                    GL.Vertex2(location.X, location.Y + WorldConstants.TileHeight);
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(location);
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y);
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(location.X + WorldConstants.TileWidth, location.Y + WorldConstants.TileHeight);
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(location.X, location.Y + WorldConstants.TileHeight);
 
-                    GL.End();
-                }
+                GL.End();
+            }
         }
     }
 }

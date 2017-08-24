@@ -4,31 +4,31 @@ namespace YetAnotherEngine.GameObjects
 {
     class Wave
     {
-        public int Count { get; set; }
-        public int Decrement { get; set; }
+        public int UnitsCount { get; set; }
+        public int UnitIntervalDecrement { get; set; }
         public UnitType Type { get; set; }
 
         private int _timer;
-        private const int DefaultDelay = 45;
+        private const int DefaultDelayInMS = 45;
 
-        public Wave(UnitType type, int count, int decrement)
+        public Wave(UnitType type, int unitsCount, int unitIntervalDecrement)
         {
             Type = type;
-            Count = count;
-            Decrement = decrement;
+            UnitsCount = unitsCount;
+            UnitIntervalDecrement = unitIntervalDecrement;
             _timer = 0;
         }
 
         public bool SpawnWave()
         {
-            if (_timer <= 0 && Count > 0)
+            if (_timer <= 0 && UnitsCount > 0)
             {
-                _timer = DefaultDelay;
-                Count--;
+                _timer = DefaultDelayInMS;
+                UnitsCount--;
                 return true;
             }
 
-            _timer -= Decrement;
+            _timer -= UnitIntervalDecrement;
 
             return false;
         }
