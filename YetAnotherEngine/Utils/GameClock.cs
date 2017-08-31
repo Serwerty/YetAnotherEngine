@@ -7,7 +7,8 @@
 
         public static double GetMultiplier(double seconds)
         {
-            return seconds * 1000 / MultiplierDivider;
+            const int millisecondsInSecond = 1000;
+            return seconds * millisecondsInSecond / MultiplierDivider;
             //todo: discuss the possibility to remove 1000
         }
     }

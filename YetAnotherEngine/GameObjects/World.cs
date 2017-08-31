@@ -20,11 +20,6 @@ namespace YetAnotherEngine.GameObjects
         private const int WorldWidth = WorldConstants.WorldWidth;
         private const int WorldHeight = WorldConstants.WorldHeight;
 
-        private const string GroundTileFilePath = "Textures/Tiles/terrain_tile.png";
-        private const string TowersTileFilePath = "Textures/Tiles/towers.png";
-        private const string SelectionTileFilePath = "Textures/Selection.png";
-        private const string UnitTileFilePath = "Textures/Knowitall_Front_point.png";
-
         private readonly int[] _groundTextures = new int[64]; // for now it wil be one(random) of 5
         private readonly int[,] _groundTexturesMap = new int[WorldHeight, WorldWidth];
         private readonly ConstructionTile[,] _tiles = new ConstructionTile[WorldHeight, WorldWidth];
