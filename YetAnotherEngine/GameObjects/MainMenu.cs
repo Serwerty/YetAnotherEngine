@@ -4,12 +4,13 @@ using YetAnotherEngine.Utils;
 
 namespace YetAnotherEngine.GameObjects
 {
+    //TODO: implement, refactor, shit
     public class MainMenu
     {
         private const string MenuBackGroundPath = "Textures/Backgrounds/menu-background.jpg";
         private int _backgorundTexture;
 
-        private readonly TextLine _textLine = new TextLine("big-outline.png");
+        private TextLine _textLine = new TextLine("big-outline.png");
 
         private const string MenuLine1 = "Game";
         private const string MenuLine2 = "Options";

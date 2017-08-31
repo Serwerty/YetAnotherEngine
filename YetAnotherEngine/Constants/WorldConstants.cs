@@ -16,7 +16,7 @@ namespace YetAnotherEngine.Constants
         public static Color GreenColor = Color.FromArgb(178, 0,245,0);
 
         public const float ZoomSpeed = 0.05f;
-        public const float ZoomInLimitation = 0f;
-        public const float ZoomOutLimitation = 1f;
+        public const float ZoomInLimitation = 0.5f;
+        public const float ZoomOutLimitation = 2f;
     }
 }

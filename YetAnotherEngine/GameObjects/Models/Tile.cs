@@ -2,7 +2,7 @@
 
 namespace YetAnotherEngine.GameObjects
 {
-    public class Tile
+    public class ConstructionTile
     {
         public int TextureId { get; set; }
         public int TextureOffsetX { get; set; } = 64;

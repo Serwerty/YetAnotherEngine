@@ -8,46 +8,41 @@ using YetAnotherEngine.GameObjects;
 using YetAnotherEngine.Utils;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine
 {
-    class Game : GameWindow
+    public class Game : GameWindow
     {
-        //Default windows size
         public const int NominalWidth = 1024;
         public const int NominalHeight = 780;
+        private const string WindowHeader = "Tower Defence";
 
-        //for resize purpose
+        //for resizing purpose
         private float _projectionWidth;
         private float _projectionHeight;
 
-        //Window header
-        private const string WindowsHeader = "Tower Defence";
-
-        private float _avgFps;
-        private float _avgCnt;
         private Camera _camera;
+        private World _gameWorld;
+        private MainMenu _gameMenu;
 
-        private static World _gameWorld;
-        private static MainMenu _gameMenu;
-
+        //TODO: refactor
         public static double zScale = 1;
-        private double _gameClockMultiplyer = 1;
 
-        public static TextLine _fpsText;
+        private double _gameClockMultiplier = 1;
 
         private GameState _gameState = GameState.InGame;
 
-        public Game() : base(NominalWidth, NominalHeight, new GraphicsMode(32, 16, 8, 16), WindowsHeader)
+        public Game() : base(NominalWidth, NominalHeight, new GraphicsMode(32, 16, 8, 16), WindowHeader)
         {
-            //turning vertical sync on
             VSync = VSyncMode.On;
 
             WindowBorder = WindowBorder.Fixed;
 
             _gameWorld = new World(Mouse, Keyboard);
+            _camera = new Camera(Keyboard, Mouse, Width, Height);
             _gameMenu = new MainMenu();
-            _fpsText = new TextLine("big-outline.png");
+            MouseHelper.Instance.Init(Mouse, _camera);
         }
 
         protected override void OnLoad(EventArgs E)
@@ -65,9 +60,6 @@ namespace YetAnotherEngine
             GL.Enable(EnableCap.PointSmooth);
             GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
             GL.Hint(HintTarget.LineSmoothHint, HintMode.Nicest);
-
-            _camera = new Camera(Keyboard, Mouse, this);
-            MouseHelper.Instance.Init(Mouse);
         }
 
         protected override void OnMouseWheel(MouseWheelEventArgs e)
@@ -76,18 +68,20 @@ namespace YetAnotherEngine
 
             if (e.Delta > 0 && zScale > WorldConstants.ZoomInLimitation) // Zoom in
             {
-                zScale -= WorldConstants.ZoomSpeed * _gameClockMultiplyer;
+                zScale -= WorldConstants.ZoomSpeed * _gameClockMultiplier;
             }
             else if (e.Delta < 0 && zScale < WorldConstants.ZoomOutLimitation) // Zoom out
             {
-                zScale += WorldConstants.ZoomSpeed * _gameClockMultiplyer;
+                zScale += WorldConstants.ZoomSpeed * _gameClockMultiplier;
             }
-
         }
 
         protected override void OnResize(EventArgs E)
         {
             base.OnResize(E);
+
+            _camera.WindowHeight = Height;
+            _camera.WindowWidth = Width;
 
             GL.Viewport(0, 0, (int)_projectionWidth, (int)_projectionHeight);
             _projectionWidth = NominalWidth;
@@ -111,14 +105,16 @@ namespace YetAnotherEngine
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            _gameClockMultiplyer = GameClock.GetMultiplier(e.Time);
-            _camera.Move(_gameClockMultiplyer);
 
-            _gameWorld.MoveUnits(_gameClockMultiplyer);
+            _gameClockMultiplier = GameClock.GetMultiplier(e.Time);
 
-            MouseHelper.Instance.Calculate(_camera.GetPosition());
+            _camera.Move(_gameClockMultiplier);
+
+            _gameWorld.MoveUnits(_gameClockMultiplier);
             _gameWorld.SpawnWaves();
             _gameWorld.DeleteDespawnedUnits();
+
+            MouseHelper.Instance.Calculate();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -131,6 +127,7 @@ namespace YetAnotherEngine
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref modelview);
             GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
+            GL.Scale(zScale, zScale, 1);
 
             switch (_gameState)
             {
@@ -143,21 +140,20 @@ namespace YetAnotherEngine
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
-
-                    GL.Ortho(-zScale, 1, -zScale, 1, -1, 1);
-
+                    #region Working with zooming
+                    //GL.Ortho(-zScale, 1, -zScale, 1, -1, 1);
+                    #endregion
                     _gameWorld.RenderGround();
                     _gameWorld.RenderTowers();
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
                     _gameWorld.RenderUnits();
+                    FpsHelper.Instance.DrawFpsText(e.Time);
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();
                     break;
             }
-
-            DisplayFps(e.Time);
 
             SwapBuffers();
         }
@@ -172,22 +168,6 @@ namespace YetAnotherEngine
         {
             base.OnMouseEnter(e);
             _camera.IsLocked = false;
-        }
-
-        private void DisplayFps(double eventTime)
-        {
-            GL.Color4(Color.White);
-            var curFps = (float)(1.0 / eventTime);
-            if (_avgCnt <= 10.0F)
-            {
-                _avgFps = curFps;
-            }
-            else
-            {
-                _avgFps += (curFps - _avgFps) / _avgCnt;
-            }
-            _avgCnt++;
-            _fpsText.WriteFps("FPS average: " + $"{_avgFps:0}" + " FPS current: " + $"{curFps:0}");
         }
     }
 }

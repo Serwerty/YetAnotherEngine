@@ -27,7 +27,7 @@ namespace YetAnotherEngine.GameObjects
 
         private readonly int[] _groundTextures = new int[64]; // for now it wil be one(random) of 5
         private readonly int[,] _groundTexturesMap = new int[WorldHeight, WorldWidth];
-        private readonly Tile[,] _tiles = new Tile[WorldHeight, WorldWidth];
+        private readonly ConstructionTile[,] _tiles = new ConstructionTile[WorldHeight, WorldWidth];
 
         private int _basicTowerTextureId;
         private int _selectionTextureId;
@@ -103,7 +103,7 @@ namespace YetAnotherEngine.GameObjects
             {
                 for (var j = 0; j < WorldWidth; j++)
                 {
-                    _tiles[i, j] = new Tile();
+                    _tiles[i, j] = new ConstructionTile();
                 }
             }
 
@@ -152,11 +152,11 @@ namespace YetAnotherEngine.GameObjects
 
         private bool IsTowerPlaceable()
         {
-            var x = (int)MouseHelper.Instance.TilePosition.X;
-            var y = (int)MouseHelper.Instance.TilePosition.Y;
-            Game._fpsText.WriteCoords($"Position: [{x}:{y}] " +
-                                      $"Location: [{MouseHelper.Instance.TileCoords.X}:{MouseHelper.Instance.TileCoords.Y}] " +
-                                      $"Mouse: [{_mouseDevice.X}:{_mouseDevice.Y}]");
+            var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
+            var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
+            //Game._fpsText.WriteCoords($"Position: [{x}:{y}] " +
+            //                          $"Location: [{MouseHelper.Instance.TilePositionObject.TileCoords.X}:{MouseHelper.Instance.TilePositionObject.TileCoords.Y}] " +
+            //                          $"Mouse: [{_mouseDevice.X}:{_mouseDevice.Y}]");
 
             if (_towersList.ContainsKey(x * 100 + y) || x < 0 ||
                 x >= WorldHeight || y < 0 || y >= WorldWidth)
@@ -248,11 +248,11 @@ namespace YetAnotherEngine.GameObjects
                 var tileOffset = new Vector2(BasicTower.TowerCenterX - WorldConstants.TileWidth / 2,
                                              BasicTower.TowerCenterY - WorldConstants.TileHeight / 4);
 
-                var location = MouseHelper.Instance.TileCoords - tileOffset;
+                var location = MouseHelper.Instance.TilePositionObject.TileCoords - tileOffset;
                 
                 TowerBase tower = new BasicTower(location, _basicTowerTextureId);
 
-                _towersList.Add((int)MouseHelper.Instance.TilePosition.X * 100 + (int)MouseHelper.Instance.TilePosition.Y, tower);
+                _towersList.Add((int)MouseHelper.Instance.TilePositionObject.TilePosition.X * 100 + (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y, tower);
             }
         }
 
@@ -348,7 +348,7 @@ namespace YetAnotherEngine.GameObjects
         {
             if (_shouldTowerBeRendered && _keyboardDevice[Key.T])
             {
-                var location = MouseHelper.Instance.TileCoords;
+                var location = MouseHelper.Instance.TilePositionObject.TileCoords;
 
                 GL.BindTexture(TextureTarget.Texture2D, _selectionTextureId);
 

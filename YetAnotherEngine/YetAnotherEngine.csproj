@@ -50,7 +50,7 @@
     <Compile Include="Enums\UnitType.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
-    <Compile Include="GameObjects\Tile.cs" />
+    <Compile Include="GameObjects\Models\Tile.cs" />
     <Compile Include="GameObjects\Towers\BasicTower.cs" />
     <Compile Include="GameObjects\Towers\TowerBase.cs" />
     <Compile Include="GameObjects\Units\BasicUnit.cs" />
@@ -71,7 +71,9 @@
     <Compile Include="OpenGL\TextureFont.cs" />
     <Compile Include="Utils\CoordsCalculator.cs" />
     <Compile Include="Utils\GameClock.cs" />
-    <Compile Include="Utils\MouseHelper.cs" />
+    <Compile Include="Utils\Helpers\FpsHelper.cs" />
+    <Compile Include="Utils\Models\TilePositionObject.cs" />
+    <Compile Include="Utils\Helpers\MouseHelper.cs" />
     <Compile Include="Utils\TextureLoader.cs" />
     <Compile Include="OldCode\World.cs" />
     <Compile Include="Utils\TextUtil.cs" />
@@ -191,6 +193,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
