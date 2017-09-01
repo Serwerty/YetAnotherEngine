@@ -4,14 +4,14 @@ using OpenTK.Graphics.OpenGL;
 
 namespace YetAnotherEngine.GameObjects.Units
 {
-    class BasicUnit : UnitBase
+    class SimpleUnit : UnitBase
     {
         public const int UnitWidth = 64;
         public const int UnitHeight = 64;
 
-        private const int speed = 2;
+        private const int Speed = 2;
 
-        public BasicUnit(Vector2 location, int textureId) : base(location, textureId)
+        public SimpleUnit(Vector2 location, int textureId) : base(location, textureId)
         {
         }
 
@@ -36,14 +36,14 @@ namespace YetAnotherEngine.GameObjects.Units
 
         public override void Move(double speedMultiplier)
         {
-            Vector2 path = CurrentTargetLocation - Location;
-            if (path.Length < speed * speedMultiplier)
+            var path = CurrentTargetLocation - Location;
+            if (path.Length < Speed * speedMultiplier)
             {
                 Location = CurrentTargetLocation;
             }
             else
             {
-                Vector2 endPoint = Vector2.Multiply(path.Normalized(), speed * (float)speedMultiplier);
+                var endPoint = Vector2.Multiply(path.Normalized(), Speed * (float)speedMultiplier);
                 Location.X += endPoint.X;
                 Location.Y += endPoint.Y;
             }

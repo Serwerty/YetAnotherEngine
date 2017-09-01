@@ -8,6 +8,7 @@ using YetAnotherEngine.GameObjects;
 using YetAnotherEngine.Utils;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.GameObjects.World;
 using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine
@@ -22,9 +23,9 @@ namespace YetAnotherEngine
         private float _projectionWidth;
         private float _projectionHeight;
 
-        private Camera _camera;
-        private World _gameWorld;
-        private MainMenu _gameMenu;
+        private readonly Camera _camera;
+        private readonly GameWorld _gameWorld;
+        private readonly MainMenu _gameMenu;
 
         //TODO: refactor
         public static double zScale = 1;
@@ -39,7 +40,7 @@ namespace YetAnotherEngine
 
             WindowBorder = WindowBorder.Fixed;
 
-            _gameWorld = new World(Mouse, Keyboard);
+            _gameWorld = new GameWorld(Mouse, Keyboard);
             _camera = new Camera(Keyboard, Mouse, Width, Height);
             _gameMenu = new MainMenu();
             MouseHelper.Instance.Init(Mouse, _camera);
@@ -112,7 +113,6 @@ namespace YetAnotherEngine
 
             _gameWorld.MoveUnits(_gameClockMultiplier);
             _gameWorld.SpawnWaves();
-            _gameWorld.DeleteDespawnedUnits();
 
             MouseHelper.Instance.Calculate();
         }

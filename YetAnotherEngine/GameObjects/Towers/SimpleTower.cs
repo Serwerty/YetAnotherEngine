@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace YetAnotherEngine.GameObjects.Towers
 {
-    class BasicTower : TowerBase
+    public class SimpleTower : TowerBase
     {
 
         public const int TextureOffsetX = 14;
@@ -21,7 +21,7 @@ namespace YetAnotherEngine.GameObjects.Towers
         public const int TowerCenterX = 30;
         public const int TowerCenterY = 82;
 
-        public BasicTower(Vector2 location, int textureId) : base(location, textureId)
+        public SimpleTower(Vector2 location, int textureId) : base(location, textureId)
         {
         
         }

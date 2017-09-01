@@ -1,15 +1,19 @@
-﻿using YetAnotherEngine.Enums;
+﻿using System.Collections.Generic;
+using YetAnotherEngine.Enums;
+using YetAnotherEngine.GameObjects.Units;
 
-namespace YetAnotherEngine.GameObjects
+namespace YetAnotherEngine.GameObjects.Waves
 {
-    class Wave
+    public class Wave
     {
         public int UnitsCount { get; set; }
         public int UnitIntervalDecrement { get; set; }
         public UnitType Type { get; set; }
 
+        public List<UnitBase> Units = new List<UnitBase>();
+
         private int _timer;
-        private const int DefaultDelayInMS = 45;
+        private const int DefaultDelayInMs = 45;
 
         public Wave(UnitType type, int unitsCount, int unitIntervalDecrement)
         {
@@ -23,7 +27,7 @@ namespace YetAnotherEngine.GameObjects
         {
             if (_timer <= 0 && UnitsCount > 0)
             {
-                _timer = DefaultDelayInMS;
+                _timer = DefaultDelayInMs;
                 UnitsCount--;
                 return true;
             }

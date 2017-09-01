@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace YetAnotherEngine.GameObjects.Towers
 {
-    abstract class TowerBase
+    public abstract class TowerBase
     {
         public Vector2 Location { get; set; }
 
