@@ -22,10 +22,10 @@ namespace YetAnotherEngine.GameObjects.World
 
         public GameWorld(MouseDevice mouseDevice, KeyboardDevice keyboardDevice)
         {
-            _mapLoader = new MapLoader();
             _mapTextures = new MapTextures(); //TODO: should be map-related
-            _wavesManager = new WavesManager(); //TODO: should be map-related
-            _towersManager = new TowersManager(); //TODO: should be map-related
+            _mapLoader = new MapLoader(_mapTextures.GroundTextures);
+            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures); //TODO: should be map-related
+            _towersManager = new TowersManager(_mapTextures.TowerTextures); //TODO: should be map-related
 
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
@@ -33,7 +33,10 @@ namespace YetAnotherEngine.GameObjects.World
 
         public void AddTower()
         {
-            _towersManager.AddTower();
+            var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
+            var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
+
+            _towersManager.AddTower(x, y, _mapLoader.ConstructionTiles[x, y].Type);
         }
 
         public void MoveUnits(double speedMultiplier)
@@ -80,17 +83,19 @@ namespace YetAnotherEngine.GameObjects.World
 
         internal void RenderTowers()
         {
-            if (!_keyboardDevice[Key.T])
-            {
-                return;
-            }
-
             _towersManager.RenderTowers();
         }
 
         internal void RenderTowerToBePlaced(Vector2 currentOffset)
         {
-            _towersManager.RenderTowerToBePlaced(currentOffset);
+            if(_keyboardDevice[Key.T])
+            {
+                var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
+                var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
+
+                _towersManager.RenderTowerToBePlaced(currentOffset,
+                    new Vector2(_mouseDevice.X, _mouseDevice.Y), x, y, _mapLoader.ConstructionTiles[x, y].Type);
+            }
         }
 
         internal void RenderUnits()
@@ -100,7 +105,7 @@ namespace YetAnotherEngine.GameObjects.World
 
         internal void RenderSelection()
         {
-            if (_shouldTowerBeRendered && _keyboardDevice[Key.T])
+            if (_keyboardDevice[Key.T] /*&& _shouldTowerBeRendered*/)
             {
                 var location = MouseHelper.Instance.TilePositionObject.TileCoords;
 

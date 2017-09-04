@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using OpenTK;
+using System.Collections.Generic;
+using System.Linq;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.GameObjects.Units;
 using YetAnotherEngine.Utils;
@@ -10,9 +12,13 @@ namespace YetAnotherEngine.GameObjects.Waves
     {
         //TODO: when having many waves, this should be a list
         private readonly Wave _wave;
+        private readonly List<Vector2> _roadList;
+        private readonly int[] _unitTextures;
 
-        public WavesManager()
+        public WavesManager(List<Vector2> roadList, int[] unitTextures)
         {
+            _unitTextures = unitTextures;
+            _roadList = roadList;
             _wave = new Wave(UnitType.Basic, 150, 5);
         }
 
@@ -20,7 +26,7 @@ namespace YetAnotherEngine.GameObjects.Waves
         {
             if (_wave.SpawnWave())
             {
-                _wave.Units.Add(new SimpleUnit(CoordsCalculator.CalculateLocationFromTilePosition(_pathList.First()), _mapTextures.UnitsTextures[0]));
+                _wave.Units.Add(new SimpleUnit(CoordsCalculator.CalculateLocationFromTilePosition(_roadList.First()), _unitTextures[0]));
             }
         }
 
@@ -28,7 +34,7 @@ namespace YetAnotherEngine.GameObjects.Waves
         {
             foreach (var unit in _wave.Units)
             {
-                unit.CheckLocation();
+                unit.CheckLocation(_roadList);
                 if (!unit.IsDespawned)
                 {
                     unit.Move(speedMultiplier);

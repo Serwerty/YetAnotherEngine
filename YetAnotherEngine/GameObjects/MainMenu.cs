@@ -25,7 +25,6 @@ namespace YetAnotherEngine.GameObjects
         {
             var backGroundTexture = new Bitmap(MenuBackGroundPath);
             _backgorundTexture = TextureLoader.GenerateTexture(backGroundTexture, 4270, 2135, 0, 0);
-
         }
 
         public void RenderMenu()

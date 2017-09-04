@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK;
-using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.Utils;
@@ -14,28 +9,29 @@ namespace YetAnotherEngine.GameObjects.Towers
 {
     public class TowersManager
     {
-        private readonly SortedList<int, TowerBase> _towersList;
+        private readonly SortedList<int, TowerBase> _towersList = new SortedList<int, TowerBase>();
         private readonly TowerBase _towerToBePlaced;
         private readonly bool _shouldTowerBeRendered;
+        private readonly int[] _towerTexures;
 
-        public TowersManager()
+        public TowersManager(int[] towerTextures)
         {
-            _towersList = new SortedList<int, TowerBase>();
-            _towerToBePlaced = new SimpleTower(new Vector2(0, 0), _mapTextures.TowerTextures[0]);
+            _towerTexures = towerTextures;
+            _towerToBePlaced = new SimpleTower(new Vector2(0, 0), towerTextures[0]);
 
             _shouldTowerBeRendered = true;
         }
 
-        public void AddTower()
+        public void AddTower(int mouseX, int mouseY, TileType type)
         {
-            if (IsTowerPlaceable() && _shouldTowerBeRendered)
+            if (IsTowerPlaceable(mouseX, mouseY, type) && _shouldTowerBeRendered)
             {
                 var tileOffset = new Vector2(SimpleTower.TowerCenterX - WorldConstants.TileWidth / 2,
                                              SimpleTower.TowerCenterY - WorldConstants.TileHeight / 4);
 
                 var location = MouseHelper.Instance.TilePositionObject.TileCoords - tileOffset;
 
-                TowerBase tower = new SimpleTower(location, _mapTextures.TowerTextures[0]);
+                TowerBase tower = new SimpleTower(location, _towerTexures[0]);
 
                 _towersList.Add((int)MouseHelper.Instance.TilePositionObject.TilePosition.X * 100 + (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y, tower);
             }
@@ -49,37 +45,36 @@ namespace YetAnotherEngine.GameObjects.Towers
             }
         }
 
-        public void RenderTowerToBePlaced(Vector2 currentOffset)
+        public void RenderTowerToBePlaced(Vector2 currentOffset, Vector2 mouseCords, int mouseX, int mouseY, TileType type)
         {
-            if (!_shouldTowerBeRendered || !_keyboardDevice[Key.T])
+            if (!_shouldTowerBeRendered)
             {
                 return;
             }
 
-            _towerToBePlaced.Location = new Vector2(currentOffset.X + _mouseDevice.X - Game.NominalWidth / 2f - SimpleTower.TowerCenterX,
-                                                    -currentOffset.Y + _mouseDevice.Y - Game.NominalHeight / 2f - SimpleTower.TowerCenterY);
+            _towerToBePlaced.Location = new Vector2(currentOffset.X + mouseCords.X - Game.NominalWidth / 2f - SimpleTower.TowerCenterX,
+                                                    -currentOffset.Y + mouseCords.Y - Game.NominalHeight / 2f - SimpleTower.TowerCenterY);
 
-            var towerColor = IsTowerPlaceable() ? WorldConstants.GreenColor : WorldConstants.RedColor;
+            var towerColor = IsTowerPlaceable(mouseX, mouseY, type) ? WorldConstants.GreenColor : WorldConstants.RedColor;
 
             _towerToBePlaced.Draw(towerColor);
         }
 
 
-        private bool IsTowerPlaceable()
+        private bool IsTowerPlaceable(int mouseX, int mouseY, TileType type)
         {
-            var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
-            var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
+
             //Game._fpsText.WriteCoords($"Position: [{x}:{y}] " +
             //                          $"Location: [{MouseHelper.Instance.TilePositionObject.TileCoords.X}:{MouseHelper.Instance.TilePositionObject.TileCoords.Y}] " +
             //                          $"Mouse: [{_mouseDevice.X}:{_mouseDevice.Y}]");
 
-            if (_towersList.ContainsKey(x * 100 + y) || x < 0 ||
-                x >= WorldConstants.WorldHeight || y < 0 || y >= WorldConstants.WorldWidth)
+            if (_towersList.ContainsKey(mouseX * 100 + mouseY) || mouseX < 0 ||
+                mouseX >= WorldConstants.WorldHeight || mouseY < 0 || mouseY >= WorldConstants.WorldWidth)
             {
                 return false;
             }
 
-            return _mapLoader.ConstructionTiles[x, y].Type == TileType.Tower;
+            return type == TileType.Tower;
         }
     }
 }

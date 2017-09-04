@@ -10,17 +10,21 @@ using YetAnotherEngine.Utils;
 
 namespace YetAnotherEngine.GameObjects.World
 {
+    //TODO: split path and textures responsibilities into two classes
     public class MapLoader
     {
         private const string DefaultMapPath = "Maps/map.dat";
 
         private readonly string _mapFilePath;
+        private readonly int[] _mapTextures;
 
         private List<Vector2> _roadList;
         private ConstructionTile[,] _constructionTiles;
 
-        public MapLoader(string mapFilePath = DefaultMapPath)
+
+        public MapLoader(int[] mapTextures, string mapFilePath = DefaultMapPath)
         {
+            _mapTextures = mapTextures;
             _mapFilePath = mapFilePath;
         }
 
@@ -50,7 +54,6 @@ namespace YetAnotherEngine.GameObjects.World
 
         private void GetConstructionTiles()
         {
-            var tilesTextureMap = new Bitmap(GroundTileFilePath);
             _constructionTiles = new ConstructionTile[WorldConstants.WorldHeight, WorldConstants.WorldWidth];
             _roadList = new List<Vector2>();
 
@@ -98,9 +101,15 @@ namespace YetAnotherEngine.GameObjects.World
             {
                 for (var j = 0; j < WorldConstants.WorldWidth; j++)
                 {
-                    _constructionTiles[i, j].TextureId = TextureLoader.GenerateTexture(tilesTextureMap, WorldConstants.TileWidth,
-                                                                           WorldConstants.TileHeight, _constructionTiles[i, j].TextureOffsetX,
-                                                                           _constructionTiles[i, j].TextureOffsetY);
+                    switch (_constructionTiles[i, j].Type)
+                    {
+                        case TileType.Road:
+                            _constructionTiles[i, j].TextureId = _mapTextures[1];
+                            break;
+                        case TileType.Tower:
+                            _constructionTiles[i, j].TextureId = _mapTextures[0];
+                            break;
+                    }
                 }
             }
         }

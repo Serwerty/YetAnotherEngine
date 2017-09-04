@@ -19,6 +19,8 @@ namespace YetAnotherEngine.Utils
 
         public TilePositionObject TilePositionObject => _tilePositionObject;
 
+        public Vector2 MousePosition => new Vector2(_mouseDevice.X, _mouseDevice.Y);
+
         public void Init(MouseDevice mouseDevice, Camera camera)
         {
             _mouseDevice = mouseDevice;
