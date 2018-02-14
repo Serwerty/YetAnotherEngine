@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace YetAnotherEngine.GameObjects.Towers
+namespace YetAnotherEngine.GameObjects.Drawables.Towers
 {
     public class SimpleTower : TowerBase
     {

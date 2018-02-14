@@ -1,12 +1,15 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.GameObjects.Drawables;
+using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.GameObjects.Textures;
-using YetAnotherEngine.GameObjects.Towers;
 using YetAnotherEngine.GameObjects.Waves;
 using YetAnotherEngine.Utils;
+using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.World
 {
@@ -19,12 +22,13 @@ namespace YetAnotherEngine.GameObjects.World
         private readonly MapTextures _mapTextures;
         private readonly WavesManager _wavesManager;
         private readonly TowersManager _towersManager;
+        private SortedList<int, IDrawable> _drawablesList;
 
-        public GameWorld(MouseDevice mouseDevice, KeyboardDevice keyboardDevice)
+        public GameWorld(MouseDevice mouseDevice, KeyboardDevice keyboardDevice, Camera camera)
         {
             _mapTextures = new MapTextures(); //TODO: should be map-related
             _mapLoader = new MapLoader(_mapTextures.GroundTextures);
-            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures); //TODO: should be map-related
+            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera); //TODO: should be map-related
             _towersManager = new TowersManager(_mapTextures.TowerTextures); //TODO: should be map-related
 
             _mouseDevice = mouseDevice;
@@ -36,7 +40,7 @@ namespace YetAnotherEngine.GameObjects.World
             var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
             var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
 
-            _towersManager.AddTower(x, y, _mapLoader.ConstructionTiles[x, y].Type);
+            _towersManager.AddTower(x, y, _mapLoader);
         }
 
         public void MoveUnits(double speedMultiplier)
@@ -86,6 +90,24 @@ namespace YetAnotherEngine.GameObjects.World
             _towersManager.RenderTowers();
         }
 
+        internal void RenderDrawables()
+        {
+            _drawablesList = new SortedList<int, IDrawable>();
+            foreach (var unit in _wavesManager.GetUnits())
+            {
+                _drawablesList.Add(unit.Key,(IDrawable)unit.Value);
+            }
+            foreach (var tower in _towersManager.GetTowers())
+            {
+                _drawablesList.Add(tower.Key, (IDrawable)tower.Value);
+            }
+
+            foreach (var drawable in _drawablesList)
+            {
+                drawable.Value.Draw(Color.White);
+            }
+        }
+
         internal void RenderTowerToBePlaced(Vector2 currentOffset)
         {
             if(_keyboardDevice[Key.T])
@@ -94,7 +116,7 @@ namespace YetAnotherEngine.GameObjects.World
                 var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
 
                 _towersManager.RenderTowerToBePlaced(currentOffset,
-                    new Vector2(_mouseDevice.X, _mouseDevice.Y), x, y, _mapLoader.ConstructionTiles[x, y].Type);
+                    new Vector2(_mouseDevice.X, _mouseDevice.Y), x, y, _mapLoader);
             }
         }
 

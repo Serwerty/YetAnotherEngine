@@ -4,9 +4,9 @@ using System.Linq;
 using OpenTK;
 using YetAnotherEngine.Utils;
 
-namespace YetAnotherEngine.GameObjects.Units
+namespace YetAnotherEngine.GameObjects.Drawables.Units
 {
-    public abstract class UnitBase
+    public abstract class UnitBase : IDrawable
     {
         public Vector2 Location;
 
@@ -16,7 +16,7 @@ namespace YetAnotherEngine.GameObjects.Units
 
         public bool IsDespawned { get; set; } = false;
 
-        public abstract void Draw();
+        public abstract void Draw(Color color);
 
         protected UnitBase(Vector2 location, int textureId)
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Net;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
@@ -29,6 +30,8 @@ namespace YetAnotherEngine
 
         //TODO: refactor
         public static double zScale = 1;
+        public static float MultiplierWidth;
+        public static float MultiplierHeight;
 
         private double _gameClockMultiplier = 1;
 
@@ -40,8 +43,11 @@ namespace YetAnotherEngine
 
             WindowBorder = WindowBorder.Fixed;
 
-            _gameWorld = new GameWorld(Mouse, Keyboard);
-            _camera = new Camera(Keyboard, Mouse, Width, Height);
+            MultiplierWidth = NominalWidth * 1f / Width;
+            MultiplierHeight = NominalHeight * 1f / Height;
+
+            _camera = new Camera(Keyboard, Mouse, NominalWidth, NominalHeight);
+            _gameWorld = new GameWorld(Mouse, Keyboard, _camera);      
             _gameMenu = new MainMenu();
             MouseHelper.Instance.Init(Mouse, _camera);
         }
@@ -81,8 +87,11 @@ namespace YetAnotherEngine
         {
             base.OnResize(E);
 
-            _camera.WindowHeight = Height;
-            _camera.WindowWidth = Width;
+            //_camera.WindowHeight = Height;
+            //_camera.WindowWidth = Width;
+
+            MultiplierWidth = NominalWidth * 1f / Width;
+            MultiplierHeight = NominalHeight * 1f / Height;
 
             GL.Viewport(0, 0, (int)_projectionWidth, (int)_projectionHeight);
             _projectionWidth = NominalWidth;
@@ -144,11 +153,14 @@ namespace YetAnotherEngine
                     //GL.Ortho(-zScale, 1, -zScale, 1, -1, 1);
                     #endregion
                     _gameWorld.RenderGround();
-                    _gameWorld.RenderTowers();
+                    _gameWorld.RenderDrawables();
+                    //_gameWorld.RenderTowers();
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
-                    _gameWorld.RenderUnits();
-                    FpsHelper.Instance.DrawFpsText(e.Time);
+                   // _gameWorld.RenderUnits();
+                    
+                    //FpsHelper.Instance.DrawFpsText(e.Time);
+                    MouseHelper.Instance.DrawCoords();
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();

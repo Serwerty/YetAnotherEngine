@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace YetAnotherEngine.GameObjects.Units
+namespace YetAnotherEngine.GameObjects.Drawables.Units
 {
     class SimpleUnit : UnitBase
     {
@@ -15,12 +15,12 @@ namespace YetAnotherEngine.GameObjects.Units
         {
         }
 
-        public override void Draw()
+        public override void Draw(Color color)
         {
             GL.BindTexture(TextureTarget.Texture2D, TextureId);
 
             GL.Begin(PrimitiveType.Quads);
-            GL.Color4(Color.White);
+            GL.Color4(color);
 
             GL.TexCoord2(0, 0);
             GL.Vertex2(Location.X+16,Location.Y - 8);

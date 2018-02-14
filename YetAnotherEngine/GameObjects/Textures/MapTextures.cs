@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using YetAnotherEngine.Constants;
-using YetAnotherEngine.GameObjects.Towers;
+using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.Utils;
 
 namespace YetAnotherEngine.GameObjects.Textures

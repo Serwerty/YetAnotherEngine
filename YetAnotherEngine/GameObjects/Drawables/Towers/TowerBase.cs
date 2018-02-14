@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using OpenTK;
 
-namespace YetAnotherEngine.GameObjects.Towers
+namespace YetAnotherEngine.GameObjects.Drawables.Towers
 {
-    public abstract class TowerBase
+    public abstract class TowerBase : IDrawable
     {
         public Vector2 Location { get; set; }
 

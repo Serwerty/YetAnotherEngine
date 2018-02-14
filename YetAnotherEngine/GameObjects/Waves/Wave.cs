@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using YetAnotherEngine.Enums;
-using YetAnotherEngine.GameObjects.Units;
+using YetAnotherEngine.GameObjects.Drawables.Units;
 
 namespace YetAnotherEngine.GameObjects.Waves
 {
@@ -10,7 +10,7 @@ namespace YetAnotherEngine.GameObjects.Waves
         public int UnitIntervalDecrement { get; set; }
         public UnitType Type { get; set; }
 
-        public List<UnitBase> Units = new List<UnitBase>();
+        public SortedList<int, UnitBase> Units = new SortedList<int,UnitBase>();
 
         private int _timer;
         private const int DefaultDelayInMs = 45;

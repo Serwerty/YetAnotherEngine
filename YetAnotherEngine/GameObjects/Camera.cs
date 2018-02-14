@@ -30,6 +30,7 @@ namespace YetAnotherEngine.GameObjects
             WindowWidth = windowWidth;
             WindowHeight = windowHeight;
 
+
             _position = new Vector2(WorldWidthInPixels / 2 + WorldConstants.TileWidth / 2,
                 -WorldHeightInPixels / 2);
         }
