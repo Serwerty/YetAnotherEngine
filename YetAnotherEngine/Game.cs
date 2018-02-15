@@ -73,11 +73,11 @@ namespace YetAnotherEngine
         {
             base.OnMouseWheel(e);
 
-            if (e.Delta > 0 && zScale > WorldConstants.ZoomInLimitation) // Zoom in
+            if (e.Delta < 0 && zScale > WorldConstants.ZoomInLimitation) // Zoom in
             {
                 zScale -= WorldConstants.ZoomSpeed * _gameClockMultiplier;
             }
-            else if (e.Delta < 0 && zScale < WorldConstants.ZoomOutLimitation) // Zoom out
+            else if (e.Delta > 0 && zScale < WorldConstants.ZoomOutLimitation) // Zoom out
             {
                 zScale += WorldConstants.ZoomSpeed * _gameClockMultiplier;
             }
@@ -161,8 +161,8 @@ namespace YetAnotherEngine
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
                    // _gameWorld.RenderUnits();
                     
-                    //FpsHelper.Instance.DrawFpsText(e.Time);
-                    MouseHelper.Instance.DrawCoords();
+                    FpsHelper.Instance.DrawFpsText(e.Time);
+                    //MouseHelper.Instance.DrawCoords();
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();

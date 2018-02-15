@@ -51,6 +51,7 @@
     <Compile Include="GameObjects\Drawables\IDrawable.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\Arrow.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectileBase.cs" />
+    <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesImpact\ProjectileImpact.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesManager.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />

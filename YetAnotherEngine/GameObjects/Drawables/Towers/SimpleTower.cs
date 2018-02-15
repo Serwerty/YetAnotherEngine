@@ -10,17 +10,17 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 {
     public class SimpleTower : TowerBase
     {
-        public const int TextureOffsetX = 14;
+        public const int TextureOffsetX = 7;
         public const int TextureOffsetY = 0;
 
-        public const int TowerWidth = 128;
-        public const int TowerHeight = 196;
+        public const int TowerWidth = 64;
+        public const int TowerHeight = 98;
 
-        public const int TowerCenterX = 30;
-        public const int TowerCenterY = 82;
+        public const int TowerCenterX = 15;
+        public const int TowerCenterY = 41;
 
 
-        public new int Range { get; set; } = 150;
+        public new int Range { get; set; } = 75;
 
         private const int ShootingDelay = 50;
 

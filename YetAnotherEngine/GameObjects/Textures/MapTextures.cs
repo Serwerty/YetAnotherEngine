@@ -33,8 +33,8 @@ namespace YetAnotherEngine.GameObjects.Textures
                 WorldConstants.TileWidth, 128, 832);
 
             var towerTexture = new Bitmap(TowersTileFilePath);
-            TowerTextures[0] = TextureLoader.GenerateTexture(towerTexture, SimpleTower.TowerWidth,
-                SimpleTower.TowerHeight, SimpleTower.TextureOffsetX, SimpleTower.TextureOffsetY);
+            TowerTextures[0] = TextureLoader.GenerateTexture(towerTexture, 128,
+                196, SimpleTower.TextureOffsetX, SimpleTower.TextureOffsetY);
 
             var selectionTexture = new Bitmap(SelectionTileFilePath);
             SelectionTexture = TextureLoader.GenerateTexture(selectionTexture, 64, 64, 0, 0);
