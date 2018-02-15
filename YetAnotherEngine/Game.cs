@@ -122,6 +122,8 @@ namespace YetAnotherEngine
 
             _gameWorld.MoveUnits(_gameClockMultiplier);
             _gameWorld.SpawnWaves();
+            _gameWorld.MoveProjectiles(_gameClockMultiplier);
+            _gameWorld.checkTowersForShoot();
 
             MouseHelper.Instance.Calculate();
         }

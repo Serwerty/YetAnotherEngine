@@ -23,7 +23,7 @@ namespace YetAnotherEngine.GameObjects.Waves
         {
             _unitTextures = unitTextures;
             _roadList = roadList;
-            _wave = new Wave(UnitType.Basic, 150, 5);
+            _wave = new Wave(UnitType.Basic, 150, 1);
             _camera = camera;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Runtime.InteropServices.WindowsRuntime;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.Utils;
@@ -13,10 +14,12 @@ namespace YetAnotherEngine.GameObjects.Textures
         private const string TowersTileFilePath = "Textures/Tiles/towers.png";
         private const string SelectionTileFilePath = "Textures/Selection.png";
         private const string UnitTileFilePath = "Textures/Knowitall_Front_point.png";
+        private const string ArrowProjectileTileFilePath = "Textures/projectile_fireball.png";
 
         public int[] GroundTextures = new int[2]; //TODO: expand with map textures
         public int[] TowerTextures = new int[1]; //TODO: expand with tower textures
-        public int[] UnitsTextures = new int[1];//TODO: expand with unit textures
+        public int[] UnitsTextures = new int[1]; //TODO: expand with unit textures
+        public int[] ProjectilesTextures = new int[1]; //TODO: expand with projectile textures
         public int SelectionTexture; 
 
 
@@ -38,6 +41,9 @@ namespace YetAnotherEngine.GameObjects.Textures
 
             var basicUnitTexture = new Bitmap(UnitTileFilePath);
             UnitsTextures[0] = TextureLoader.GenerateTexture(basicUnitTexture, 64, 64, 0, 0);
+
+            var arrowProjectileTexture = new Bitmap(ArrowProjectileTileFilePath);
+            ProjectilesTextures[0] = TextureLoader.GenerateTexture(arrowProjectileTexture, 128, 128, 0, 0);
         }
     }
 }

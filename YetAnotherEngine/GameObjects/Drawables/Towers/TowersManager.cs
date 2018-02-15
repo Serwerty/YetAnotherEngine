@@ -3,6 +3,8 @@ using System.Drawing;
 using OpenTK;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.Enums;
+using YetAnotherEngine.GameObjects.Drawables.Projectiles;
+using YetAnotherEngine.GameObjects.Drawables.Units;
 using YetAnotherEngine.GameObjects.World;
 using YetAnotherEngine.Utils;
 using YetAnotherEngine.Utils.Helpers;
@@ -15,7 +17,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         private readonly TowerBase _towerToBePlaced;
         private readonly bool _shouldTowerBeRendered;
         private readonly int[] _towerTexures;
-
+     
         public TowersManager(int[] towerTextures)
         {
             _towerTexures = towerTextures;
@@ -44,6 +46,24 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             return _towersList;
         }
 
+        public void CheckTowersForShoot(SortedList<int,UnitBase> units, ref ProjectilesManager projectileManager)
+        {
+            foreach (var tower in _towersList)
+            {
+                tower.Value.CurrentShootigDelay--;
+                if (tower.Value.CurrentShootigDelay <= 0)
+                {
+                    UnitBase targertUnit = tower.Value.CalculateClosestUnit(units);
+                    if (targertUnit != null)
+                    {
+                        projectileManager.AddProjectile(tower.Value, targertUnit);
+                        tower.Value.ResetDelay();
+                    }
+                }
+            }
+        }
+
+ 
         public void RenderTowers()
         {
             foreach (var tower in _towersList)

@@ -1,12 +1,15 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using YetAnotherEngine.GameObjects.Drawables.Units;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Towers
 {
     public class SimpleTower : TowerBase
     {
-
         public const int TextureOffsetX = 14;
         public const int TextureOffsetY = 0;
 
@@ -16,9 +19,13 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public const int TowerCenterX = 30;
         public const int TowerCenterY = 82;
 
+
+        public new int Range { get; set; } = 150;
+
+        private const int ShootingDelay = 50;
+
         public SimpleTower(Vector2 location, int textureId) : base(location, textureId)
         {
-        
         }
 
         public override void Draw(Color color)
@@ -38,6 +45,30 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             GL.Vertex2(Location.X, Location.Y + TowerHeight / 2f);
 
             GL.End();
+        }
+
+        public override void ResetDelay()
+        {
+            CurrentShootigDelay = ShootingDelay;
+        }
+
+        public override UnitBase CalculateClosestUnit(SortedList<int, UnitBase> units)
+        {
+            double minDistance = int.MaxValue;
+            int key = 0;
+
+            foreach (var unit in units)
+            {
+                double distance = Math.Sqrt((unit.Value.Location.X - Location.X) * (unit.Value.Location.X - Location.X) +
+                                           (unit.Value.Location.Y - Location.Y) * (unit.Value.Location.Y - Location.Y));
+                if (distance < Range && distance < minDistance)
+                {
+                    minDistance = distance;
+                    key = unit.Key;
+                }
+            }
+
+            return units.FirstOrDefault(x => x.Key == key).Value;
         }
     }
 }

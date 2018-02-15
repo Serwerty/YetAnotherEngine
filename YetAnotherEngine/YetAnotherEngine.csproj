@@ -49,6 +49,9 @@
     <Compile Include="Enums\TileType.cs" />
     <Compile Include="Enums\UnitType.cs" />
     <Compile Include="GameObjects\Drawables\IDrawable.cs" />
+    <Compile Include="GameObjects\Drawables\Projectiles\Arrow.cs" />
+    <Compile Include="GameObjects\Drawables\Projectiles\ProjectileBase.cs" />
+    <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesManager.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Models\Tile.cs" />
@@ -200,7 +203,16 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Textures\bow_arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\projectile_fireball.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

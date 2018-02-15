@@ -5,6 +5,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables;
+using YetAnotherEngine.GameObjects.Drawables.Projectiles;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.GameObjects.Textures;
 using YetAnotherEngine.GameObjects.Waves;
@@ -22,6 +23,7 @@ namespace YetAnotherEngine.GameObjects.World
         private readonly MapTextures _mapTextures;
         private readonly WavesManager _wavesManager;
         private readonly TowersManager _towersManager;
+        private ProjectilesManager _projectilesManager;
         private SortedList<int, IDrawable> _drawablesList;
 
         public GameWorld(MouseDevice mouseDevice, KeyboardDevice keyboardDevice, Camera camera)
@@ -30,6 +32,7 @@ namespace YetAnotherEngine.GameObjects.World
             _mapLoader = new MapLoader(_mapTextures.GroundTextures);
             _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera); //TODO: should be map-related
             _towersManager = new TowersManager(_mapTextures.TowerTextures); //TODO: should be map-related
+            _projectilesManager = new ProjectilesManager(_mapTextures.ProjectilesTextures);
 
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
@@ -46,6 +49,16 @@ namespace YetAnotherEngine.GameObjects.World
         public void MoveUnits(double speedMultiplier)
         {
             _wavesManager.MoveUnits(speedMultiplier);
+        }
+
+        public void MoveProjectiles(double speedMultiplier)
+        {
+            _projectilesManager.MoveProjectiles(speedMultiplier);
+        }
+
+        public void checkTowersForShoot()
+        {
+            _towersManager.CheckTowersForShoot(_wavesManager.GetUnits(),ref _projectilesManager);
         }
 
         public void SpawnWaves()
@@ -101,7 +114,10 @@ namespace YetAnotherEngine.GameObjects.World
             {
                 _drawablesList.Add(tower.Key, (IDrawable)tower.Value);
             }
-
+            foreach (var projectile in _projectilesManager.GetProjectiles())
+            {
+                _drawablesList.Add(projectile.Key, (IDrawable)projectile.Value);
+            }
             foreach (var drawable in _drawablesList)
             {
                 drawable.Value.Draw(Color.White);

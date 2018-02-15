@@ -4,7 +4,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Units
 {
-    class SimpleUnit : UnitBase
+    public class SimpleUnit : UnitBase
     {
         public const int UnitWidth = 64;
         public const int UnitHeight = 64;
@@ -23,7 +23,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
             GL.Color4(color);
 
             GL.TexCoord2(0, 0);
-            GL.Vertex2(Location.X+16,Location.Y - 8);
+            GL.Vertex2(Location.X + 16, Location.Y - 8);
             GL.TexCoord2(1, 0);
             GL.Vertex2(Location.X + UnitWidth / 2f + 16, Location.Y - 8);
             GL.TexCoord2(1, 1);
@@ -43,7 +43,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
             }
             else
             {
-                var endPoint = Vector2.Multiply(path.Normalized(), Speed * (float)speedMultiplier);
+                var endPoint = Vector2.Multiply(path.Normalized(), Speed * (float) speedMultiplier);
                 Location.X += endPoint.X;
                 Location.Y += endPoint.Y;
             }
