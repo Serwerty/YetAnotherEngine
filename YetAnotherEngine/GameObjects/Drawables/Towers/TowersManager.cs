@@ -15,14 +15,15 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
     {
         private readonly SortedList<int, TowerBase> _towersList = new SortedList<int, TowerBase>();
         private readonly TowerBase _towerToBePlaced;
+        private readonly TowerRangeField _towerRangeField;
         private readonly bool _shouldTowerBeRendered;
         private readonly int[] _towerTexures;
      
-        public TowersManager(int[] towerTextures)
+        public TowersManager(int[] towerTextures, int towerRangeFieldTexture)
         {
             _towerTexures = towerTextures;
             _towerToBePlaced = new SimpleTower(new Vector2(0, 0), towerTextures[0]);
-
+            _towerRangeField = new TowerRangeField(new Vector2(0,0), towerRangeFieldTexture, _towerToBePlaced.Range);
             _shouldTowerBeRendered = true;
         }
 
@@ -79,12 +80,16 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                 return;
             }
 
-            _towerToBePlaced.Location = new Vector2(currentOffset.X + mouseCords.X * Game.MultiplierWidth - Game.NominalWidth / 2f - SimpleTower.TowerCenterX,
-                                                    -currentOffset.Y + mouseCords.Y * Game.MultiplierHeight - Game.NominalHeight / 2f - SimpleTower.TowerCenterY);
+            var location = new Vector2(currentOffset.X + mouseCords.X * Game.MultiplierWidth - Game.NominalWidth / 2f - SimpleTower.TowerCenterX,
+                -currentOffset.Y + mouseCords.Y * Game.MultiplierHeight - Game.NominalHeight / 2f - SimpleTower.TowerCenterY);
+
+            _towerToBePlaced.Location = location;
+            _towerRangeField.Location = location - new Vector2(_towerRangeField.Range - SimpleTower.TowerCenterX, 0);
 
             var towerColor = IsTowerPlaceable(mouseX, mouseY, mapLoader) ? WorldConstants.GreenColor : WorldConstants.RedColor;
 
             _towerToBePlaced.Draw(towerColor);
+            _towerRangeField.Draw(towerColor);
         }
 
 

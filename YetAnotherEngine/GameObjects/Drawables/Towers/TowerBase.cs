@@ -9,7 +9,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
     {
         public Vector2 Location { get; set; }
 
-        public int Range { get; set; }
+        public int Range { get; protected set; }
 
         public int CurrentShootigDelay { get; set; }
 

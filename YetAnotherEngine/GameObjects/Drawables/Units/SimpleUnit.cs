@@ -9,7 +9,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
         public const int UnitWidth = 64;
         public const int UnitHeight = 64;
 
-        private const int Speed = 2;
+        private const int Speed = 1;
 
         public SimpleUnit(Vector2 location, int textureId) : base(location, textureId)
         {

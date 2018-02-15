@@ -13,7 +13,7 @@ namespace YetAnotherEngine.GameObjects.Waves
         public SortedList<int, UnitBase> Units = new SortedList<int,UnitBase>();
 
         private int _timer;
-        private const int DefaultDelayInMs = 45;
+        private const int DefaultDelayInMs = 60;
 
         public Wave(UnitType type, int unitsCount, int unitIntervalDecrement)
         {

@@ -53,6 +53,7 @@
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectileBase.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesImpact\ProjectileImpact.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesManager.cs" />
+    <Compile Include="GameObjects\Drawables\Towers\TowerRangeField.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Models\Tile.cs" />
@@ -212,6 +213,11 @@
   <ItemGroup>
     <None Include="Textures\projectile_fireball.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\range.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

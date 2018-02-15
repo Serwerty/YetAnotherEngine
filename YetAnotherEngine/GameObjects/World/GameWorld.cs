@@ -31,7 +31,7 @@ namespace YetAnotherEngine.GameObjects.World
             _mapTextures = new MapTextures(); //TODO: should be map-related
             _mapLoader = new MapLoader(_mapTextures.GroundTextures);
             _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera); //TODO: should be map-related
-            _towersManager = new TowersManager(_mapTextures.TowerTextures); //TODO: should be map-related
+            _towersManager = new TowersManager(_mapTextures.TowerTextures,_mapTextures.TowerRangeFiledTexture); //TODO: should be map-related
             _projectilesManager = new ProjectilesManager(_mapTextures.ProjectilesTextures);
 
             _mouseDevice = mouseDevice;

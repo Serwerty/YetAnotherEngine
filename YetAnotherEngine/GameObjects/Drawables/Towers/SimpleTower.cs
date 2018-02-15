@@ -19,13 +19,11 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public const int TowerCenterX = 15;
         public const int TowerCenterY = 41;
 
-
-        public new int Range { get; set; } = 75;
-
         private const int ShootingDelay = 50;
 
         public SimpleTower(Vector2 location, int textureId) : base(location, textureId)
         {
+            Range = 75;
         }
 
         public override void Draw(Color color)
@@ -60,8 +58,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             foreach (var unit in units)
             {
                 double distance = Math.Sqrt((unit.Value.Location.X - Location.X) * (unit.Value.Location.X - Location.X) +
-                                           (unit.Value.Location.Y - Location.Y) * (unit.Value.Location.Y - Location.Y));
-                if (distance < Range && distance < minDistance)
+                                           (unit.Value.Location.Y * 2  - Location.Y * 2) * (unit.Value.Location.Y * 2 - Location.Y * 2));
+                if (distance <= Range && distance < minDistance)
                 {
                     minDistance = distance;
                     key = unit.Key;
