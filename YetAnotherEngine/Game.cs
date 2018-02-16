@@ -47,7 +47,7 @@ namespace YetAnotherEngine
             MultiplierHeight = NominalHeight * 1f / Height;
 
             _camera = new Camera(Keyboard, Mouse, NominalWidth, NominalHeight);
-            _gameWorld = new GameWorld(Mouse, Keyboard, _camera);      
+            _gameWorld = new GameWorld(Mouse, Keyboard, _camera);
             _gameMenu = new MainMenu();
             MouseHelper.Instance.Init(Mouse, _camera);
         }
@@ -93,13 +93,13 @@ namespace YetAnotherEngine
             MultiplierWidth = NominalWidth * 1f / Width;
             MultiplierHeight = NominalHeight * 1f / Height;
 
-            GL.Viewport(0, 0, (int)_projectionWidth, (int)_projectionHeight);
+            GL.Viewport(0, 0, (int) _projectionWidth, (int) _projectionHeight);
             _projectionWidth = NominalWidth;
-            _projectionHeight = ClientRectangle.Height / (float)ClientRectangle.Width * _projectionWidth;
+            _projectionHeight = ClientRectangle.Height / (float) ClientRectangle.Width * _projectionWidth;
             if (_projectionHeight < NominalHeight)
             {
                 _projectionHeight = NominalHeight;
-                _projectionWidth = ClientRectangle.Width / (float)ClientRectangle.Height * _projectionHeight;
+                _projectionWidth = ClientRectangle.Width / (float) ClientRectangle.Height * _projectionHeight;
             }
         }
 
@@ -111,7 +111,7 @@ namespace YetAnotherEngine
                 _gameWorld.AddTower();
             }
         }
-        
+
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
@@ -145,24 +145,35 @@ namespace YetAnotherEngine
                 case GameState.InMainMenu:
                     _gameMenu.SetUpMenuProjection();
                     _gameMenu.RenderMenu();
-                    break; 
+                    break;
                 case GameState.InGame:
                     var projection = Matrix4.CreateOrthographic(-NominalWidth, -NominalHeight, -1, 1);
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
+
                     #region Working with zooming
+
                     //GL.Ortho(-zScale, 1, -zScale, 1, -1, 1);
+
                     #endregion
+
                     _gameWorld.RenderGround();
                     _gameWorld.RenderDrawables();
                     //_gameWorld.RenderTowers();
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
-                   // _gameWorld.RenderUnits();
-                    
-                    FpsHelper.Instance.DrawFpsText(e.Time);
+                    // _gameWorld.RenderUnits();
+
+                    #region ShowInfo
+
+                    //FpsHelper.Instance.DrawFpsText(e.Time);
                     //MouseHelper.Instance.DrawCoords();
+                    //MouseHelper.Instance.DrawTilePosition();
+                    ShowStatsHelper.Instance.ShowStats();
+
+                    #endregion
+
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();

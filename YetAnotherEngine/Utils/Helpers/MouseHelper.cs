@@ -14,8 +14,8 @@ namespace YetAnotherEngine.Utils.Helpers
         private Camera _camera;
         private TilePositionObject _tilePositionObject;
 
-        private const string FpsTextFont = "big-outline.png";
-        private TextLine _textLineCoords = new TextLine(FpsTextFont);
+        private const string TextFont = "big-outline.png";
+        private TextLine _textLineCoords = new TextLine(TextFont);
 
         private MouseHelper() { }
 
@@ -41,6 +41,13 @@ namespace YetAnotherEngine.Utils.Helpers
         {
             GL.Color4(Color.White);
             _textLineCoords.WriteFps($"mouse X: {_mouseDevice.X:0} mouse Y: {_mouseDevice.Y:0}");
+        }
+
+        public void DrawTilePosition()
+        {
+            GL.Color4(Color.White);
+            _textLineCoords.WriteFps($"pos X: {TilePositionObject.TilePosition.X:0} pos Y: {TilePositionObject.TilePosition.Y:0}" +
+                                     $"loc X: {TilePositionObject.TileCoords.X:0} loc Y: {TilePositionObject.TileCoords.Y:0}");
         }
     }
 }

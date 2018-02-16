@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using OpenTK;
+using YetAnotherEngine.GameObjects.Drawables.Projectiles.ProjectilesImpact;
 using YetAnotherEngine.GameObjects.Drawables.Units;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
@@ -15,14 +16,16 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
         public abstract void Move(double speedMultiplier);
 
         public bool IsDespawned { get; set; } = false;
-
+        public bool IsHitted { get; set; } = false;
         protected int TextureId { get; set; }
+        internal ProjectileImpact projectilesImpact;
 
-        protected ProjectileBase(Vector2 location, int textureId, UnitBase targetUnit)
+        protected ProjectileBase(Vector2 location, int textureId, int projectileImpactTextureId, UnitBase targetUnit)
         {
             Location = location;
             TextureId = textureId;
             TargetUnit = targetUnit;
+            projectilesImpact = new ProjectileImpact(location, projectileImpactTextureId);
         }
     }
 }

@@ -17,14 +17,16 @@ namespace YetAnotherEngine.GameObjects.Waves
         private readonly Wave _wave;
         private readonly List<Vector2> _roadList;
         private readonly int[] _unitTextures;
+        private readonly int _hpBarTextureId;
         private readonly Camera _camera;
 
-        public WavesManager(List<Vector2> roadList, int[] unitTextures, Camera camera)
+        public WavesManager(List<Vector2> roadList, int[] unitTextures, Camera camera, int hpBarTextureId)
         {
             _unitTextures = unitTextures;
             _roadList = roadList;
             _wave = new Wave(UnitType.Basic, 150, 1);
             _camera = camera;
+            _hpBarTextureId = hpBarTextureId;
         }
 
         public void SpawnWave()
@@ -33,13 +35,13 @@ namespace YetAnotherEngine.GameObjects.Waves
             {
                 UnitBase unitToBeRendered =
                     new SimpleUnit(CoordsCalculator.CalculateLocationFromTilePosition(_roadList.First()),
-                        _unitTextures[0]);
+                        _unitTextures[0], _hpBarTextureId);
                 TilePositionObject tilePositionObject = new TilePositionObject(
                     Vector2.Divide(_camera.GetPosition(), (float) Game.zScale),
                     new Vector2(unitToBeRendered.Location.X, unitToBeRendered.Location.Y));
 
                 _wave.Units.Add(
-                    (int) tilePositionObject.TilePosition.X * 100 + (int) tilePositionObject.TilePosition.Y * 1000 +
+                    (int) tilePositionObject.TilePosition.X * 1000 + (int) tilePositionObject.TilePosition.Y * 100000 +
                     _wave.UnitsCount, unitToBeRendered);
             }
         }
@@ -56,7 +58,6 @@ namespace YetAnotherEngine.GameObjects.Waves
             }
 
             SortedListHelper.Instance.RemoveAllFromSortedList(_wave.Units, x => x.Value.IsDespawned);
-            //_wave.Units.RemoveAll(x => x.IsDespawned);
         }
 
         public SortedList<int, UnitBase> GetUnits()

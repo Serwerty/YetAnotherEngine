@@ -11,11 +11,13 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
     {
         private readonly SortedList<int, ProjectileBase> _projectiles = new SortedList<int, ProjectileBase>();
         private int[] _projectilesTextures;
+        private int _projectileImpactTextureId;
         public int Counter = 0;
 
-        public ProjectilesManager(int[] projectilesTextures)
+        public ProjectilesManager(int[] projectilesTextures,int projectileImpactTextureId)
         {
             _projectilesTextures = projectilesTextures;
+            _projectileImpactTextureId = projectileImpactTextureId;
         }
 
         internal SortedList<int, ProjectileBase> GetProjectiles()
@@ -30,6 +32,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
             {
                 projectile.Value.Move(speedMultiplier);
             }
+
+            SortedListHelper.Instance.RemoveAllFromSortedList(_projectiles, x => x.Value.IsDespawned);
         }
 
         public void AddProjectile(TowerBase tower, UnitBase targetUnit)
@@ -38,10 +42,10 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
                 SimpleTower.TowerCenterY - WorldConstants.TileHeight / 4);
 
             var towerCenterLocation = tower.Location + tileOffset;
-            
 
-            Arrow arrow = new Arrow(towerCenterLocation, _projectilesTextures[0], targetUnit);
-            _projectiles.Add((int) arrow.Location.X * 100 + (int) arrow.Location.Y * 1000 + Counter, arrow);
+
+            Arrow arrow = new Arrow(towerCenterLocation, _projectilesTextures[0], _projectileImpactTextureId, targetUnit);
+            _projectiles.Add((int) arrow.Location.X * 100 + (int) arrow.Location.Y * 10000 + Counter, arrow);
             Counter++;
         }
     }

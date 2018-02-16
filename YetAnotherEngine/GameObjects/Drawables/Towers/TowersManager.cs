@@ -38,7 +38,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
                 TowerBase tower = new SimpleTower(location, _towerTexures[0]);
 
-                _towersList.Add((int)MouseHelper.Instance.TilePositionObject.TilePosition.X * 100 + (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y * 1000, tower);
+                _towersList.Add((int)MouseHelper.Instance.TilePositionObject.TilePosition.X * 1000 + (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y * 100000, tower);
             }
         }
 
@@ -54,7 +54,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                 tower.Value.CurrentShootigDelay--;
                 if (tower.Value.CurrentShootigDelay <= 0)
                 {
-                    UnitBase targertUnit = tower.Value.CalculateClosestUnit(units);
+                    UnitBase targertUnit = tower.Value.GetTargetUnit(units);
                     if (targertUnit != null)
                     {
                         projectileManager.AddProjectile(tower.Value, targertUnit);
@@ -100,7 +100,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
               //                        $"Location: [{MouseHelper.Instance.TilePositionObject.TileCoords.X}:{MouseHelper.Instance.TilePositionObject.TileCoords.Y}] " +
                 //                     $"Mouse: [{_mouseDevice.X}:{_mouseDevice.Y}]");
 
-            if (_towersList.ContainsKey(mouseX * 100 + mouseY * 1000) || mouseX < 0 ||
+            if (_towersList.ContainsKey(mouseX * 1000 + mouseY * 100000) || mouseX < 0 ||
                 mouseX >= WorldConstants.WorldHeight || mouseY < 0 || mouseY >= WorldConstants.WorldWidth)
             {
                 return false;

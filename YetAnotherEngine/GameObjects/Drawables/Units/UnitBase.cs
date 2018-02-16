@@ -10,19 +10,25 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
     {
         public Vector2 Location;
 
+        public int Hp;
+        public int CurrentHp { get; set; }
+
         public Vector2 CurrentTargetLocation;
 
         protected int TextureId { get; set; }
 
         public bool IsDespawned { get; set; } = false;
 
+        internal HpBar hpBar;
+
         public abstract void Draw(Color color);
 
-        protected UnitBase(Vector2 location, int textureId)
+        protected UnitBase(Vector2 location, int textureId, int hpBarTextureId)
         {
             Location = location;
             TextureId = textureId;
             CurrentTargetLocation = location;
+            hpBar = new HpBar(location, hpBarTextureId);
         }
 
         public abstract void Move(double speedMultiplier);
@@ -46,5 +52,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
                 }
             }
         }
+
+        public abstract void Hit(int damage);
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using YetAnotherEngine.GameObjects.Drawables.Units;
+using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Towers
 {
@@ -20,6 +21,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public const int TowerCenterY = 41;
 
         private const int ShootingDelay = 50;
+
+        private UnitBase _currentTargetUnit;
 
         public SimpleTower(Vector2 location, int textureId) : base(location, textureId)
         {
@@ -50,19 +53,47 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             CurrentShootigDelay = ShootingDelay;
         }
 
-        public override UnitBase CalculateClosestUnit(SortedList<int, UnitBase> units)
+        public override UnitBase GetTargetUnit(SortedList<int, UnitBase> units)
+        {
+            if (_currentTargetUnit == null)
+            {
+                _currentTargetUnit = CalculateClosestUnit(units);
+            }
+            else
+            {
+                var location = Location - new Vector2(TowerCenterX - 2, -TowerCenterY + 6);
+                double distance = Math.Sqrt(
+                    (_currentTargetUnit.Location.X - location.X) * (_currentTargetUnit.Location.X - location.X) +
+                    (_currentTargetUnit.Location.Y * 2 - location.Y * 2) * (_currentTargetUnit.Location.Y * 2 - location.Y * 2));
+                if (distance > Range || _currentTargetUnit.IsDespawned)
+                {
+                    _currentTargetUnit = CalculateClosestUnit(units);
+                }
+            }
+
+            return _currentTargetUnit;
+        }
+
+        private UnitBase CalculateClosestUnit(SortedList<int, UnitBase> units)
         {
             double minDistance = int.MaxValue;
             int key = 0;
 
             foreach (var unit in units)
             {
-                double distance = Math.Sqrt((unit.Value.Location.X - Location.X) * (unit.Value.Location.X - Location.X) +
-                                           (unit.Value.Location.Y * 2  - Location.Y * 2) * (unit.Value.Location.Y * 2 - Location.Y * 2));
-                if (distance <= Range && distance < minDistance)
+                if (!unit.Value.IsDespawned)
                 {
-                    minDistance = distance;
-                    key = unit.Key;
+                    var location = Location - new Vector2(TowerCenterX - 2, -TowerCenterY + 6);
+                    double distance = Math.Sqrt(
+                        (unit.Value.Location.X - location.X) * (unit.Value.Location.X - location.X) +
+                        (unit.Value.Location.Y * 2f - location.Y * 2f) * (unit.Value.Location.Y * 2f - location.Y * 2f));
+                    
+                    if (distance <= Range && distance < minDistance)
+                    {
+                        minDistance = distance;
+                        ShowStatsHelper.StatsMessage = $"distance = {distance:0}";
+                        key = unit.Key;
+                    }
                 }
             }
 

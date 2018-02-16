@@ -6,6 +6,7 @@ using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables;
 using YetAnotherEngine.GameObjects.Drawables.Projectiles;
+using YetAnotherEngine.GameObjects.Drawables.Projectiles.ProjectilesImpact;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.GameObjects.Textures;
 using YetAnotherEngine.GameObjects.Waves;
@@ -30,10 +31,10 @@ namespace YetAnotherEngine.GameObjects.World
         {
             _mapTextures = new MapTextures(); //TODO: should be map-related
             _mapLoader = new MapLoader(_mapTextures.GroundTextures);
-            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera); //TODO: should be map-related
+            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera, _mapTextures.HpBarTexture); //TODO: should be map-related
             _towersManager = new TowersManager(_mapTextures.TowerTextures,_mapTextures.TowerRangeFiledTexture); //TODO: should be map-related
-            _projectilesManager = new ProjectilesManager(_mapTextures.ProjectilesTextures);
-
+            _projectilesManager = new ProjectilesManager(_mapTextures.ProjectilesTextures, _mapTextures.HitMarkerTexture);
+            DrawablePoint.Instance.Init(new Vector2(0,0),_mapTextures.HitMarkerTexture);
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
         }

@@ -26,7 +26,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             TextureId = textureId;
         }
 
-        public abstract UnitBase CalculateClosestUnit(SortedList<int,UnitBase> units);
+        public abstract UnitBase GetTargetUnit(SortedList<int,UnitBase> units);
 
     }
 }

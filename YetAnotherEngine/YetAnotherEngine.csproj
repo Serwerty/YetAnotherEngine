@@ -54,6 +54,7 @@
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesImpact\ProjectileImpact.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesManager.cs" />
     <Compile Include="GameObjects\Drawables\Towers\TowerRangeField.cs" />
+    <Compile Include="GameObjects\Drawables\Units\HpBar.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Models\Tile.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="Utils\CoordsCalculator.cs" />
     <Compile Include="Utils\GameClock.cs" />
     <Compile Include="Utils\Helpers\ArrayHelper.cs" />
+    <Compile Include="Utils\Helpers\DrawablePoint.cs" />
     <Compile Include="Utils\Helpers\FpsHelper.cs" />
+    <Compile Include="Utils\Helpers\ShowStatsHelper.cs" />
     <Compile Include="Utils\Helpers\SortedListHelper.cs" />
     <Compile Include="Utils\Models\TilePositionObject.cs" />
     <Compile Include="Utils\Helpers\MouseHelper.cs" />
@@ -218,6 +221,16 @@
   <ItemGroup>
     <None Include="Textures\range.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\hitmarker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\quad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
