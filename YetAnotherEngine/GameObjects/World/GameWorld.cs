@@ -5,6 +5,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables;
+using YetAnotherEngine.GameObjects.Drawables.Buttons;
 using YetAnotherEngine.GameObjects.Drawables.Projectiles;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.GameObjects.Textures;
@@ -22,6 +23,7 @@ namespace YetAnotherEngine.GameObjects.World
         private readonly MapTextures _mapTextures;
         private readonly WavesManager _wavesManager;
         private readonly TowersManager _towersManager;
+        private readonly TowerButton _towerButton;
         private ProjectilesManager _projectilesManager;
         private SortedList<int, IDrawable> _drawablesList;
 
@@ -39,6 +41,7 @@ namespace YetAnotherEngine.GameObjects.World
             DrawablePoint.Instance.Init(new Vector2(0, 0), _mapTextures.HitMarkerTexture);
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
+            _towerButton = new TowerButton(_mapTextures.TowerButtonTexture);
         }
 
         public void AddTower()
@@ -59,7 +62,7 @@ namespace YetAnotherEngine.GameObjects.World
             _projectilesManager.MoveProjectiles(speedMultiplier);
         }
 
-        public void checkTowersForShoot()
+        public void CheckTowersForShoot()
         {
             _towersManager.CheckTowersForShoot(_wavesManager.GetUnits(), ref _projectilesManager);
         }
@@ -139,7 +142,8 @@ namespace YetAnotherEngine.GameObjects.World
                 var y = (int) MouseHelper.Instance.TilePositionObject.TilePosition.Y;
 
                 _towersManager.RenderTowerToBePlaced(currentOffset,
-                    new Vector2(_mouseDevice.X, _mouseDevice.Y), x, y, _mapLoader);
+                    new Vector2(_mouseDevice.X ,_mouseDevice.Y), x, y,
+                    _mapLoader);
             }
         }
 
@@ -170,6 +174,11 @@ namespace YetAnotherEngine.GameObjects.World
 
                 GL.End();
             }
+        }
+
+        internal void RenderButtons()
+        {
+            _towerButton.Draw();
         }
     }
 }

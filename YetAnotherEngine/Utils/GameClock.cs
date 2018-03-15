@@ -2,10 +2,10 @@
 {
     public static class GameClock
     {
-        private const double TargetFps = 60.0;
-        private const double MultiplierDivider = 1000 / TargetFps;
+        private const float TargetFps = 60f;
+        private const float MultiplierDivider = 1000 / TargetFps;
 
-        public static double GetMultiplier(double seconds)
+        public static float GetMultiplier(float seconds)
         {
             const int millisecondsInSecond = 1000;
             return seconds * millisecondsInSecond / MultiplierDivider;

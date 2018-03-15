@@ -21,7 +21,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public TowersManager(int[] towerTextures, int towerRangeFieldTexture)
         {
             _towerTexures = towerTextures;
-            _towerToBePlaced = new SimpleTower(new Vector2(0, 0), towerTextures[0]);
+            //_towerToBePlaced = new SimpleTower(new Vector2(0, 0), towerTextures[0]);
+            _towerToBePlaced = new NormalTower(new Vector2(0, 0), towerTextures[1]);
             _towerRangeField = new TowerRangeField(new Vector2(0, 0), towerRangeFieldTexture, _towerToBePlaced.Range);
             _shouldTowerBeRendered = true;
         }
@@ -30,19 +31,19 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         {
             if (IsTowerPlaceable(mouseX, mouseY, mapLoader) && _shouldTowerBeRendered)
             {
-                if (Gold.Instance().GoldValue >= ((SimpleTower) _towerToBePlaced).Price)
+                    if (Gold.Instance().GoldValue >= _towerToBePlaced.Price)
                 {
                     var tileOffset = new Vector2(SimpleTower.TowerCenterX - WorldConstants.TileWidth / 2,
                         SimpleTower.TowerCenterY - WorldConstants.TileHeight / 4);
 
                     var location = MouseHelper.Instance.TilePositionObject.TileCoords - tileOffset;
 
-                    TowerBase tower = new SimpleTower(location, _towerTexures[0]);
+                    TowerBase tower = new NormalTower(location, _towerTexures[1]);
 
                     _towersList.Add(
                         (int) MouseHelper.Instance.TilePositionObject.TilePosition.X * 1000 +
                         (int) MouseHelper.Instance.TilePositionObject.TilePosition.Y * 100000, tower);
-                    Gold.Instance().GoldValue -= ((SimpleTower) _towerToBePlaced).Price;
+                    Gold.Instance().GoldValue -= _towerToBePlaced.Price;
                 }
                 else
                 {
@@ -91,9 +92,9 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             }
 
             var location = new Vector2(
-                currentOffset.X + mouseCords.X * Game.MultiplierWidth - Game.NominalWidth / 2f -
+                currentOffset.X + mouseCords.X * Game.zScale - Game.NominalWidth / 2f -
                 SimpleTower.TowerCenterX,
-                -currentOffset.Y + mouseCords.Y * Game.MultiplierHeight - Game.NominalHeight / 2f -
+                -currentOffset.Y + mouseCords.Y * Game.zScale - Game.NominalHeight/ 2f -
                 SimpleTower.TowerCenterY);
 
             _towerToBePlaced.Location = location;

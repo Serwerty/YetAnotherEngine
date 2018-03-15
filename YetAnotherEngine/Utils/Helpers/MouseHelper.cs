@@ -33,8 +33,8 @@ namespace YetAnotherEngine.Utils.Helpers
 
         public void Calculate()
         {
-            _tilePositionObject = new TilePositionObject(Vector2.Divide(_camera.GetPosition(), (float) Game.zScale),
-                new Vector2(_mouseDevice.X * Game.MultiplierWidth, _mouseDevice.Y * Game.MultiplierHeight));
+            _tilePositionObject = new TilePositionObject(_camera.GetPosition(),
+                new Vector2(_mouseDevice.X, _mouseDevice.Y));
         }
 
         public void DrawCoords()

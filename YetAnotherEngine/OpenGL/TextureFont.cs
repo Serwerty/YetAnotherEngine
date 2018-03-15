@@ -47,8 +47,8 @@ namespace YetAnotherEngine.OpenGL
         public void WriteString(string text)
         {
             GL.PushMatrix();
-            var width = ComputeWidth(text);
-            GL.Translate(-width / 2.0, -0.5, 0);
+            //var width = ComputeWidth(text);
+            GL.Translate(0, -0.5, 0);
             GL.Begin(PrimitiveType.Quads);
             double xpos = 0;
             foreach (var ch in text)

@@ -48,11 +48,13 @@
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\TileType.cs" />
     <Compile Include="Enums\UnitType.cs" />
+    <Compile Include="GameObjects\Drawables\Buttons\TowerButton.cs" />
     <Compile Include="GameObjects\Drawables\IDrawable.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\Arrow.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectileBase.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesImpact\ProjectileImpact.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesManager.cs" />
+    <Compile Include="GameObjects\Drawables\Towers\NormalTower.cs" />
     <Compile Include="GameObjects\Drawables\Towers\TowerRangeField.cs" />
     <Compile Include="GameObjects\Drawables\Units\HpBar.cs" />
     <Compile Include="GameObjects\Gold.cs" />
@@ -227,7 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Textures\range.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -237,6 +239,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Textures\quad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\Buttons\TowerButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

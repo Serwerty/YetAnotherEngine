@@ -20,28 +20,28 @@ namespace YetAnotherEngine.GameObjects
         public void WriteFps(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 20, 99, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 99, 0);
             _textFont.Stop();
         }
 
         public void WriteCoords(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 20, 97, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 97, 0);
             _textFont.Stop();
         }
 
         public void WriteTilePosition(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 22, 95, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 95, 0);
             _textFont.Stop();
         }
 
         public void WriteLogText(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 20, 93, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 93, 0);
             _textFont.Stop();
         }
 
@@ -56,7 +56,7 @@ namespace YetAnotherEngine.GameObjects
         public void WriteGold(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 94, 99, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 90, 99, 0);
             _textFont.Stop();
         }
     }

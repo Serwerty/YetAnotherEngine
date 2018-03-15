@@ -16,8 +16,8 @@ namespace YetAnotherEngine
 {
     public class Game : GameWindow
     {
-        public const int NominalWidth = 1024;
-        public const int NominalHeight = 780;
+        public const int NominalWidth = 1280;
+        public const int NominalHeight = 1024;
         private const string WindowHeader = "Tower Defence";
 
         //for resizing purpose
@@ -29,11 +29,11 @@ namespace YetAnotherEngine
         private readonly MainMenu _gameMenu;
 
         //TODO: refactor
-        public static double zScale = 1;
+        public static float zScale = 1;
         public static float MultiplierWidth;
         public static float MultiplierHeight;
 
-        private double _gameClockMultiplier = 1;
+        private float _gameClockMultiplier = 1;
 
         private GameState _gameState = GameState.InGame;
 
@@ -87,20 +87,10 @@ namespace YetAnotherEngine
         {
             base.OnResize(E);
 
-            //_camera.WindowHeight = Height;
-            //_camera.WindowWidth = Width;
-
             MultiplierWidth = NominalWidth * 1f / Width;
             MultiplierHeight = NominalHeight * 1f / Height;
 
-            GL.Viewport(0, 0, (int) _projectionWidth, (int) _projectionHeight);
-            _projectionWidth = NominalWidth;
-            _projectionHeight = ClientRectangle.Height / (float) ClientRectangle.Width * _projectionWidth;
-            if (_projectionHeight < NominalHeight)
-            {
-                _projectionHeight = NominalHeight;
-                _projectionWidth = ClientRectangle.Width / (float) ClientRectangle.Height * _projectionHeight;
-            }
+            GL.Viewport(0, 0, Width, Height);
         }
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
@@ -116,14 +106,14 @@ namespace YetAnotherEngine
         {
             base.OnUpdateFrame(e);
 
-            _gameClockMultiplier = GameClock.GetMultiplier(e.Time);
+            _gameClockMultiplier = GameClock.GetMultiplier((float)e.Time);
 
             _camera.Move(_gameClockMultiplier);
 
             _gameWorld.MoveUnits(_gameClockMultiplier);
             _gameWorld.SpawnWaves();
             _gameWorld.MoveProjectiles(_gameClockMultiplier);
-            _gameWorld.checkTowersForShoot();
+            _gameWorld.CheckTowersForShoot();
 
             MouseHelper.Instance.Calculate();
         }
@@ -138,7 +128,8 @@ namespace YetAnotherEngine
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref modelview);
             GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
-            GL.Scale(zScale, zScale, 1);
+            //GL.Viewport(0, 0, NominalWidth, NominalHeight);
+           
 
             switch (_gameState)
             {
@@ -147,15 +138,13 @@ namespace YetAnotherEngine
                     _gameMenu.RenderMenu();
                     break;
                 case GameState.InGame:
-                    var projection = Matrix4.CreateOrthographic(-NominalWidth, -NominalHeight, -1, 1);
+                    var projection = Matrix4.CreateOrthographic(-NominalWidth/MultiplierWidth, -NominalHeight/MultiplierHeight, -1, 1);
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadMatrix(ref projection);
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
 
                     #region Working with zooming
-
-                    //GL.Ortho(-zScale, 1, -zScale, 1, -1, 1);
-
+                    GL.Scale(zScale, zScale, zScale);
                     #endregion
 
                     _gameWorld.RenderGround();
@@ -164,12 +153,14 @@ namespace YetAnotherEngine
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
                     // _gameWorld.RenderUnits();
+                    _gameWorld.RenderButtons();
 
                     #region ShowInfo
 
                     FpsHelper.Instance.DrawFpsText(e.Time);
                     MouseHelper.Instance.DrawCoords();
                     MouseHelper.Instance.DrawTilePosition();
+                    ShowStatsHelper.StatsMessage = $"zScale = {zScale}";
                     ShowStatsHelper.Instance.ShowStats();
 
                     #endregion

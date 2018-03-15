@@ -110,7 +110,7 @@ namespace YetAnotherEngine.GameObjects
 
         public Vector2 GetPosition()
         {
-            return _position;
+            return new Vector2(_position.X * (float)Game.zScale, _position.Y * (float)Game.zScale);
         }
     }
 }

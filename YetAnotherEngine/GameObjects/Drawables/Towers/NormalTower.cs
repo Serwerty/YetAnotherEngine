@@ -1,30 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using YetAnotherEngine.GameObjects.Drawables.Units;
 using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Towers
 {
-    public class SimpleTower : TowerBase
+    public class NormalTower : TowerBase
     {
-        public const int TextureOffsetX = 7;
-        public const int TextureOffsetY = 0;
+        public const int TextureOffsetX = 0;
+        public const int TextureOffsetY = 220;
 
         public const int TowerCenterX = 15;
         public const int TowerCenterY = 41;
 
-        private const int ShootingDelay = 50;
+        private const int ShootingDelay = 25;
 
-        private const int DefaultRange = 75;
-        private const int DefaultPrice = 50;
+        private const int DefaultRange = 100;
+        private const int DefaultPrice = 100;
 
         private UnitBase _currentTargetUnit;
 
-        public SimpleTower(Vector2 location, int textureId) : base(location, textureId)
+        public NormalTower(Vector2 location, int textureId) : base(location, textureId)
         {
             Range = DefaultRange;
             Price = DefaultPrice;
@@ -75,7 +73,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                     if (distance <= Range && distance < minDistance)
                     {
                         minDistance = distance;
-                        //ShowStatsHelper.StatsMessage = $"distance = {distance:0}";
+                        ShowStatsHelper.StatsMessage = $"distance = {distance:0}";
                         key = unit.Key;
                     }
                 }

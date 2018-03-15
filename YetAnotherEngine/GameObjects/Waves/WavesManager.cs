@@ -37,7 +37,7 @@ namespace YetAnotherEngine.GameObjects.Waves
                     new SimpleUnit(CoordsCalculator.CalculateLocationFromTilePosition(_roadList.First()),
                         _unitTextures[0], _hpBarTextureId);
                 TilePositionObject tilePositionObject = new TilePositionObject(
-                    Vector2.Divide(_camera.GetPosition(), (float) Game.zScale),
+                    _camera.GetPosition(),
                     new Vector2(unitToBeRendered.Location.X, unitToBeRendered.Location.Y));
 
                 _wave.Units.Add(

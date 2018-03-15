@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel.Design.Serialization;
+using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
@@ -18,15 +19,17 @@ namespace YetAnotherEngine.GameObjects.Textures
         private const string TowerRangeFieldTileFilePath = "Textures/range.png";
         private const string HitmarkerTileFilePath = "Textures/hitmarker.png";
         private const string HpBarTileFilePath = "Textures/quad.png";
+        private const string TowerButtonTileFilePath = "Textures/Buttons/TowerButton.png";
 
         public int[] GroundTextures = new int[2]; //TODO: expand with map textures
-        public int[] TowerTextures = new int[1]; //TODO: expand with tower textures
+        public int[] TowerTextures = new int[2]; //TODO: expand with tower textures
         public int[] UnitsTextures = new int[1]; //TODO: expand with unit textures
         public int[] ProjectilesTextures = new int[1]; //TODO: expand with projectile textures
         public int SelectionTexture;
         public int TowerRangeFiledTexture;
         public int HitMarkerTexture;
         public int HpBarTexture;
+        public int TowerButtonTexture;
 
 
         public MapTextures()
@@ -41,6 +44,9 @@ namespace YetAnotherEngine.GameObjects.Textures
             var towerTexture = new Bitmap(TowersTileFilePath);
             TowerTextures[0] = TextureLoader.GenerateTexture(towerTexture, 128,
                 196, SimpleTower.TextureOffsetX, SimpleTower.TextureOffsetY);
+
+            TowerTextures[1] = TextureLoader.GenerateTexture(towerTexture, 128,
+                196, NormalTower.TextureOffsetX, NormalTower.TextureOffsetY);
 
             var selectionTexture = new Bitmap(SelectionTileFilePath);
             SelectionTexture = TextureLoader.GenerateTexture(selectionTexture, 64, 64, 0, 0);
@@ -59,6 +65,9 @@ namespace YetAnotherEngine.GameObjects.Textures
 
             var hpBarTexture = new Bitmap(HpBarTileFilePath);
             HpBarTexture = TextureLoader.GenerateTexture(hpBarTexture, 64, 64, 0, 0);
+
+            var towerButtonTexture = new Bitmap(TowerButtonTileFilePath);
+            TowerButtonTexture = TextureLoader.GenerateTexture(towerButtonTexture, 124, 124, 0, 0);
         }
     }
 }

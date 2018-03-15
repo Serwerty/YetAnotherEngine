@@ -4,8 +4,8 @@ namespace YetAnotherEngine.Constants
 {
     static class WorldConstants
     {
-        public const int WorldHeight = 16;
-        public const int WorldWidth = 16;
+        public const int WorldHeight = 32;
+        public const int WorldWidth = 32;
         public const int TileHeight = 64;
         public const int TileWidth = 64;
         public const float CameraScrollSpeed = 6f;
