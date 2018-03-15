@@ -11,7 +11,9 @@ namespace YetAnotherEngine.Utils.Helpers
 
         public static DrawablePoint Instance => _instance ?? (_instance = new DrawablePoint());
 
-        private DrawablePoint() { }
+        private DrawablePoint()
+        {
+        }
 
         public Vector2 Location
         {
@@ -49,6 +51,5 @@ namespace YetAnotherEngine.Utils.Helpers
 
             GL.End();
         }
-
     }
 }

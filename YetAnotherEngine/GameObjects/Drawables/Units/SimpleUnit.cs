@@ -10,11 +10,13 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
         public const int UnitHeight = 64;
         public const int MaxHp = 30;
         private const int Speed = 1;
+        public const int GoldPerKill = 5;
 
         public new int Hp { get; set; } = MaxHp;
         public new int CurrentHp { get; set; } = MaxHp;
 
-        public SimpleUnit(Vector2 location, int textureId, int hpBarTextureId) : base(location, textureId, hpBarTextureId)
+        public SimpleUnit(Vector2 location, int textureId, int hpBarTextureId) : base(location, textureId,
+            hpBarTextureId)
         {
         }
 
@@ -63,15 +65,15 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
             CurrentHp -= damage;
             if (CurrentHp > 0)
             {
-                double HpPercent = CurrentHp *1f / Hp;
+                double HpPercent = CurrentHp * 1f / Hp;
                 hpBar.HpPercent = HpPercent;
             }
             else
             {
+                //Unit is Killed
+                Gold.Instance().GoldValue += GoldPerKill;
                 IsDespawned = true;
             }
         }
-
- 
     }
 }

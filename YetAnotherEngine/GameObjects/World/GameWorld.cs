@@ -6,11 +6,9 @@ using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables;
 using YetAnotherEngine.GameObjects.Drawables.Projectiles;
-using YetAnotherEngine.GameObjects.Drawables.Projectiles.ProjectilesImpact;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.GameObjects.Textures;
 using YetAnotherEngine.GameObjects.Waves;
-using YetAnotherEngine.Utils;
 using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.World
@@ -31,18 +29,22 @@ namespace YetAnotherEngine.GameObjects.World
         {
             _mapTextures = new MapTextures(); //TODO: should be map-related
             _mapLoader = new MapLoader(_mapTextures.GroundTextures);
-            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera, _mapTextures.HpBarTexture); //TODO: should be map-related
-            _towersManager = new TowersManager(_mapTextures.TowerTextures,_mapTextures.TowerRangeFiledTexture); //TODO: should be map-related
-            _projectilesManager = new ProjectilesManager(_mapTextures.ProjectilesTextures, _mapTextures.HitMarkerTexture);
-            DrawablePoint.Instance.Init(new Vector2(0,0),_mapTextures.HitMarkerTexture);
+            _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera,
+                _mapTextures.HpBarTexture); //TODO: should be map-related
+            _towersManager =
+                new TowersManager(_mapTextures.TowerTextures,
+                    _mapTextures.TowerRangeFiledTexture); //TODO: should be map-related
+            _projectilesManager =
+                new ProjectilesManager(_mapTextures.ProjectilesTextures, _mapTextures.HitMarkerTexture);
+            DrawablePoint.Instance.Init(new Vector2(0, 0), _mapTextures.HitMarkerTexture);
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
         }
 
         public void AddTower()
         {
-            var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
-            var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
+            var x = (int) MouseHelper.Instance.TilePositionObject.TilePosition.X;
+            var y = (int) MouseHelper.Instance.TilePositionObject.TilePosition.Y;
 
             _towersManager.AddTower(x, y, _mapLoader);
         }
@@ -59,7 +61,7 @@ namespace YetAnotherEngine.GameObjects.World
 
         public void checkTowersForShoot()
         {
-            _towersManager.CheckTowersForShoot(_wavesManager.GetUnits(),ref _projectilesManager);
+            _towersManager.CheckTowersForShoot(_wavesManager.GetUnits(), ref _projectilesManager);
         }
 
         public void SpawnWaves()
@@ -71,7 +73,8 @@ namespace YetAnotherEngine.GameObjects.World
         {
             for (var i = 0; i < WorldConstants.WorldHeight; i++)
             {
-                var globalOffsetX = i * WorldConstants.TileWidth / 2 + WorldConstants.WorldWidth * WorldConstants.TileWidth / 2;
+                var globalOffsetX = i * WorldConstants.TileWidth / 2 +
+                                    WorldConstants.WorldWidth * WorldConstants.TileWidth / 2;
                 var globalOffsetY = i * WorldConstants.TileHeight / 4;
 
                 for (var j = 0; j < WorldConstants.WorldWidth; j++)
@@ -109,16 +112,19 @@ namespace YetAnotherEngine.GameObjects.World
             _drawablesList = new SortedList<int, IDrawable>();
             foreach (var unit in _wavesManager.GetUnits())
             {
-                _drawablesList.Add(unit.Key,(IDrawable)unit.Value);
+                _drawablesList.Add(unit.Key, (IDrawable) unit.Value);
             }
+
             foreach (var tower in _towersManager.GetTowers())
             {
-                _drawablesList.Add(tower.Key, (IDrawable)tower.Value);
+                _drawablesList.Add(tower.Key, (IDrawable) tower.Value);
             }
+
             foreach (var projectile in _projectilesManager.GetProjectiles())
             {
-                _drawablesList.Add(projectile.Key, (IDrawable)projectile.Value);
+                _drawablesList.Add(projectile.Key, (IDrawable) projectile.Value);
             }
+
             foreach (var drawable in _drawablesList)
             {
                 drawable.Value.Draw(Color.White);
@@ -127,10 +133,10 @@ namespace YetAnotherEngine.GameObjects.World
 
         internal void RenderTowerToBePlaced(Vector2 currentOffset)
         {
-            if(_keyboardDevice[Key.T])
+            if (_keyboardDevice[Key.T])
             {
-                var x = (int)MouseHelper.Instance.TilePositionObject.TilePosition.X;
-                var y = (int)MouseHelper.Instance.TilePositionObject.TilePosition.Y;
+                var x = (int) MouseHelper.Instance.TilePositionObject.TilePosition.X;
+                var y = (int) MouseHelper.Instance.TilePositionObject.TilePosition.Y;
 
                 _towersManager.RenderTowerToBePlaced(currentOffset,
                     new Vector2(_mouseDevice.X, _mouseDevice.Y), x, y, _mapLoader);

@@ -24,6 +24,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
         private UnitBase _currentTargetUnit;
 
+        public new int Price { get; protected set; } = 50;
+
         public SimpleTower(Vector2 location, int textureId) : base(location, textureId)
         {
             Range = 75;
@@ -64,7 +66,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                 var location = Location - new Vector2(TowerCenterX - 2, -TowerCenterY + 6);
                 double distance = Math.Sqrt(
                     (_currentTargetUnit.Location.X - location.X) * (_currentTargetUnit.Location.X - location.X) +
-                    (_currentTargetUnit.Location.Y * 2 - location.Y * 2) * (_currentTargetUnit.Location.Y * 2 - location.Y * 2));
+                    (_currentTargetUnit.Location.Y * 2 - location.Y * 2) *
+                    (_currentTargetUnit.Location.Y * 2 - location.Y * 2));
                 if (distance > Range || _currentTargetUnit.IsDespawned)
                 {
                     _currentTargetUnit = CalculateClosestUnit(units);
@@ -86,8 +89,9 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                     var location = Location - new Vector2(TowerCenterX - 2, -TowerCenterY + 6);
                     double distance = Math.Sqrt(
                         (unit.Value.Location.X - location.X) * (unit.Value.Location.X - location.X) +
-                        (unit.Value.Location.Y * 2f - location.Y * 2f) * (unit.Value.Location.Y * 2f - location.Y * 2f));
-                    
+                        (unit.Value.Location.Y * 2f - location.Y * 2f) *
+                        (unit.Value.Location.Y * 2f - location.Y * 2f));
+
                     if (distance <= Range && distance < minDistance)
                     {
                         minDistance = distance;

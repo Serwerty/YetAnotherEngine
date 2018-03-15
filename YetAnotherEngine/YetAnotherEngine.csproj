@@ -55,6 +55,7 @@
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectilesManager.cs" />
     <Compile Include="GameObjects\Drawables\Towers\TowerRangeField.cs" />
     <Compile Include="GameObjects\Drawables\Units\HpBar.cs" />
+    <Compile Include="GameObjects\Gold.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Models\Tile.cs" />
@@ -103,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Maps\map.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\map1.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\newMap.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Textures\Tiles\terrain_tile.png">

@@ -11,6 +11,5 @@ namespace YetAnotherEngine
                 game.Run(WorldConstants.TargetUpdateRate, 0);
             }
         }
-
     }
 }

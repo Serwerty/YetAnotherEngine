@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using YetAnotherEngine.Constants;
@@ -62,7 +57,6 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
                 GL.Vertex2(Location.X, Location.Y + Height);
 
                 GL.End();
-
             }
         }
     }

@@ -10,8 +10,6 @@ namespace YetAnotherEngine.GameObjects
         private const string MenuBackGroundPath = "Textures/Backgrounds/menu-background.jpg";
         private int _backgorundTexture;
 
-        private TextLine _textLine = new TextLine("big-outline.png");
-
         private const string MenuLine1 = "Game";
         private const string MenuLine2 = "Options";
         private const string MenuLine3 = "Exit";
@@ -42,9 +40,9 @@ namespace YetAnotherEngine.GameObjects
             GL.Vertex2(-1.0f, 1.0f);
             GL.End();
 
-            _textLine.WriteText(MenuLine1, 35, 0, 0);
-            _textLine.WriteText(MenuLine2, 4, 500, 500);
-            _textLine.WriteText(MenuLine3, 4, 700, 500);
+            TextLine.Instane().WriteText(MenuLine1, 35, 0, 0);
+            TextLine.Instane().WriteText(MenuLine2, 4, 500, 500);
+            TextLine.Instane().WriteText(MenuLine3, 4, 700, 500);
         }
 
         public void SetUpMenuProjection()

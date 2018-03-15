@@ -12,7 +12,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles.ProjectilesImpact
         public Vector2 Location
         {
             get => _location;
-            set => _location = value - new Vector2(ProjectileSize.X / 2, ProjectileSize.Y /2);
+            set => _location = value - new Vector2(ProjectileSize.X / 2, ProjectileSize.Y / 2);
         }
 
         public Vector2 ProjectileSize = new Vector2(12, 12);

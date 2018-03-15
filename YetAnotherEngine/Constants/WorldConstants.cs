@@ -4,8 +4,8 @@ namespace YetAnotherEngine.Constants
 {
     static class WorldConstants
     {
-        public const int WorldHeight = 30;
-        public const int WorldWidth = 30;
+        public const int WorldHeight = 16;
+        public const int WorldWidth = 16;
         public const int TileHeight = 64;
         public const int TileWidth = 64;
         public const float CameraScrollSpeed = 6f;
@@ -18,5 +18,7 @@ namespace YetAnotherEngine.Constants
         public const float ZoomSpeed = 0.01f;
         public const float ZoomInLimitation = 0.5f;
         public const float ZoomOutLimitation = 2f;
+
+        public const string FontTextureName = "big-outline.png";
     }
 }

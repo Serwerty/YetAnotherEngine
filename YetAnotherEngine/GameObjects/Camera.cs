@@ -7,7 +7,7 @@ namespace YetAnotherEngine.GameObjects
     public class Camera
     {
         private const int WorldHeightInPixels = WorldConstants.WorldHeight * WorldConstants.TileHeight / 4 +
-                                        WorldConstants.WorldWidth * WorldConstants.TileHeight / 4;
+                                                WorldConstants.WorldWidth * WorldConstants.TileHeight / 4;
 
         private const int WorldWidthInPixels = WorldConstants.WorldHeight * WorldConstants.TileWidth / 2 +
                                                WorldConstants.WorldWidth * WorldConstants.TileWidth / 2;
@@ -46,7 +46,8 @@ namespace YetAnotherEngine.GameObjects
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {
-                    var upperMapBoundary = _position.Y < -WorldHeightInPixels / 2 + (WorldHeightInPixels / 2 - WindowHeight / 2);
+                    var upperMapBoundary =
+                        _position.Y < -WorldHeightInPixels / 2 + (WorldHeightInPixels / 2 - WindowHeight / 2);
 
                     if (WorldHeightInPixels > WindowHeight && upperMapBoundary)
                     {
@@ -55,7 +56,9 @@ namespace YetAnotherEngine.GameObjects
                 }
                 else if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
                 {
-                    var lowerMapBoundary = _position.Y > -(WorldHeightInPixels / 2 + (WorldHeightInPixels / 2 - WindowHeight / 2)) - WorldConstants.TileHeight / 2;
+                    var lowerMapBoundary = _position.Y >
+                                           -(WorldHeightInPixels / 2 + (WorldHeightInPixels / 2 - WindowHeight / 2)) -
+                                           WorldConstants.TileHeight / 2;
 
                     if (WorldHeightInPixels > WindowHeight && lowerMapBoundary)
                     {
@@ -64,7 +67,8 @@ namespace YetAnotherEngine.GameObjects
                 }
                 else if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
                 {
-                    var rightMapBoundary = _position.X < WorldWidthInPixels / 2 + (WorldWidthInPixels / 2 - WindowWidth / 2) + WorldConstants.TileWidth / 2;
+                    var rightMapBoundary = _position.X < WorldWidthInPixels / 2 +
+                                           (WorldWidthInPixels / 2 - WindowWidth / 2) + WorldConstants.TileWidth / 2;
 
                     if (WorldWidthInPixels > WindowWidth && rightMapBoundary)
                     {
@@ -73,7 +77,8 @@ namespace YetAnotherEngine.GameObjects
                 }
                 else if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
                 {
-                    var leftMapBoundary = _position.X > WorldWidthInPixels / 2 - (WorldWidthInPixels / 2 - WindowWidth / 2) + WorldConstants.TileWidth / 2;
+                    var leftMapBoundary = _position.X > WorldWidthInPixels / 2 -
+                                          (WorldWidthInPixels / 2 - WindowWidth / 2) + WorldConstants.TileWidth / 2;
 
                     if (WorldWidthInPixels > WindowWidth && leftMapBoundary)
                     {
@@ -85,22 +90,22 @@ namespace YetAnotherEngine.GameObjects
 
         private void MoveRight(double multiplier)
         {
-            _position.X += (float)multiplier * WorldConstants.CameraScrollSpeed;
+            _position.X += (float) multiplier * WorldConstants.CameraScrollSpeed;
         }
 
         private void MoveLeft(double multiplier)
         {
-            _position.X -= (float)multiplier * WorldConstants.CameraScrollSpeed;
+            _position.X -= (float) multiplier * WorldConstants.CameraScrollSpeed;
         }
 
         private void MoveUp(double multiplier)
         {
-            _position.Y += (float)multiplier * WorldConstants.CameraScrollSpeed;
+            _position.Y += (float) multiplier * WorldConstants.CameraScrollSpeed;
         }
 
         private void MoveDown(double multiplier)
         {
-            _position.Y -= (float)multiplier * WorldConstants.CameraScrollSpeed;
+            _position.Y -= (float) multiplier * WorldConstants.CameraScrollSpeed;
         }
 
         public Vector2 GetPosition()

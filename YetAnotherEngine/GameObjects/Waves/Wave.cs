@@ -10,7 +10,7 @@ namespace YetAnotherEngine.GameObjects.Waves
         public int UnitIntervalDecrement { get; set; }
         public UnitType Type { get; set; }
 
-        public SortedList<int, UnitBase> Units = new SortedList<int,UnitBase>();
+        public SortedList<int, UnitBase> Units = new SortedList<int, UnitBase>();
 
         private int _timer;
         private const int DefaultDelayInMs = 60;

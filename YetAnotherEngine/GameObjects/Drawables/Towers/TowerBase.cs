@@ -19,6 +19,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
         public abstract void ResetDelay();
 
+        public int Price { get; protected set; }
 
         protected TowerBase(Vector2 location, int textureId)
         {
@@ -26,7 +27,6 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             TextureId = textureId;
         }
 
-        public abstract UnitBase GetTargetUnit(SortedList<int,UnitBase> units);
-
+        public abstract UnitBase GetTargetUnit(SortedList<int, UnitBase> units);
     }
 }

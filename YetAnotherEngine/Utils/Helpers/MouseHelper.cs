@@ -14,10 +14,9 @@ namespace YetAnotherEngine.Utils.Helpers
         private Camera _camera;
         private TilePositionObject _tilePositionObject;
 
-        private const string TextFont = "big-outline.png";
-        private TextLine _textLineCoords = new TextLine(TextFont);
-
-        private MouseHelper() { }
+        private MouseHelper()
+        {
+        }
 
 
         public static MouseHelper Instance => _instance ?? (_instance = new MouseHelper());
@@ -34,20 +33,23 @@ namespace YetAnotherEngine.Utils.Helpers
 
         public void Calculate()
         {
-            _tilePositionObject = new TilePositionObject(Vector2.Divide(_camera.GetPosition(),(float)Game.zScale), new Vector2(_mouseDevice.X * Game.MultiplierWidth, _mouseDevice.Y  * Game.MultiplierHeight));
+            _tilePositionObject = new TilePositionObject(Vector2.Divide(_camera.GetPosition(), (float) Game.zScale),
+                new Vector2(_mouseDevice.X * Game.MultiplierWidth, _mouseDevice.Y * Game.MultiplierHeight));
         }
 
         public void DrawCoords()
         {
             GL.Color4(Color.White);
-            _textLineCoords.WriteFps($"mouse X: {_mouseDevice.X:0} mouse Y: {_mouseDevice.Y:0}");
+             TextLine.Instane().WriteCoords($"mouse X: {_mouseDevice.X:0} mouse Y: {_mouseDevice.Y:0}");
         }
 
         public void DrawTilePosition()
         {
             GL.Color4(Color.White);
-            _textLineCoords.WriteFps($"pos X: {TilePositionObject.TilePosition.X:0} pos Y: {TilePositionObject.TilePosition.Y:0}" +
-                                     $"loc X: {TilePositionObject.TileCoords.X:0} loc Y: {TilePositionObject.TileCoords.Y:0}");
+            if (TilePositionObject == null) return;
+            TextLine.Instane().WriteTilePosition(
+                $"pos X: {TilePositionObject.TilePosition.X:0} pos Y: {TilePositionObject.TilePosition.Y:0} " +
+                $"loc X: {TilePositionObject.TileCoords.X:0} loc Y: {TilePositionObject.TileCoords.Y:0}");
         }
     }
 }

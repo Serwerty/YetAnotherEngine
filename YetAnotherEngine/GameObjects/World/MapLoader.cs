@@ -13,7 +13,7 @@ namespace YetAnotherEngine.GameObjects.World
     //TODO: split path and textures responsibilities into two classes
     public class MapLoader
     {
-        private const string DefaultMapPath = "Maps/map.dat";
+        private const string DefaultMapPath = "Maps/newMap.dat";
 
         private readonly string _mapFilePath;
         private readonly int[] _mapTextures;
@@ -36,6 +36,7 @@ namespace YetAnotherEngine.GameObjects.World
                 {
                     GetConstructionTiles();
                 }
+
                 return _constructionTiles;
             }
         }
@@ -48,6 +49,7 @@ namespace YetAnotherEngine.GameObjects.World
                 {
                     GetConstructionTiles();
                 }
+
                 return _roadList;
             }
         }
@@ -132,6 +134,7 @@ namespace YetAnotherEngine.GameObjects.World
                         {
                             path.Add(lastRoadPosition);
                         }
+
                         lastDirection = direction;
                     }
                     else
@@ -141,8 +144,10 @@ namespace YetAnotherEngine.GameObjects.World
                     }
                 }
                 else path.Add(roadPostion);
+
                 lastRoadPosition = roadPostion;
             }
+
             path.Add(RoadList.Last());
             return path;
         }

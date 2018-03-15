@@ -41,7 +41,7 @@ namespace YetAnotherEngine
         {
             VSync = VSyncMode.On;
 
-            WindowBorder = WindowBorder.Fixed;
+           // WindowBorder = WindowBorder.Fixed;
 
             MultiplierWidth = NominalWidth * 1f / Width;
             MultiplierHeight = NominalHeight * 1f / Height;
@@ -167,12 +167,14 @@ namespace YetAnotherEngine
 
                     #region ShowInfo
 
-                    //FpsHelper.Instance.DrawFpsText(e.Time);
-                    //MouseHelper.Instance.DrawCoords();
-                    //MouseHelper.Instance.DrawTilePosition();
+                    FpsHelper.Instance.DrawFpsText(e.Time);
+                    MouseHelper.Instance.DrawCoords();
+                    MouseHelper.Instance.DrawTilePosition();
                     ShowStatsHelper.Instance.ShowStats();
 
                     #endregion
+
+                    Gold.Instance().WriteGoldValueLine();
 
                     break;
                 case GameState.InOptions:

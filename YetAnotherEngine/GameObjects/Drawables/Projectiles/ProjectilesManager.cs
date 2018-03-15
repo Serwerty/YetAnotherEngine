@@ -14,7 +14,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
         private int _projectileImpactTextureId;
         public int Counter = 0;
 
-        public ProjectilesManager(int[] projectilesTextures,int projectileImpactTextureId)
+        public ProjectilesManager(int[] projectilesTextures, int projectileImpactTextureId)
         {
             _projectilesTextures = projectilesTextures;
             _projectileImpactTextureId = projectileImpactTextureId;
@@ -44,7 +44,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
             var towerCenterLocation = tower.Location + tileOffset;
 
 
-            Arrow arrow = new Arrow(towerCenterLocation, _projectilesTextures[0], _projectileImpactTextureId, targetUnit);
+            Arrow arrow = new Arrow(towerCenterLocation, _projectilesTextures[0], _projectileImpactTextureId,
+                targetUnit);
             _projectiles.Add((int) arrow.Location.X * 100 + (int) arrow.Location.Y * 10000 + Counter, arrow);
             Counter++;
         }
