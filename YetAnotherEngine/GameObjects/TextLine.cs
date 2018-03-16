@@ -20,28 +20,28 @@ namespace YetAnotherEngine.GameObjects
         public void WriteFps(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 99, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 3, 99, 0);
             _textFont.Stop();
         }
 
         public void WriteCoords(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 97, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 3, 97, 0);
             _textFont.Stop();
         }
 
         public void WriteTilePosition(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 95, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 3, 95, 0);
             _textFont.Stop();
         }
 
         public void WriteLogText(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 2, 93, 0);
+            _textFont.WriteStringAtRelativePosition(text, 1.8, 3, 93, 0);
             _textFont.Stop();
         }
 

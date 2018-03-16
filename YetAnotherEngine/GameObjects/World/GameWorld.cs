@@ -23,7 +23,6 @@ namespace YetAnotherEngine.GameObjects.World
         private readonly MapTextures _mapTextures;
         private readonly WavesManager _wavesManager;
         private readonly TowersManager _towersManager;
-        private readonly TowerButton _towerButton;
         private ProjectilesManager _projectilesManager;
         private SortedList<int, IDrawable> _drawablesList;
 
@@ -41,7 +40,7 @@ namespace YetAnotherEngine.GameObjects.World
             DrawablePoint.Instance.Init(new Vector2(0, 0), _mapTextures.HitMarkerTexture);
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
-            _towerButton = new TowerButton(_mapTextures.TowerButtonTexture);
+            TowerButton.GetInstance().Init(_mapTextures.TowerButtonTexture,_mapTextures.TowerTextures);
         }
 
         public void AddTower()
@@ -176,9 +175,14 @@ namespace YetAnotherEngine.GameObjects.World
             }
         }
 
+        public void CheckButtons()
+        {
+            TowerButton.GetInstance().IsMouseInside(new Vector2(_mouseDevice.X,_mouseDevice.Y));
+        }
+
         internal void RenderButtons()
         {
-            _towerButton.Draw();
+            TowerButton.GetInstance().Draw();
         }
     }
 }

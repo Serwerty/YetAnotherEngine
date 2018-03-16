@@ -33,6 +33,9 @@ namespace YetAnotherEngine
         public static float MultiplierWidth;
         public static float MultiplierHeight;
 
+        public static float CurrentWidth;
+        public static float CurrentHeight;
+
         private float _gameClockMultiplier = 1;
 
         private GameState _gameState = GameState.InGame;
@@ -45,6 +48,9 @@ namespace YetAnotherEngine
 
             MultiplierWidth = NominalWidth * 1f / Width;
             MultiplierHeight = NominalHeight * 1f / Height;
+
+            CurrentWidth = Width;
+            CurrentHeight = Height;
 
             _camera = new Camera(Keyboard, Mouse, NominalWidth, NominalHeight);
             _gameWorld = new GameWorld(Mouse, Keyboard, _camera);
@@ -89,7 +95,8 @@ namespace YetAnotherEngine
 
             MultiplierWidth = NominalWidth * 1f / Width;
             MultiplierHeight = NominalHeight * 1f / Height;
-
+            CurrentWidth = Width;
+            CurrentHeight = Height;
             GL.Viewport(0, 0, Width, Height);
         }
 
@@ -100,6 +107,7 @@ namespace YetAnotherEngine
             {
                 _gameWorld.AddTower();
             }
+            _gameWorld.CheckButtons();
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -160,7 +168,7 @@ namespace YetAnotherEngine
                     FpsHelper.Instance.DrawFpsText(e.Time);
                     MouseHelper.Instance.DrawCoords();
                     MouseHelper.Instance.DrawTilePosition();
-                    ShowStatsHelper.StatsMessage = $"zScale = {zScale}";
+                    //ShowStatsHelper.StatsMessage = $"zScale = {zScale}";
                     ShowStatsHelper.Instance.ShowStats();
 
                     #endregion

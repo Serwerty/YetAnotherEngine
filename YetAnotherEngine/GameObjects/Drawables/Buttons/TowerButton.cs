@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using YetAnotherEngine.Constants;
+using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Buttons
 {
     class TowerButton
     {
-        public int TextureId;
+        private int _textureId;
+        private int[] _towerTextures;
+        private static TowerButton _instance;
+        public static TowerButton GetInstance() => _instance ?? (_instance = new TowerButton());
 
-        public TowerButton(int textureId)
+        private TowerButton()
         {
-            TextureId = textureId;
         }
+
+        public void Init(int textureId, int[] towerTextures)
+        {
+            _textureId = textureId;
+            _towerTextures = towerTextures;
+        }
+
+        public bool FirstButtonSellected = true;
+        public bool SecondButtonSellected = false;
 
         public void Draw()
         {
@@ -27,25 +34,77 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Translate(5,5, 0);
             var aspectRatio = ComputeAspectRatio();
             GL.Scale(aspectRatio * 1, 1, 1);
             GL.Rotate(0, 0, 0, 1);
             GL.PushMatrix();
-  
-            GL.BindTexture(TextureTarget.Texture2D, TextureId);
+            GL.Translate(5, 5, 0);
+
+            GL.BindTexture(TextureTarget.Texture2D, _textureId);
 
             GL.Begin(PrimitiveType.Quads);
-            GL.Color4(Color.White);
+
+            GL.Color4(FirstButtonSellected ? Color.Green : Color.White);
 
             GL.TexCoord2(0, 0);
             GL.Vertex2(0, 0);
             GL.TexCoord2(1, 0);
             GL.Vertex2(10, 0);
             GL.TexCoord2(1, 1);
-            GL.Vertex2(10,10);
+            GL.Vertex2(10, 10);
             GL.TexCoord2(0, 1);
-            GL.Vertex2(0,10);
+            GL.Vertex2(0, 10);
+
+            GL.End();
+
+            GL.BindTexture(TextureTarget.Texture2D, _towerTextures[0]);
+
+            GL.Begin(PrimitiveType.Quads);
+
+            GL.Color4(Color.White);
+
+            GL.TexCoord2(0, 1);
+            GL.Vertex2(2, 1);
+            GL.TexCoord2(1, 1);
+            GL.Vertex2(8, 1);
+            GL.TexCoord2(1, 0);
+            GL.Vertex2(8, 9);
+            GL.TexCoord2(0, 0);
+            GL.Vertex2(2, 9);
+
+            GL.End();
+
+            GL.Translate(15, 0, 0);
+
+            GL.BindTexture(TextureTarget.Texture2D, _textureId);
+            GL.Begin(PrimitiveType.Quads);
+            GL.Color4(SecondButtonSellected ? Color.Green : Color.White);
+
+            GL.TexCoord2(0, 0);
+            GL.Vertex2(0, 0);
+            GL.TexCoord2(1, 0);
+            GL.Vertex2(10, 0);
+            GL.TexCoord2(1, 1);
+            GL.Vertex2(10, 10);
+            GL.TexCoord2(0, 1);
+            GL.Vertex2(0, 10);
+
+            GL.End();
+
+            GL.BindTexture(TextureTarget.Texture2D, _towerTextures[1]);
+
+            GL.Begin(PrimitiveType.Quads);
+
+            GL.Color4(Color.White);
+
+            GL.TexCoord2(0, 1);
+            GL.Vertex2(2, 1);
+            GL.TexCoord2(1, 1);
+            GL.Vertex2(8, 1);
+            GL.TexCoord2(1, 0);
+            GL.Vertex2(8, 9);
+            GL.TexCoord2(0, 0);
+            GL.Vertex2(2, 9);
 
             GL.End();
 
@@ -61,8 +120,43 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             GL.GetInteger(GetPName.Viewport, viewport);
             var w = viewport[2];
             var h = viewport[3];
-            double aspectRatio = h / (float)w;
+            double aspectRatio = h / (float) w;
             return aspectRatio;
+        }
+
+        public void IsMouseInside(Vector2 location)
+        {
+            var aspectRatio = ComputeAspectRatio();
+            if (location.X * aspectRatio * 100f / Game.CurrentHeight >= 5 * aspectRatio && location.X * aspectRatio *
+                                                                                        100f / Game.CurrentHeight <=
+                                                                                        15 * aspectRatio
+                                                                                        && 100 - (location.Y * 100 /
+                                                                                                  Game.CurrentHeight) >=
+                                                                                        5 && 100 -
+                                                                                        (location.Y * 100f /
+                                                                                         Game.CurrentHeight) <=
+                                                                                        15)
+            {
+                FirstButtonSellected = true;
+                SecondButtonSellected = false;
+            }
+
+            else if (location.X * aspectRatio * 100f / Game.CurrentHeight >= 20 * aspectRatio && location.X *
+                                                                                              aspectRatio * 100f /
+                                                                                              Game.CurrentHeight <=
+                                                                                              30 * aspectRatio
+                                                                                              && 100 - (location.Y *
+                                                                                                        100 / Game
+                                                                                                            .CurrentHeight
+                                                                                              ) >=
+                                                                                              5 && 100 -
+                                                                                              (location.Y * 100f /
+                                                                                               Game.CurrentHeight) <=
+                                                                                              15)
+            {
+                FirstButtonSellected = false;
+                SecondButtonSellected = true;
+            }
         }
     }
 }

@@ -9,9 +9,10 @@ namespace YetAnotherEngine.Utils
         {
             //https://math.stackexchange.com/questions/312403/how-do-i-determine-if-a-point-is-within-a-rhombus
 
-            var roughLocation = new Vector2((currentOffset.X + location.X - Game.NominalWidth / 2f),
-                                            (-currentOffset.Y + location.Y - Game.NominalHeight / 2f));
+            var roughLocation = new Vector2((currentOffset.X + location.X - Game.CurrentWidth / 2f),
+                                            (-currentOffset.Y + location.Y - Game.CurrentHeight / 2f));
 
+            roughLocation /= Game.zScale;
 
             roughLocation.X -= roughLocation.X % WorldConstants.TileWidth;
             roughLocation.Y -= roughLocation.Y % (WorldConstants.TileHeight / 2f);
@@ -27,9 +28,11 @@ namespace YetAnotherEngine.Utils
             Vector2 U = (C - A) / (2 * a);         // unit vector in x-direction
             Vector2 V = (D - B) / (2 * b);         // unit vector in y-direction
 
-            Vector2 P = new Vector2(currentOffset.X + location.X - Game.NominalWidth / 2f,
-                                    -currentOffset.Y + location.Y - Game.NominalHeight / 2f);
+            Vector2 P = new Vector2(currentOffset.X + location.X - Game.CurrentWidth / 2f,
+                                    -currentOffset.Y + location.Y - Game.CurrentHeight / 2f);
 
+            //P = new Vector2(P.X / Game.zScale, P.Y / Game.zScale);
+            P /= Game.zScale;
             Vector2 W = P - Q;
             float xabs = (W * U).Length;
             float yabs = (W * V).Length;
