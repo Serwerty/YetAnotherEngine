@@ -54,7 +54,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                     var location = MouseHelper.Instance.TilePositionObject.TileCoords - tileOffset;
 
                     TowerBase tower = new SimpleTower(location, _towerTexures[0]);
-                    if (TowerButton.GetInstance().SecondButtonSellected)
+                    if (TowerButtons.GetInstance().SecondButtonSellected)
                         tower = new NormalTower(location, _towerTexures[1]);
 
 
@@ -109,13 +109,13 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                 return;
             }
 
-            if (TowerButton.GetInstance().FirstButtonSellected)
+            if (TowerButtons.GetInstance().FirstButtonSellected)
             {
                 _towerToBePlaced = _simpleTowerToBePlaced;
                 _towerRangeField = _simpleTowerRangeField;
             }
 
-            if (TowerButton.GetInstance().SecondButtonSellected)
+            if (TowerButtons.GetInstance().SecondButtonSellected)
             {
                 _towerToBePlaced = _normalTowerToBePlaced;
                 _towerRangeField = _normalTowerRangeField;

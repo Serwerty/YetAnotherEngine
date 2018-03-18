@@ -40,7 +40,7 @@ namespace YetAnotherEngine.GameObjects.World
             DrawablePoint.Instance.Init(new Vector2(0, 0), _mapTextures.HitMarkerTexture);
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
-            TowerButton.GetInstance().Init(_mapTextures.TowerButtonTexture,_mapTextures.TowerTextures);
+            TowerButtons.GetInstance().Init(_mapTextures.TowerButtonTexture,_mapTextures.TowerTextures);
         }
 
         public void AddTower()
@@ -177,12 +177,12 @@ namespace YetAnotherEngine.GameObjects.World
 
         public void CheckButtons()
         {
-            TowerButton.GetInstance().IsMouseInside(new Vector2(_mouseDevice.X,_mouseDevice.Y));
+            TowerButtons.GetInstance().IsMouseInside(new Vector2(_mouseDevice.X,_mouseDevice.Y));
         }
 
         internal void RenderButtons()
         {
-            TowerButton.GetInstance().Draw();
+            TowerButtons.GetInstance().Draw();
         }
     }
 }

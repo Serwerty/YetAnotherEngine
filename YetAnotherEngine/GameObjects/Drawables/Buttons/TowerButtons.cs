@@ -1,18 +1,17 @@
 ﻿using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Buttons
 {
-    class TowerButton
+    class TowerButtons
     {
         private int _textureId;
         private int[] _towerTextures;
-        private static TowerButton _instance;
-        public static TowerButton GetInstance() => _instance ?? (_instance = new TowerButton());
+        private static TowerButtons _instance;
+        public static TowerButtons GetInstance() => _instance ?? (_instance = new TowerButtons());
 
-        private TowerButton()
+        private TowerButtons()
         {
         }
 
@@ -23,7 +22,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
         }
 
         public bool FirstButtonSellected = true;
-        public bool SecondButtonSellected = false;
+        public bool SecondButtonSellected;
 
         public void Draw()
         {

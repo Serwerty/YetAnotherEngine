@@ -48,7 +48,7 @@
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\TileType.cs" />
     <Compile Include="Enums\UnitType.cs" />
-    <Compile Include="GameObjects\Drawables\Buttons\TowerButton.cs" />
+    <Compile Include="GameObjects\Drawables\Buttons\TowerButtons.cs" />
     <Compile Include="GameObjects\Drawables\IDrawable.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\Arrow.cs" />
     <Compile Include="GameObjects\Drawables\Projectiles\ProjectileBase.cs" />

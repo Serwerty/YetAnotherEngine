@@ -53,47 +53,39 @@ namespace YetAnotherEngine.GameObjects
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {
-                    var upperMapBoundary = _position.Y < (-Game.CurrentHeight / Game.zScale) / 2;
-
-                    if (_worldHeightInPixels > WindowHeight && upperMapBoundary)
+                    if (_position.Y < (-Game.CurrentHeight / Game.zScale) / 2)
                     {
                         MoveUp(multiplier);
                     }
                 }
                 else if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
                 {
-                    var lowerMapBoundary = _position.Y >
-                                           (-_worldHeightInPixels - _worldHeightInPixels +
-                                            Game.CurrentHeight / Game.zScale) / 2;
-                    if (_worldHeightInPixels > WindowHeight && lowerMapBoundary)
+                    if (_position.Y >
+                        (-_worldHeightInPixels - _worldHeightInPixels +
+                         Game.CurrentHeight / Game.zScale) / 2)
                     {
                         MoveDown(multiplier);
                     }
                 }
                 else if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
                 {
-                    var rightMapBoundary = _position.X <
-                                           (_worldWidthInPixels + WorldConstants.TileWidth + _worldWidthInPixels -
-                                            Game.CurrentWidth / Game.zScale) / 2;
-
-                    if (_worldWidthInPixels > WindowWidth && rightMapBoundary)
+                    if (_position.X <
+                        (_worldWidthInPixels + WorldConstants.TileWidth + _worldWidthInPixels -
+                         Game.CurrentWidth / Game.zScale) / 2)
                     {
                         MoveRight(multiplier);
                     }
                 }
                 else if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
                 {
-                    var leftMapBoundary =
-                        _position.X > (WorldConstants.TileWidth + Game.CurrentWidth / Game.zScale) / 2;
-
-                    if (_worldWidthInPixels > WindowWidth && leftMapBoundary)
+                    if (_position.X > (WorldConstants.TileWidth + Game.CurrentWidth / Game.zScale) / 2)
                     {
                         MoveLeft(multiplier);
                     }
                 }
 
                 ShowStatsHelper.StatsMessage =
-                    $"pos:{_position.Y}, {Game.CurrentHeight / 2}, {_worldHeightInPixels}, {Game.CurrentHeight}";
+                    $"pos:{_position.Y}, {(-_worldHeightInPixels - _worldHeightInPixels + Game.CurrentHeight / Game.zScale) / 2}";
             }
         }
 
