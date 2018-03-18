@@ -43,7 +43,7 @@ namespace YetAnotherEngine
         public Game() : base(NominalWidth, NominalHeight, new GraphicsMode(32, 16, 8, 16), WindowHeader)
         {
             VSync = VSyncMode.On;
-
+            WindowState = WindowState.Fullscreen;
            // WindowBorder = WindowBorder.Fixed;
 
             MultiplierWidth = NominalWidth * 1f / Width;
@@ -108,6 +108,15 @@ namespace YetAnotherEngine
                 _gameWorld.AddTower();
             }
             _gameWorld.CheckButtons();
+        }
+
+        protected override void OnKeyDown(KeyboardKeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Alt && e.Key == Key.F4)
+            {
+                Environment.Exit(0);
+            }
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
