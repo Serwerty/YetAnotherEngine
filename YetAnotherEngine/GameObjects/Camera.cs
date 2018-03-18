@@ -1,18 +1,19 @@
 ﻿using OpenTK;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects
 {
     public class Camera
     {
-        private const int WorldHeightInPixels = WorldConstants.WorldHeight * WorldConstants.TileHeight / 4 +
-                                                WorldConstants.WorldWidth * WorldConstants.TileHeight / 4;
+        private float _worldHeightInPixels = WorldConstants.WorldHeight * WorldConstants.TileHeight / 4 +
+                                             WorldConstants.WorldWidth * WorldConstants.TileHeight / 4;
 
-        private const int WorldWidthInPixels = WorldConstants.WorldHeight * WorldConstants.TileWidth / 2 +
-                                               WorldConstants.WorldWidth * WorldConstants.TileWidth / 2;
+        private float _worldWidthInPixels = WorldConstants.WorldHeight * WorldConstants.TileWidth / 2 +
+                                            WorldConstants.WorldWidth * WorldConstants.TileWidth / 2;
 
-        private const double MovableScreenPercent = 0.10;
+        private const double MovableScreenPercent = 0.07;
 
         private Vector2 _position;
         private readonly KeyboardDevice _keyboardDevice;
@@ -31,25 +32,30 @@ namespace YetAnotherEngine.GameObjects
             WindowHeight = windowHeight;
 
 
-            _position = new Vector2(WorldWidthInPixels / 2 + WorldConstants.TileWidth / 2,
-                -WorldHeightInPixels / 2);
+            _position = new Vector2(_worldWidthInPixels / 2 + WorldConstants.TileWidth / 2,
+                -_worldHeightInPixels / 2);
         }
 
         public void Move(double multiplier)
         {
+            //_worldWidthInPixels *= Game.MultiplierWidth;
+            //_worldHeightInPixels *= Game.MultiplierHeight;
+
             if (!IsLocked)
             {
-                var mouseMoveRight = _mouseDevice.X >= (WindowWidth - WindowWidth * MovableScreenPercent);
-                var mouseMoveLeft = _mouseDevice.X <= (WindowWidth * MovableScreenPercent);
-                var mouseMoveUp = _mouseDevice.Y <= (WindowWidth * MovableScreenPercent);
-                var mouseMoveDown = _mouseDevice.Y >= (WindowHeight - WindowWidth * MovableScreenPercent);
+                var mouseMoveRight = _mouseDevice.X / Game.zScale >=
+                                     (Game.CurrentWidth - Game.CurrentWidth * MovableScreenPercent);
+                var mouseMoveLeft = _mouseDevice.X / Game.zScale <= (Game.CurrentWidth * MovableScreenPercent);
+                var mouseMoveUp = _mouseDevice.Y / Game.zScale <= (Game.CurrentWidth * MovableScreenPercent);
+                var mouseMoveDown = _mouseDevice.Y / Game.zScale >=
+                                    (Game.CurrentHeight - Game.CurrentWidth * MovableScreenPercent);
+
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {
-                    var upperMapBoundary =
-                        _position.Y < -WorldHeightInPixels / 2 + (WorldHeightInPixels / 2 - WindowHeight / 2);
+                    var upperMapBoundary = _position.Y < (-Game.CurrentHeight / Game.zScale) / 2;
 
-                    if (WorldHeightInPixels > WindowHeight && upperMapBoundary)
+                    if (_worldHeightInPixels > WindowHeight && upperMapBoundary)
                     {
                         MoveUp(multiplier);
                     }
@@ -57,34 +63,37 @@ namespace YetAnotherEngine.GameObjects
                 else if (_keyboardDevice[KeyboardConstants.DownKey] || mouseMoveDown)
                 {
                     var lowerMapBoundary = _position.Y >
-                                           -(WorldHeightInPixels / 2 + (WorldHeightInPixels / 2 - WindowHeight / 2)) -
-                                           WorldConstants.TileHeight / 2;
-
-                    if (WorldHeightInPixels > WindowHeight && lowerMapBoundary)
+                                           (-_worldHeightInPixels - _worldHeightInPixels +
+                                            Game.CurrentHeight / Game.zScale) / 2;
+                    if (_worldHeightInPixels > WindowHeight && lowerMapBoundary)
                     {
                         MoveDown(multiplier);
                     }
                 }
                 else if (_keyboardDevice[KeyboardConstants.RightKey] || mouseMoveRight)
                 {
-                    var rightMapBoundary = _position.X < WorldWidthInPixels / 2 +
-                                           (WorldWidthInPixels / 2 - WindowWidth / 2) + WorldConstants.TileWidth / 2;
+                    var rightMapBoundary = _position.X <
+                                           (_worldWidthInPixels + WorldConstants.TileWidth + _worldWidthInPixels -
+                                            Game.CurrentWidth / Game.zScale) / 2;
 
-                    if (WorldWidthInPixels > WindowWidth && rightMapBoundary)
+                    if (_worldWidthInPixels > WindowWidth && rightMapBoundary)
                     {
                         MoveRight(multiplier);
                     }
                 }
                 else if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
                 {
-                    var leftMapBoundary = _position.X > WorldWidthInPixels / 2 -
-                                          (WorldWidthInPixels / 2 - WindowWidth / 2) + WorldConstants.TileWidth / 2;
+                    var leftMapBoundary =
+                        _position.X > (WorldConstants.TileWidth + Game.CurrentWidth / Game.zScale) / 2;
 
-                    if (WorldWidthInPixels > WindowWidth && leftMapBoundary)
+                    if (_worldWidthInPixels > WindowWidth && leftMapBoundary)
                     {
                         MoveLeft(multiplier);
                     }
                 }
+
+                ShowStatsHelper.StatsMessage =
+                    $"pos:{_position.Y}, {Game.CurrentHeight / 2}, {_worldHeightInPixels}, {Game.CurrentHeight}";
             }
         }
 
@@ -110,7 +119,7 @@ namespace YetAnotherEngine.GameObjects
 
         public Vector2 GetPosition()
         {
-            return new Vector2(_position.X * (float)Game.zScale, _position.Y * (float)Game.zScale);
+            return new Vector2(_position.X * (float) Game.zScale, _position.Y * (float) Game.zScale);
         }
     }
 }

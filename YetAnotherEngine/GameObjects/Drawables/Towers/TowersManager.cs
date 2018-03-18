@@ -34,10 +34,11 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             _simpleTowerToBePlaced = new SimpleTower(new Vector2(0, 0), towerTextures[0]);
             _normalTowerToBePlaced = new NormalTower(new Vector2(0, 0), towerTextures[1]);
             _towerToBePlaced = _simpleTowerToBePlaced;
-            //_towerToBePlaced = new NormalTower(new Vector2(0, 0), towerTextures[1]);
+
             _simpleTowerRangeField = new TowerRangeField(new Vector2(0, 0), towerRangeFieldTexture, _simpleTowerToBePlaced.Range);
             _normalTowerRangeField = new TowerRangeField(new Vector2(0, 0), towerRangeFieldTexture, _normalTowerToBePlaced.Range);
             _towerRangeField = _simpleTowerRangeField;
+
             _shouldTowerBeRendered = true;
         }
 
