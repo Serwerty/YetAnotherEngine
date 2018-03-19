@@ -14,18 +14,21 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
         public abstract void Draw(Color color);
 
         public abstract void Move(double speedMultiplier);
+        public int Damage { get; protected set; }
+
 
         public bool IsDespawned { get; set; } = false;
         public bool IsHitted { get; set; } = false;
         protected int TextureId { get; set; }
-        internal ProjectileImpact projectilesImpact;
+        internal ProjectileImpact ProjectilesImpact;
 
-        protected ProjectileBase(Vector2 location, int textureId, int projectileImpactTextureId, UnitBase targetUnit)
+        protected ProjectileBase(Vector2 location, int textureId, int projectileImpactTextureId, UnitBase targetUnit,int damage)
         {
             Location = location;
             TextureId = textureId;
             TargetUnit = targetUnit;
-            projectilesImpact = new ProjectileImpact(location, projectileImpactTextureId);
+            Damage = damage;
+            ProjectilesImpact = new ProjectileImpact(location, projectileImpactTextureId);
         }
     }
 }

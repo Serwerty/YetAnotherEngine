@@ -6,6 +6,7 @@ using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables;
 using YetAnotherEngine.GameObjects.Drawables.Buttons;
+using YetAnotherEngine.GameObjects.Drawables.Icons;
 using YetAnotherEngine.GameObjects.Drawables.Projectiles;
 using YetAnotherEngine.GameObjects.Drawables.Towers;
 using YetAnotherEngine.GameObjects.Textures;
@@ -41,6 +42,7 @@ namespace YetAnotherEngine.GameObjects.World
             _mouseDevice = mouseDevice;
             _keyboardDevice = keyboardDevice;
             TowerButtons.GetInstance().Init(_mapTextures.TowerButtonTexture,_mapTextures.TowerTextures);
+            IconsManager.GetInstance().Init(_mapTextures.GoldIconTexture, _mapTextures.DamageIconTexture, _mapTextures.RangeIconTexture);
         }
 
         public void AddTower()
@@ -175,14 +177,17 @@ namespace YetAnotherEngine.GameObjects.World
             }
         }
 
+        internal void RenderUtils()
+        {
+            TowerButtons.GetInstance().Draw();
+            IconsManager.GetInstance().RenderIcons();
+            _towersManager.RenderTowerStats();
+        }
+
         public void CheckButtons()
         {
             TowerButtons.GetInstance().IsMouseInside(new Vector2(_mouseDevice.X,_mouseDevice.Y));
         }
 
-        internal void RenderButtons()
-        {
-            TowerButtons.GetInstance().Draw();
-        }
     }
 }

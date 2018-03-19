@@ -20,6 +20,9 @@ namespace YetAnotherEngine.GameObjects.Textures
         private const string HitmarkerTileFilePath = "Textures/hitmarker.png";
         private const string HpBarTileFilePath = "Textures/quad.png";
         private const string TowerButtonTileFilePath = "Textures/Buttons/TowerButton.png";
+        private const string GoldIconTileFilePath = "Textures/Icons/bitcoin.png";
+        private const string DamageIconTileFilePath = "Textures/Icons/damage.png";
+        private const string RangeIconTileFilePath = "Textures/Icons/range.png";
 
         public int[] GroundTextures = new int[2]; //TODO: expand with map textures
         public int[] TowerTextures = new int[2]; //TODO: expand with tower textures
@@ -30,7 +33,9 @@ namespace YetAnotherEngine.GameObjects.Textures
         public int HitMarkerTexture;
         public int HpBarTexture;
         public int TowerButtonTexture;
-
+        public int GoldIconTexture;
+        public int DamageIconTexture;
+        public int RangeIconTexture;
 
         public MapTextures()
         {
@@ -68,6 +73,15 @@ namespace YetAnotherEngine.GameObjects.Textures
 
             var towerButtonTexture = new Bitmap(TowerButtonTileFilePath);
             TowerButtonTexture = TextureLoader.GenerateTexture(towerButtonTexture, 124, 124, 0, 0);
+
+            var goldIconTexture = new Bitmap(GoldIconTileFilePath);
+            GoldIconTexture = TextureLoader.GenerateTexture(goldIconTexture, 225, 225, 0, 0);
+
+            var damageIconTexture = new Bitmap(DamageIconTileFilePath);
+            DamageIconTexture = TextureLoader.GenerateTexture(damageIconTexture, 128, 128, 0, 0);
+
+            var rangeIconTexture = new Bitmap(RangeIconTileFilePath);
+            RangeIconTexture = TextureLoader.GenerateTexture(rangeIconTexture, 512, 512, 0, 0);
         }
     }
 }

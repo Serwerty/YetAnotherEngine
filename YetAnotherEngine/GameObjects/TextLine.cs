@@ -52,11 +52,17 @@ namespace YetAnotherEngine.GameObjects
             _textFont.Stop();
         }
 
+        public void WriteTextAtRelativePosition(string text, double height, double x, double y)
+        {
+            _textFont.Start();
+            _textFont.WriteStringAtRelativePosition(text, height, x, y, 0);
+            _textFont.Stop();
+        }
 
         public void WriteGold(string text)
         {
             _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 1.8, 90, 99, 0);
+            _textFont.WriteStringAtRelativePosition(text, 2.2, 90, 98, 0);
             _textFont.Stop();
         }
     }

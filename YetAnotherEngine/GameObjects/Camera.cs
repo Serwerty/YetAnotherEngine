@@ -43,17 +43,17 @@ namespace YetAnotherEngine.GameObjects
 
             if (!IsLocked)
             {
-                var mouseMoveRight = _mouseDevice.X / Game.zScale >=
+                var mouseMoveRight = _mouseDevice.X / Game.ZScale >=
                                      (Game.CurrentWidth - Game.CurrentWidth * MovableScreenPercent);
-                var mouseMoveLeft = _mouseDevice.X / Game.zScale <= (Game.CurrentWidth * MovableScreenPercent);
-                var mouseMoveUp = _mouseDevice.Y / Game.zScale <= (Game.CurrentWidth * MovableScreenPercent);
-                var mouseMoveDown = _mouseDevice.Y / Game.zScale >=
+                var mouseMoveLeft = _mouseDevice.X / Game.ZScale <= (Game.CurrentWidth * MovableScreenPercent);
+                var mouseMoveUp = _mouseDevice.Y / Game.ZScale <= (Game.CurrentWidth * MovableScreenPercent);
+                var mouseMoveDown = _mouseDevice.Y / Game.ZScale >=
                                     (Game.CurrentHeight - Game.CurrentWidth * MovableScreenPercent);
 
 
                 if (_keyboardDevice[KeyboardConstants.UpKey] || mouseMoveUp)
                 {
-                    if (_position.Y < (-Game.CurrentHeight / Game.zScale) / 2)
+                    if (_position.Y < (-Game.CurrentHeight / Game.ZScale) / 2)
                     {
                         MoveUp(multiplier);
                     }
@@ -62,7 +62,7 @@ namespace YetAnotherEngine.GameObjects
                 {
                     if (_position.Y >
                         (-_worldHeightInPixels - _worldHeightInPixels +
-                         Game.CurrentHeight / Game.zScale) / 2)
+                         Game.CurrentHeight / Game.ZScale) / 2)
                     {
                         MoveDown(multiplier);
                     }
@@ -71,21 +71,18 @@ namespace YetAnotherEngine.GameObjects
                 {
                     if (_position.X <
                         (_worldWidthInPixels + WorldConstants.TileWidth + _worldWidthInPixels -
-                         Game.CurrentWidth / Game.zScale) / 2)
+                         Game.CurrentWidth / Game.ZScale) / 2)
                     {
                         MoveRight(multiplier);
                     }
                 }
                 else if (_keyboardDevice[KeyboardConstants.LeftKey] || mouseMoveLeft)
                 {
-                    if (_position.X > (WorldConstants.TileWidth + Game.CurrentWidth / Game.zScale) / 2)
+                    if (_position.X > (WorldConstants.TileWidth + Game.CurrentWidth / Game.ZScale) / 2)
                     {
                         MoveLeft(multiplier);
                     }
                 }
-
-                ShowStatsHelper.StatsMessage =
-                    $"pos:{_position.Y}, {(-_worldHeightInPixels - _worldHeightInPixels + Game.CurrentHeight / Game.zScale) / 2}";
             }
         }
 
@@ -111,7 +108,7 @@ namespace YetAnotherEngine.GameObjects
 
         public Vector2 GetPosition()
         {
-            return new Vector2(_position.X * (float) Game.zScale, _position.Y * (float) Game.zScale);
+            return new Vector2(_position.X * (float) Game.ZScale, _position.Y * (float) Game.ZScale);
         }
     }
 }

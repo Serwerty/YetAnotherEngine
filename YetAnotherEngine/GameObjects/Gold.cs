@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL;
+using YetAnotherEngine.Constants;
 
 namespace YetAnotherEngine.GameObjects
 {
@@ -15,10 +11,10 @@ namespace YetAnotherEngine.GameObjects
         public static Gold Instance() => _instance ?? (_instance = new Gold());
         public int GoldValue { get; set; } = 200;
 
-        private const int WarningDrawDuration = 2;
-        private const int WarningDrawCount = 5;
-        private int _currentWarningDrawDuration = 0;
-        private int _currentWarningDrawCount = 0;
+        private const int WarningDrawDuration = 3;
+        private const int WarningDrawCount = 6;
+        private int _currentWarningDrawDuration;
+        private int _currentWarningDrawCount;
 
         private Gold()
         {
@@ -52,11 +48,11 @@ namespace YetAnotherEngine.GameObjects
                     _currentWarningDrawCount--;
 
                 }
-                GL.Color4(Color.Goldenrod);
+                GL.Color4(WorldConstants.OrangeColor);
             }
             else
             {
-                GL.Color4(Color.Goldenrod);
+                GL.Color4(WorldConstants.OrangeColor);
             }
             TextLine.Instane().WriteGold($"Gold:{GoldValue}");
         }

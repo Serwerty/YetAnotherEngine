@@ -12,7 +12,7 @@ namespace YetAnotherEngine.Utils
             var roughLocation = new Vector2((currentOffset.X + location.X - Game.CurrentWidth / 2f),
                                             (-currentOffset.Y + location.Y - Game.CurrentHeight / 2f));
 
-            roughLocation /= Game.zScale;
+            roughLocation /= Game.ZScale;
 
             roughLocation.X -= roughLocation.X % WorldConstants.TileWidth;
             roughLocation.Y -= roughLocation.Y % (WorldConstants.TileHeight / 2f);
@@ -32,7 +32,7 @@ namespace YetAnotherEngine.Utils
                                     -currentOffset.Y + location.Y - Game.CurrentHeight / 2f);
 
             //P = new Vector2(P.X / Game.zScale, P.Y / Game.zScale);
-            P /= Game.zScale;
+            P /= Game.ZScale;
             Vector2 W = P - Q;
             float xabs = (W * U).Length;
             float yabs = (W * V).Length;

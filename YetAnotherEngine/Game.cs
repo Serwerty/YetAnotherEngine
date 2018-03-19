@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Net;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK;
@@ -20,16 +19,13 @@ namespace YetAnotherEngine
         public const int NominalHeight = 1024;
         private const string WindowHeader = "Tower Defence";
 
-        //for resizing purpose
-        private float _projectionWidth;
-        private float _projectionHeight;
 
         private readonly Camera _camera;
         private readonly GameWorld _gameWorld;
         private readonly MainMenu _gameMenu;
 
         //TODO: refactor
-        public static float zScale = 1;
+        public static float ZScale = 1;
         public static float MultiplierWidth;
         public static float MultiplierHeight;
 
@@ -58,6 +54,12 @@ namespace YetAnotherEngine
             MouseHelper.Instance.Init(Mouse, _camera);
         }
 
+        public sealed override WindowState WindowState
+        {
+            get => base.WindowState;
+            set => base.WindowState = value;
+        }
+
         protected override void OnLoad(EventArgs E)
         {
             base.OnLoad(E);
@@ -79,13 +81,13 @@ namespace YetAnotherEngine
         {
             base.OnMouseWheel(e);
 
-            if (e.Delta < 0 && zScale > WorldConstants.ZoomInLimitation) // Zoom in
+            if (e.Delta < 0 && ZScale > WorldConstants.ZoomInLimitation) // Zoom in
             {
-                zScale -= WorldConstants.ZoomSpeed * _gameClockMultiplier;
+                ZScale -= WorldConstants.ZoomSpeed * _gameClockMultiplier;
             }
-            else if (e.Delta > 0 && zScale < WorldConstants.ZoomOutLimitation) // Zoom out
+            else if (e.Delta > 0 && ZScale < WorldConstants.ZoomOutLimitation) // Zoom out
             {
-                zScale += WorldConstants.ZoomSpeed * _gameClockMultiplier;
+                ZScale += WorldConstants.ZoomSpeed * _gameClockMultiplier;
             }
         }
 
@@ -161,7 +163,7 @@ namespace YetAnotherEngine
                     GL.Translate(_camera.GetPosition().X, _camera.GetPosition().Y, 0);
 
                     #region Working with zooming
-                    GL.Scale(zScale, zScale, zScale);
+                    GL.Scale(ZScale, ZScale, ZScale);
                     #endregion
 
                     _gameWorld.RenderGround();
@@ -170,7 +172,7 @@ namespace YetAnotherEngine
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
                     // _gameWorld.RenderUnits();
-                    _gameWorld.RenderButtons();
+                    _gameWorld.RenderUtils();
 
                     #region ShowInfo
 
@@ -183,6 +185,7 @@ namespace YetAnotherEngine
                     #endregion
 
                     Gold.Instance().WriteGoldValueLine();
+
 
                     break;
                 case GameState.InOptions:

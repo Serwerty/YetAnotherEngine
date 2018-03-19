@@ -10,8 +10,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
     public class ProjectilesManager
     {
         private readonly SortedList<int, ProjectileBase> _projectiles = new SortedList<int, ProjectileBase>();
-        private int[] _projectilesTextures;
-        private int _projectileImpactTextureId;
+        private readonly int[] _projectilesTextures;
+        private readonly int _projectileImpactTextureId;
         public int Counter = 0;
 
         public ProjectilesManager(int[] projectilesTextures, int projectileImpactTextureId)
@@ -36,16 +36,15 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
             SortedListHelper.Instance.RemoveAllFromSortedList(_projectiles, x => x.Value.IsDespawned);
         }
 
-        public void AddProjectile(TowerBase tower, UnitBase targetUnit)
+        public void AddProjectile(TowerBase tower, UnitBase targetUnit, int damage)
         {
             var tileOffset = new Vector2(SimpleTower.TowerCenterX - WorldConstants.TileWidth / 2,
                 SimpleTower.TowerCenterY - WorldConstants.TileHeight / 4);
 
             var towerCenterLocation = tower.Location + tileOffset;
 
-
             Arrow arrow = new Arrow(towerCenterLocation, _projectilesTextures[0], _projectileImpactTextureId,
-                targetUnit);
+                targetUnit, damage);
             _projectiles.Add((int) arrow.Location.X * 100 + (int) arrow.Location.Y * 10000 + Counter, arrow);
             Counter++;
         }

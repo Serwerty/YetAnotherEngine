@@ -14,6 +14,8 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public const int TowerHeight = 98;
 
         public int Range { get; protected set; }
+        public int Price { get; protected set; }
+        public int Damage { get; protected set; }
 
         public int CurrentShootigDelay { get; set; }
 
@@ -40,7 +42,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
         public abstract void ResetDelay();
 
-        public int Price { get; protected set; }
+        
 
         protected TowerBase(Vector2 location, int textureId)
         {

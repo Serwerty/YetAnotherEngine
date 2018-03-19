@@ -85,13 +85,26 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
                     UnitBase targertUnit = tower.Value.GetTargetUnit(units);
                     if (targertUnit != null)
                     {
-                        projectileManager.AddProjectile(tower.Value, targertUnit);
+                        projectileManager.AddProjectile(tower.Value, targertUnit, tower.Value.Damage);
                         tower.Value.ResetDelay();
                     }
                 }
             }
         }
 
+        public void RenderTowerStats()
+        {
+            if (TowerButtons.GetInstance().FirstButtonSellected)
+            {
+                TowerStatsDrawer.GetInstance().RenderStats(_simpleTowerToBePlaced.Damage, _simpleTowerToBePlaced.Price,
+                    _simpleTowerToBePlaced.Range);
+            }
+            else if (TowerButtons.GetInstance().SecondButtonSellected)
+            {
+                TowerStatsDrawer.GetInstance().RenderStats(_normalTowerToBePlaced.Damage, _normalTowerToBePlaced.Price,
+                    _normalTowerToBePlaced.Range);
+            }
+        }
 
         public void RenderTowers()
         {
@@ -122,9 +135,9 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             }
 
             var location = new Vector2(
-                (currentOffset.X + mouseCords.X - Game.CurrentWidth / 2f ) / Game.zScale -
+                (currentOffset.X + mouseCords.X - Game.CurrentWidth / 2f ) / Game.ZScale -
                 SimpleTower.TowerCenterX,
-                (-currentOffset.Y + mouseCords.Y - Game.CurrentHeight / 2f ) / Game.zScale -
+                (-currentOffset.Y + mouseCords.Y - Game.CurrentHeight / 2f ) / Game.ZScale -
                 SimpleTower.TowerCenterY);
 
             _towerToBePlaced.Location = location;
@@ -138,7 +151,6 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             _towerToBePlaced.Draw(towerColor);
             _towerRangeField.Draw(towerColor);
         }
-
 
         private bool IsTowerPlaceable(int mouseX, int mouseY, MapLoader mapLoader)
         {

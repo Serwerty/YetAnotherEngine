@@ -21,6 +21,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
         private const int DefaultRange = 75;
         private const int DefaultPrice = 50;
+        private const int DefaultDamage = 10;
 
         private UnitBase _currentTargetUnit;
 
@@ -28,6 +29,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         {
             Range = DefaultRange;
             Price = DefaultPrice;
+            Damage = DefaultDamage;
         }
 
         public override void ResetDelay()

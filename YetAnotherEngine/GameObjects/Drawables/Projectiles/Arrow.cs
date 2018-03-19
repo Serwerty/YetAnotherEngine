@@ -19,11 +19,12 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
         public const int ProjectileHeight = 16;
 
         private const int Speed = 4;
-        private int _currentProjectileImpactDuration = ProjectileImpact.DrawDuration;
+        private int _currentProjectileImpactDuration = ProjectileImpact.DrawDuration;       
 
-        public Arrow(Vector2 location, int textureId, int projectileImpactTextureId, UnitBase targetUnit) : base(
-            location, textureId, projectileImpactTextureId, targetUnit)
+        public Arrow(Vector2 location, int textureId, int projectileImpactTextureId, UnitBase targetUnit, int damage) : base(
+            location, textureId, projectileImpactTextureId, targetUnit, damage)
         {
+            Damage = damage;
         }
 
         public override void Draw(Color color)
@@ -52,13 +53,13 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
                 else
                 {
                     _currentProjectileImpactDuration--;
-                    projectilesImpact.Draw(Color.White);
+                    ProjectilesImpact.Draw(Color.White);
                     if (_currentProjectileImpactDuration < 0) IsDespawned = true;
                 }
             }
             else
             {
-                projectilesImpact.Draw(Color.White);
+                ProjectilesImpact.Draw(Color.White);
             }
         }
 
@@ -73,7 +74,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
                     {
                         Location = TargetUnit.Location;
                         TargetUnit.Hit(10);
-                        projectilesImpact.Location = Location;
+                        ProjectilesImpact.Location = Location;
                         IsHitted = true;
                     }
                     else

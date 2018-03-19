@@ -14,6 +14,7 @@ namespace YetAnotherEngine.Constants
 
         public static Color RedColor = Color.FromArgb(178,245, 0, 0);
         public static Color GreenColor = Color.FromArgb(178, 0,245,0);
+        public static Color OrangeColor = Color.FromArgb(243, 156, 18);
 
         public const float ZoomSpeed = 0.01f;
         public const float ZoomInLimitation = 0.5f;
