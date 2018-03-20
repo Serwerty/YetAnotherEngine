@@ -145,9 +145,9 @@ namespace YetAnotherEngine
             _camera.Move(_gameClockMultiplier);
 
             _gameWorld.MoveUnits(_gameClockMultiplier);
-            _gameWorld.SpawnWaves();
+            _gameWorld.SpawnWaves(_gameClockMultiplier);
             _gameWorld.MoveProjectiles(_gameClockMultiplier);
-            _gameWorld.CheckTowersForShoot();
+            _gameWorld.CheckTowersForShoot(_gameClockMultiplier);
 
             MouseHelper.Instance.Calculate();
         }
@@ -214,6 +214,7 @@ namespace YetAnotherEngine
         {
             base.OnMouseLeave(e);
             _camera.IsLocked = true;
+            GameState = GameState.InMainMenu;
         }
 
         protected override void OnMouseEnter(EventArgs e)

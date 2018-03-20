@@ -29,9 +29,9 @@ namespace YetAnotherEngine.GameObjects.Waves
             _hpBarTextureId = hpBarTextureId;
         }
 
-        public void SpawnWave()
+        public void SpawnWave(float gameClockMultiplier)
         {
-            if (_wave.SpawnWave())
+            if (_wave.SpawnWave(gameClockMultiplier))
             {
                 UnitBase unitToBeRendered =
                     new SimpleUnit(CoordsCalculator.CalculateLocationFromTilePosition(_roadList.First()),

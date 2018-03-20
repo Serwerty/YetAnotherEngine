@@ -94,14 +94,14 @@ namespace YetAnotherEngine.GameObjects.World
             _projectilesManager.MoveProjectiles(speedMultiplier);
         }
 
-        public void CheckTowersForShoot()
+        public void CheckTowersForShoot(float gameClockMultiplier)
         {
-            _towersManager.CheckTowersForShoot(_wavesManager.GetUnits(), ref _projectilesManager);
+            _towersManager.CheckTowersForShoot(_wavesManager.GetUnits(), ref _projectilesManager, gameClockMultiplier);
         }
 
-        public void SpawnWaves()
+        public void SpawnWaves(float gameClockMultiplier)
         {
-            _wavesManager.SpawnWave();
+            _wavesManager.SpawnWave(gameClockMultiplier);
         }
 
         internal void RenderGround()
@@ -215,6 +215,7 @@ namespace YetAnotherEngine.GameObjects.World
             _towersManager.RenderTowerStats();
             LivesManager.GetInstance().RenderLivesCountHeart();
         }
+
 
         public void CheckButtonsClick()
         {

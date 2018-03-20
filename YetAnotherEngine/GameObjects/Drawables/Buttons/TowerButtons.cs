@@ -126,9 +126,9 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             GL.MatrixMode(MatrixMode.Modelview);
         }
 
-        public void IsMouseInside(Vector2 location)
+        public int IsMouseInside(Vector2 location)
         {
-            if (Game.GameState != GameState.InGame) return;
+            if (Game.GameState != GameState.InGame) return -1;
             var aspectRatio = Game.CurrentHeight / Game.CurrentWidth;
             //if (location.X * aspectRatio * 100f / Game.CurrentHeight >= LeftMargin * aspectRatio && location.X *
             //    aspectRatio * 100f / Game.CurrentHeight <= LeftMargin * aspectRatio + ButtonSize * aspectRatio && 100 - 
@@ -141,6 +141,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             {
                 FirstButtonSellected = true;
                 SecondButtonSellected = false;
+                return 1;
             }
 
             //else if (location.X * aspectRatio * 100f / Game.CurrentHeight >=
@@ -148,7 +149,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             //    aspectRatio * 100f / Game.CurrentHeight <= LeftMargin * 2 * aspectRatio + ButtonSize * 2 * aspectRatio
             //    && 100 - (location.Y * 100 / Game.CurrentHeight) >= BottomMargin && 100 - (location.Y * 100f /
             //    Game.CurrentHeight) <= BottomMargin + ButtonSize)
-            else if (location.X * 100f / Game.CurrentWidth >=
+            if (location.X * 100f / Game.CurrentWidth >=
                 LeftMargin + LeftMargin * aspectRatio + ButtonSize * aspectRatio  && location.X *
                 100f / Game.CurrentWidth <= LeftMargin + LeftMargin * aspectRatio + ButtonSize * 2 * aspectRatio &&
                 100 - (location.Y * 100 / Game.CurrentHeight) >= BottomMargin && 100 - (location.Y * 100f /
@@ -156,7 +157,10 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             {
                 FirstButtonSellected = false;
                 SecondButtonSellected = true;
-            }    
+                return 2;
+            }
+
+            return -1;
         }
     }
 }

@@ -75,11 +75,11 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             return _towersList;
         }
 
-        public void CheckTowersForShoot(SortedList<int, UnitBase> units, ref ProjectilesManager projectileManager)
+        public void CheckTowersForShoot(SortedList<int, UnitBase> units, ref ProjectilesManager projectileManager, float gameClockMultiplier)
         {
             foreach (var tower in _towersList)
             {
-                tower.Value.CurrentShootigDelay--;
+                tower.Value.CurrentShootigDelay -= gameClockMultiplier;
                 if (tower.Value.CurrentShootigDelay <= 0)
                 {
                     UnitBase targertUnit = tower.Value.GetTargetUnit(units);

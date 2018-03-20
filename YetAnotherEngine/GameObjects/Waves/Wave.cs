@@ -1,21 +1,22 @@
 ﻿using System.Collections.Generic;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.GameObjects.Drawables.Units;
+using YetAnotherEngine.Utils;
 
 namespace YetAnotherEngine.GameObjects.Waves
 {
     public class Wave
     {
         public int UnitsCount { get; set; }
-        public int UnitIntervalDecrement { get; set; }
+        public float UnitIntervalDecrement { get; set; }
         public UnitType Type { get; set; }
 
         public SortedList<int, UnitBase> Units = new SortedList<int, UnitBase>();
 
-        private int _timer;
-        private const int DefaultDelayInMs = 60;
+        private float _timer;
+        private const float DefaultDelayInFrmaes = 60;
 
-        public Wave(UnitType type, int unitsCount, int unitIntervalDecrement)
+        public Wave(UnitType type, int unitsCount, float unitIntervalDecrement)
         {
             Type = type;
             UnitsCount = unitsCount;
@@ -23,16 +24,16 @@ namespace YetAnotherEngine.GameObjects.Waves
             _timer = 0;
         }
 
-        public bool SpawnWave()
+        public bool SpawnWave(float gameClockMultiplier)
         {
             if (_timer <= 0 && UnitsCount > 0)
             {
-                _timer = DefaultDelayInMs;
+                _timer = DefaultDelayInFrmaes;
                 UnitsCount--;
                 return true;
             }
 
-            _timer -= UnitIntervalDecrement;
+            _timer -= UnitIntervalDecrement * gameClockMultiplier;
 
             return false;
         }
