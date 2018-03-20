@@ -78,7 +78,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             double textWidth = _text.Length * aspectRatio * TextConstants.TextSizeCoefficient * TextSize;
 
             TextLine.Instane().WriteTextAtRelativePosition(_text, TextSize,
-                _leftMargin + (_buttonWidth * aspectRatio - textWidth - 0.4 * aspectRatio) / 2, _bottomMargin + 5);
+                _leftMargin + (_buttonWidth * aspectRatio - textWidth - 0.4 * aspectRatio) / 2, _bottomMargin + (_buttonHeight - TextSize * 0.1) / 2);
 
         }
 
