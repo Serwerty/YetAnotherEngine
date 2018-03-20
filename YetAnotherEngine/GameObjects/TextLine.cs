@@ -58,12 +58,5 @@ namespace YetAnotherEngine.GameObjects
             _textFont.WriteStringAtRelativePosition(text, height, x, y, 0);
             _textFont.Stop();
         }
-
-        public void WriteGold(string text)
-        {
-            _textFont.Start();
-            _textFont.WriteStringAtRelativePosition(text, 2.2, 90, 98, 0);
-            _textFont.Stop();
-        }
     }
 }

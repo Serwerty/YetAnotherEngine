@@ -21,5 +21,6 @@ namespace YetAnotherEngine.Constants
         public const float ZoomOutLimitation = 2f;
 
         public const string FontTextureName = "big-outline.png";
+
     }
 }

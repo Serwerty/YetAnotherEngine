@@ -15,5 +15,8 @@ namespace YetAnotherEngine.Constants
 
         public static Vector2 GoldIconLocation = new Vector2(88, 96.5f);
         public const int GoldIconSize = 3;
+
+        public static Vector2 HeartIconLocation = new Vector2(83, 96.5f);
+        public const int HeartIconSize = 3;
     }
 }

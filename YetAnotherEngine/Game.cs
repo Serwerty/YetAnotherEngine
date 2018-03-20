@@ -80,6 +80,7 @@ namespace YetAnotherEngine
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
             base.OnMouseWheel(e);
+            if (_gameState != GameState.InGame) return;
 
             if (e.Delta < 0 && ZScale > WorldConstants.ZoomInLimitation) // Zoom in
             {
@@ -105,6 +106,9 @@ namespace YetAnotherEngine
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
             base.OnMouseUp(e);
+
+            if (_gameState != GameState.InGame) return;
+
             if (Keyboard[Key.T])
             {
                 _gameWorld.AddTower();
@@ -119,11 +123,20 @@ namespace YetAnotherEngine
             {
                 Environment.Exit(0);
             }
+
+            if (e.Key == Key.Escape)
+            {
+                if (_gameState == GameState.InGame)
+                    _gameState = GameState.InMainMenu;
+                else if (_gameState == GameState.InMainMenu)
+                    _gameState = GameState.InGame;
+            }
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+            if (_gameState != GameState.InGame) return;
 
             _gameClockMultiplier = GameClock.GetMultiplier((float)e.Time);
 
@@ -146,9 +159,7 @@ namespace YetAnotherEngine
             var modelview = Matrix4.LookAt(Vector3.Zero, Vector3.UnitZ, Vector3.UnitY);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadMatrix(ref modelview);
-            GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);
-            //GL.Viewport(0, 0, NominalWidth, NominalHeight);
-           
+            GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);     
 
             switch (_gameState)
             {
@@ -168,10 +179,8 @@ namespace YetAnotherEngine
 
                     _gameWorld.RenderGround();
                     _gameWorld.RenderDrawables();
-                    //_gameWorld.RenderTowers();
                     _gameWorld.RenderSelection();
                     _gameWorld.RenderTowerToBePlaced(_camera.GetPosition());
-                    // _gameWorld.RenderUnits();
                     _gameWorld.RenderUtils();
 
                     #region ShowInfo
@@ -179,7 +188,6 @@ namespace YetAnotherEngine
                     FpsHelper.Instance.DrawFpsText(e.Time);
                     MouseHelper.Instance.DrawCoords();
                     MouseHelper.Instance.DrawTilePosition();
-                    //ShowStatsHelper.StatsMessage = $"zScale = {zScale}";
                     ShowStatsHelper.Instance.ShowStats();
 
                     #endregion

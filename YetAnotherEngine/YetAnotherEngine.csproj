@@ -45,6 +45,7 @@
     <Compile Include="Application.cs" />
     <Compile Include="Configs\GameConfigModel.cs" />
     <Compile Include="Constants\IconsConstants.cs" />
+    <Compile Include="Constants\TextConstants.cs" />
     <Compile Include="Enums\Direction.cs" />
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\TileType.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="GameObjects\Drawables\Towers\TowerStatsDrawer.cs" />
     <Compile Include="GameObjects\Drawables\Units\HpBar.cs" />
     <Compile Include="GameObjects\Gold.cs" />
+    <Compile Include="GameObjects\LivesManager.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Models\Tile.cs" />
@@ -263,6 +265,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Textures\Icons\range.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\Icons\heart.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

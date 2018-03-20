@@ -48,6 +48,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
                 }
                 else
                 {
+                    LivesManager.GetInstance().LoseLive();
                     IsDespawned = true;
                 }
             }

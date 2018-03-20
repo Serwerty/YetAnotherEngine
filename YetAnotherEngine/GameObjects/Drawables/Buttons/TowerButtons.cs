@@ -163,10 +163,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             {
                 FirstButtonSellected = false;
                 SecondButtonSellected = true;
-            }
-
-            ShowStatsHelper.StatsMessage =
-                $"{location.X * 100f / Game.CurrentWidth} x {LeftMargin + LeftMargin * aspectRatio + ButtonSize * aspectRatio} x {LeftMargin + LeftMargin * aspectRatio + ButtonSize * 2 * aspectRatio}";
+            }    
         }
     }
 }

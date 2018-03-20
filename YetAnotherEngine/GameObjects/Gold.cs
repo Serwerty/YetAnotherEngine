@@ -54,7 +54,8 @@ namespace YetAnotherEngine.GameObjects
             {
                 GL.Color4(WorldConstants.OrangeColor);
             }
-            TextLine.Instane().WriteGold($"Gold:{GoldValue}");
+            TextLine.Instane().WriteTextAtRelativePosition($"Gold:{GoldValue}", TextConstants.GoldTextSize,
+                TextConstants.GoldTextLocationX, TextConstants.GoldTextLocationY);
         }
 
         public void StartNotEnoughGoldSequence()

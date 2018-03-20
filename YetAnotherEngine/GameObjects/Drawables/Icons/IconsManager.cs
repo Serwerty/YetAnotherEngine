@@ -16,12 +16,13 @@ namespace YetAnotherEngine.GameObjects.Drawables.Icons
         {
         }
 
-        public void Init(int goldIconTextureId, int damageIconTextureId, int rangeIconTextureId)
+        public void Init(int goldIconTextureId, int damageIconTextureId, int rangeIconTextureId, int heartIconTextureId)
         {
             _iconsList.Add(new Icon(goldIconTextureId, IconsConstants.GoldIconLocation, IconsConstants.GoldIconSize));
             _iconsList.Add(new Icon(goldIconTextureId, IconsConstants.PriceIconLocation, IconsConstants.PriceIconSize));
             _iconsList.Add(new Icon(damageIconTextureId, IconsConstants.DamageIconLocation, IconsConstants.DamageIconSize));
             _iconsList.Add(new Icon(rangeIconTextureId, IconsConstants.RangeIconLocation, IconsConstants.RangeIconSize));
+            _iconsList.Add(new Icon(heartIconTextureId, IconsConstants.HeartIconLocation, IconsConstants.HeartIconSize));
         }
 
         public void RenderIcons()
