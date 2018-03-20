@@ -64,10 +64,10 @@
     <Compile Include="GameObjects\Drawables\Towers\TowerRangeField.cs" />
     <Compile Include="GameObjects\Drawables\Towers\TowerStatsDrawer.cs" />
     <Compile Include="GameObjects\Drawables\Units\HpBar.cs" />
-    <Compile Include="GameObjects\GameOverScreen.cs" />
+    <Compile Include="GameObjects\Screens\GameOverScreen.cs" />
     <Compile Include="GameObjects\Gold.cs" />
     <Compile Include="GameObjects\LivesManager.cs" />
-    <Compile Include="GameObjects\MainMenu.cs" />
+    <Compile Include="GameObjects\Screens\MainMenu.cs" />
     <Compile Include="GameObjects\TextLine.cs" />
     <Compile Include="GameObjects\Models\Tile.cs" />
     <Compile Include="GameObjects\Textures\MapTextures.cs" />

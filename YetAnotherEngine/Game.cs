@@ -9,6 +9,7 @@ using YetAnotherEngine.Utils;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.GameObjects.Drawables.Buttons;
+using YetAnotherEngine.GameObjects.Screens;
 using YetAnotherEngine.GameObjects.World;
 using YetAnotherEngine.Utils.Helpers;
 
@@ -52,7 +53,7 @@ namespace YetAnotherEngine
             _gameWorld = GameWorld.GetInstance();
             _camera = new Camera(Keyboard, Mouse, NominalWidth, NominalHeight);
             _gameWorld.Init(Mouse, Keyboard, _camera);
-            _gameMenu = new MainMenu();
+            _gameMenu = new MainMenu(_camera);
             _gameOverScreen = new GameOverScreen(_camera);
             MouseHelper.Instance.Init(Mouse, _camera);
         }
@@ -128,8 +129,8 @@ namespace YetAnotherEngine
             if (e.Key == Key.Escape)
             {
                 if (GameState == GameState.InGame)
-                    GameState = GameState.InGameOverScreen;
-                else if (GameState == GameState.InGameOverScreen)
+                    GameState = GameState.InMainMenu;
+                else if (GameState == GameState.InMainMenu)
                     GameState = GameState.InGame;
             }
         }

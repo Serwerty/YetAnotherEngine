@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.GameObjects.Drawables.Buttons;
 using YetAnotherEngine.GameObjects.World;
 using YetAnotherEngine.Utils;
 
-namespace YetAnotherEngine.GameObjects
+namespace YetAnotherEngine.GameObjects.Screens
 {
     class GameOverScreen
     {
@@ -34,11 +33,11 @@ namespace YetAnotherEngine.GameObjects
             double aspectRatio = Game.CurrentHeight / Game.CurrentWidth;
             _startNewGameButton = new TextButton("New Game", (100 - 20 * (float) aspectRatio) / 2, 30, 20, 10,
                 GameState.InGameOverScreen);
-            _startNewGameButton.OnClick += StartNewGameButtonOnOnClick;
+            _startNewGameButton.OnClick += StartNewGameButtonOnClick;
             ButtonsManager.GetInstance().AddButton(_startNewGameButton);
         }
 
-        private void StartNewGameButtonOnOnClick(object sender, EventArgs eventArgs)
+        private void StartNewGameButtonOnClick(object sender, EventArgs eventArgs)
         {
             GameWorld.GetInstance().StartNewGame(_camera);
         }
