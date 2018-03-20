@@ -73,7 +73,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Projectiles
                     if (path.Length < Speed * speedMultiplier)
                     {
                         Location = TargetUnit.Location;
-                        TargetUnit.Hit(10);
+                        TargetUnit.Hit(Damage);
                         ProjectilesImpact.Location = Location;
                         IsHitted = true;
                     }

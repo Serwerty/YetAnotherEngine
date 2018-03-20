@@ -16,8 +16,15 @@ namespace YetAnotherEngine.GameObjects
         private int _currentWarningDrawDuration;
         private int _currentWarningDrawCount;
 
+        private const int StartGoldValue = 200;
+
         private Gold()
+        {     
+        }
+
+        public void Init()
         {
+            GoldValue = StartGoldValue;
         }
 
         public void WriteGoldValueLine()

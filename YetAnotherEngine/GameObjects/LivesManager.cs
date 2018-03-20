@@ -1,7 +1,7 @@
-﻿
-using System.Drawing;
+﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.Enums;
 
 namespace YetAnotherEngine.GameObjects
 {
@@ -33,6 +33,11 @@ namespace YetAnotherEngine.GameObjects
         public void LoseLive()
         {
             LivesCount--;
+            if (LivesCount == 0)
+            {
+                Game.GameState = GameState.InGameOverScreen;
+            }
+
         }
     }
 }

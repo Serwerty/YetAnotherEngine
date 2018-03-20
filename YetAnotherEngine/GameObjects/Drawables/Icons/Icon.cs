@@ -28,7 +28,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Icons
             GL.PushMatrix();
             GL.LoadIdentity();
             GL.Translate(Location.X, Location.Y, 0);
-            var aspectRatio = ComputeAspectRatio();
+            var aspectRatio = Game.CurrentHeight / Game.CurrentWidth;
             GL.Scale(aspectRatio * 1, 1, 1);
             GL.Rotate(0, 0, 0, 1);
             GL.PushMatrix();
@@ -49,16 +49,6 @@ namespace YetAnotherEngine.GameObjects.Drawables.Icons
             GL.Vertex2(0, _iconSize);
 
             GL.End();
-        }
-
-        private static double ComputeAspectRatio()
-        {
-            var viewport = new int[4];
-            GL.GetInteger(GetPName.Viewport, viewport);
-            var w = viewport[2];
-            var h = viewport[3];
-            double aspectRatio = h / (float)w;
-            return aspectRatio;
         }
     }
 }

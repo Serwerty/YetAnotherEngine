@@ -4,6 +4,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.Enums;
 using YetAnotherEngine.GameObjects.Drawables;
 using YetAnotherEngine.GameObjects.Drawables.Buttons;
 using YetAnotherEngine.GameObjects.Drawables.Icons;
@@ -17,22 +18,40 @@ namespace YetAnotherEngine.GameObjects.World
 {
     public class GameWorld
     {
-        private readonly MouseDevice _mouseDevice;
-        private readonly KeyboardDevice _keyboardDevice;
+        private static GameWorld _instance;
 
-        private readonly MapLoader _mapLoader;
-        private readonly MapTextures _mapTextures;
-        private readonly WavesManager _wavesManager;
-        private readonly TowersManager _towersManager;
+        private GameWorld()
+        {
+        }
+
+        public static GameWorld GetInstance() => _instance ?? (_instance = new GameWorld());
+
+        private MouseDevice _mouseDevice;
+        private KeyboardDevice _keyboardDevice;
+
+        private MapLoader _mapLoader;
+        private MapTextures _mapTextures;
+        private WavesManager _wavesManager;
+        private TowersManager _towersManager;
         private ProjectilesManager _projectilesManager;
         private SortedList<int, IDrawable> _drawablesList;
 
-        public GameWorld(MouseDevice mouseDevice, KeyboardDevice keyboardDevice, Camera camera)
+        public void Init(MouseDevice mouseDevice, KeyboardDevice keyboardDevice, Camera camera)
         {
             _mapTextures = new MapTextures(); //TODO: should be map-related
 
             _mapLoader = new MapLoader(_mapTextures.GroundTextures);
 
+            _mouseDevice = mouseDevice;
+            _keyboardDevice = keyboardDevice;
+            ButtonsManager.GetInstance().Init();
+            StartNewGame(camera);
+        }
+
+
+
+        public void StartNewGame(Camera camera)
+        {
             _wavesManager = new WavesManager(_mapLoader.RoadList, _mapTextures.UnitsTextures, camera,
                 _mapTextures.HpBarTexture); //TODO: should be map-related
 
@@ -42,17 +61,19 @@ namespace YetAnotherEngine.GameObjects.World
 
             _projectilesManager =
                 new ProjectilesManager(_mapTextures.ProjectilesTextures, _mapTextures.HitMarkerTexture);
+
             DrawablePoint.Instance.Init(new Vector2(0, 0), _mapTextures.HitMarkerTexture);
 
-            _mouseDevice = mouseDevice;
-            _keyboardDevice = keyboardDevice;
+            Gold.Instance().Init();
 
-            TowerButtons.GetInstance().Init(_mapTextures.TowerButtonTexture,_mapTextures.TowerTextures);
+            TowerButtons.GetInstance().Init(_mapTextures.TowerButtonTexture, _mapTextures.TowerTextures);
 
-            IconsManager.GetInstance().Init(_mapTextures.GoldIconTexture, _mapTextures.DamageIconTexture, 
+            IconsManager.GetInstance().Init(_mapTextures.GoldIconTexture, _mapTextures.DamageIconTexture,
                 _mapTextures.RangeIconTexture, _mapTextures.HeartIconTexture);
 
             LivesManager.GetInstance().Init();
+
+            Game.GameState = GameState.InGame;
         }
 
         public void AddTower()
@@ -195,10 +216,10 @@ namespace YetAnotherEngine.GameObjects.World
             LivesManager.GetInstance().RenderLivesCountHeart();
         }
 
-        public void CheckButtons()
+        public void CheckButtonsClick()
         {
             TowerButtons.GetInstance().IsMouseInside(new Vector2(_mouseDevice.X,_mouseDevice.Y));
+            ButtonsManager.GetInstance().CheckClick(new Vector2(_mouseDevice.X, _mouseDevice.Y));
         }
-
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using YetAnotherEngine.Utils.Helpers;
+using YetAnotherEngine.Enums;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Buttons
 {
@@ -22,6 +22,9 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
 
         private const float ButtonSize = 10;
 
+        public bool FirstButtonSellected = true;
+        public bool SecondButtonSellected;
+
         private TowerButtons()
         {
         }
@@ -30,11 +33,10 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
         {
             _textureId = textureId;
             _towerTextures = towerTextures;
+            FirstButtonSellected = true;
+            SecondButtonSellected = false;
         }
-
-        public bool FirstButtonSellected = true;
-        public bool SecondButtonSellected;
-
+        
         public void Draw()
         {
             GL.MatrixMode(MatrixMode.Projection);
@@ -45,7 +47,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             GL.PushMatrix();
             GL.LoadIdentity();
             GL.Translate(LeftMargin, BottomMargin, 0);
-            var aspectRatio = ComputeAspectRatio();
+            var aspectRatio = Game.CurrentHeight / Game.CurrentWidth;
             GL.Scale(aspectRatio * 1, 1, 1);
             GL.Rotate(0, 0, 0, 1);
             GL.PushMatrix();            
@@ -124,19 +126,10 @@ namespace YetAnotherEngine.GameObjects.Drawables.Buttons
             GL.MatrixMode(MatrixMode.Modelview);
         }
 
-        private static double ComputeAspectRatio()
-        {
-            var viewport = new int[4];
-            GL.GetInteger(GetPName.Viewport, viewport);
-            var w = viewport[2];
-            var h = viewport[3];
-            double aspectRatio = h / (float) w;
-            return aspectRatio;
-        }
-
         public void IsMouseInside(Vector2 location)
         {
-            var aspectRatio = ComputeAspectRatio();
+            if (Game.GameState != GameState.InGame) return;
+            var aspectRatio = Game.CurrentHeight / Game.CurrentWidth;
             //if (location.X * aspectRatio * 100f / Game.CurrentHeight >= LeftMargin * aspectRatio && location.X *
             //    aspectRatio * 100f / Game.CurrentHeight <= LeftMargin * aspectRatio + ButtonSize * aspectRatio && 100 - 
             //    (location.Y * 100 / Game.CurrentHeight) >= BottomMargin && 100 - (location.Y * 100f /

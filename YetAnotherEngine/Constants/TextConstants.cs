@@ -3,6 +3,8 @@ namespace YetAnotherEngine.Constants
 {
     static class TextConstants
     {
+        public const double TextSizeCoefficient = 0.75;
+
         public const double LivesCountTextLocationX = 85;
         public const double LivesCountTextLocationY = 98;
         public const double LivesCountTextSize = 2.2;

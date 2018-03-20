@@ -50,6 +50,8 @@
     <Compile Include="Enums\GameState.cs" />
     <Compile Include="Enums\TileType.cs" />
     <Compile Include="Enums\UnitType.cs" />
+    <Compile Include="GameObjects\Drawables\Buttons\ButtonsManager.cs" />
+    <Compile Include="GameObjects\Drawables\Buttons\TextButton.cs" />
     <Compile Include="GameObjects\Drawables\Buttons\TowerButtons.cs" />
     <Compile Include="GameObjects\Drawables\Icons\Icon.cs" />
     <Compile Include="GameObjects\Drawables\Icons\IconsManager.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="GameObjects\Drawables\Towers\TowerRangeField.cs" />
     <Compile Include="GameObjects\Drawables\Towers\TowerStatsDrawer.cs" />
     <Compile Include="GameObjects\Drawables\Units\HpBar.cs" />
+    <Compile Include="GameObjects\GameOverScreen.cs" />
     <Compile Include="GameObjects\Gold.cs" />
     <Compile Include="GameObjects\LivesManager.cs" />
     <Compile Include="GameObjects\MainMenu.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="OpenGL\TextureFont.cs" />
     <Compile Include="Utils\CoordsCalculator.cs" />
     <Compile Include="Utils\GameClock.cs" />
+    <Compile Include="Utils\GameStatistic.cs" />
     <Compile Include="Utils\Helpers\ArrayHelper.cs" />
     <Compile Include="Utils\Helpers\DrawablePoint.cs" />
     <Compile Include="Utils\Helpers\FpsHelper.cs" />

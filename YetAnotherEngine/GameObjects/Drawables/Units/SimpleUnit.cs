@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using YetAnotherEngine.Utils;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Units
 {
@@ -65,13 +66,17 @@ namespace YetAnotherEngine.GameObjects.Drawables.Units
             CurrentHp -= damage;
             if (CurrentHp > 0)
             {
-                double HpPercent = CurrentHp * 1f / Hp;
-                hpBar.HpPercent = HpPercent;
+                GameStatistic.GetInstance().DamageDealtValue += damage;
+                double hpPercent = CurrentHp * 1f / Hp;
+                hpBar.HpPercent = hpPercent;
             }
             else
             {
                 //Unit is Killed
                 Gold.Instance().GoldValue += GoldPerKill;
+                GameStatistic.GetInstance().GoldEarned += GoldPerKill;
+                GameStatistic.GetInstance().UnitsKiled++;
+                GameStatistic.GetInstance().DamageDealtValue += (damage + CurrentHp);
                 IsDespawned = true;
             }
         }

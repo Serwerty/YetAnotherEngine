@@ -4,6 +4,7 @@
     {
         InMainMenu,
         InOptions,
-        InGame
+        InGame,
+        InGameOverScreen
     }
 }

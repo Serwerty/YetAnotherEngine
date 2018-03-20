@@ -9,7 +9,7 @@ namespace YetAnotherEngine.OpenGL
         private const double Sixteenth = 1.0 / 16.0;
         public double AdvanceWidth = 0.75;
         public double CharacterBoundingBoxWidth = 0.8;
-        public double CharacterBoundingBoxHeight = 0.8; //{ get { return 1.0 - borderY * 2; } set { borderY = (1.0 - value) / 2.0; } }
+        public double CharacterBoundingBoxHeight = 0.8;
 
         public TextureFont(int textureId)
         {
@@ -30,8 +30,8 @@ namespace YetAnotherEngine.OpenGL
         public void WriteStringAtAbsolutePosition(string text, double height, double x, double y)
         {
             GL.PushMatrix();
-            //double width = ComputeWidth(text);
-            GL.Translate(x, y - 0.5, 0);
+            double width = ComputeWidth(text);
+            GL.Translate(x - width, y - 0.5, 0);
             GL.Scale(height, -height, height);
             GL.Begin(PrimitiveType.Quads);
             double xpos = 0;
@@ -75,7 +75,7 @@ namespace YetAnotherEngine.OpenGL
             GL.PushMatrix();
             GL.LoadIdentity();
             GL.Translate(xPercent, yPercent, 0);
-            var aspectRatio = ComputeAspectRatio();
+            var aspectRatio = Game.CurrentHeight / Game.CurrentWidth;
             GL.Scale(aspectRatio * heightPercent, heightPercent, heightPercent);
             GL.Rotate(degreesCounterClockwise, 0, 0, 1);
             WriteString(text);
@@ -83,16 +83,6 @@ namespace YetAnotherEngine.OpenGL
             GL.MatrixMode(MatrixMode.Projection);
             GL.PopMatrix();
             GL.MatrixMode(MatrixMode.Modelview);
-        }
-
-        private static double ComputeAspectRatio()
-        {
-            var viewport = new int[4];
-            GL.GetInteger(GetPName.Viewport, viewport);
-            var w = viewport[2];
-            var h = viewport[3];
-            double aspectRatio = h / (float)w;
-            return aspectRatio;
         }
 
         private void WriteCharacter(char ch, double xpos)

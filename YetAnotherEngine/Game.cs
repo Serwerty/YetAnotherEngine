@@ -8,6 +8,7 @@ using YetAnotherEngine.GameObjects;
 using YetAnotherEngine.Utils;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.Constants;
+using YetAnotherEngine.GameObjects.Drawables.Buttons;
 using YetAnotherEngine.GameObjects.World;
 using YetAnotherEngine.Utils.Helpers;
 
@@ -23,6 +24,7 @@ namespace YetAnotherEngine
         private readonly Camera _camera;
         private readonly GameWorld _gameWorld;
         private readonly MainMenu _gameMenu;
+        private readonly GameOverScreen _gameOverScreen;
 
         //TODO: refactor
         public static float ZScale = 1;
@@ -34,7 +36,7 @@ namespace YetAnotherEngine
 
         private float _gameClockMultiplier = 1;
 
-        private GameState _gameState = GameState.InGame;
+        public static GameState GameState = GameState.InGame;
 
         public Game() : base(NominalWidth, NominalHeight, new GraphicsMode(32, 16, 8, 16), WindowHeader)
         {
@@ -47,10 +49,11 @@ namespace YetAnotherEngine
 
             CurrentWidth = Width;
             CurrentHeight = Height;
-
+            _gameWorld = GameWorld.GetInstance();
             _camera = new Camera(Keyboard, Mouse, NominalWidth, NominalHeight);
-            _gameWorld = new GameWorld(Mouse, Keyboard, _camera);
+            _gameWorld.Init(Mouse, Keyboard, _camera);
             _gameMenu = new MainMenu();
+            _gameOverScreen = new GameOverScreen(_camera);
             MouseHelper.Instance.Init(Mouse, _camera);
         }
 
@@ -80,7 +83,7 @@ namespace YetAnotherEngine
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
             base.OnMouseWheel(e);
-            if (_gameState != GameState.InGame) return;
+            if (GameState != GameState.InGame) return;
 
             if (e.Delta < 0 && ZScale > WorldConstants.ZoomInLimitation) // Zoom in
             {
@@ -107,13 +110,11 @@ namespace YetAnotherEngine
         {
             base.OnMouseUp(e);
 
-            if (_gameState != GameState.InGame) return;
-
-            if (Keyboard[Key.T])
+            if (Keyboard[Key.T] && GameState == GameState.InGame)
             {
                 _gameWorld.AddTower();
             }
-            _gameWorld.CheckButtons();
+            _gameWorld.CheckButtonsClick();
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
@@ -126,17 +127,17 @@ namespace YetAnotherEngine
 
             if (e.Key == Key.Escape)
             {
-                if (_gameState == GameState.InGame)
-                    _gameState = GameState.InMainMenu;
-                else if (_gameState == GameState.InMainMenu)
-                    _gameState = GameState.InGame;
+                if (GameState == GameState.InGame)
+                    GameState = GameState.InGameOverScreen;
+                else if (GameState == GameState.InGameOverScreen)
+                    GameState = GameState.InGame;
             }
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            if (_gameState != GameState.InGame) return;
+            if (GameState != GameState.InGame) return;
 
             _gameClockMultiplier = GameClock.GetMultiplier((float)e.Time);
 
@@ -161,7 +162,7 @@ namespace YetAnotherEngine
             GL.LoadMatrix(ref modelview);
             GL.Viewport(0, 0, ClientRectangle.Width, ClientRectangle.Height);     
 
-            switch (_gameState)
+            switch (GameState)
             {
                 case GameState.InMainMenu:
                     _gameMenu.SetUpMenuProjection();
@@ -198,6 +199,10 @@ namespace YetAnotherEngine
                     break;
                 case GameState.InOptions:
                     //_optionsMenu.RenderMenu();
+                    break;
+                case GameState.InGameOverScreen:
+                    _gameOverScreen.SetUpScreenProjection();
+                    _gameOverScreen.RenderScreen();
                     break;
             }
 
