@@ -12,5 +12,9 @@ namespace YetAnotherEngine.Constants
         public const double GoldTextLocationX = 90;
         public const double GoldTextLocationY = 98;
         public const double GoldTextSize = 2.2;
+
+        public const double WaveTextLocationX = 70;
+        public const double WaveTextLocationY = 98;
+        public const double WaveTextSize = 2.2;
     }
 }

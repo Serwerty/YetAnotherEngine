@@ -15,6 +15,7 @@ namespace YetAnotherEngine.GameObjects.Waves
 
         private float _timer;
         private const float DefaultDelayInFrmaes = 60;
+        public bool isSpawned = false;
 
         public Wave(UnitType type, int unitsCount, float unitIntervalDecrement)
         {
@@ -26,7 +27,13 @@ namespace YetAnotherEngine.GameObjects.Waves
 
         public bool SpawnWave(float gameClockMultiplier)
         {
-            if (_timer <= 0 && UnitsCount > 0)
+            if (UnitsCount <= 0)
+            {
+                isSpawned = true;
+                return false;
+            }
+
+            if (_timer <= 0)
             {
                 _timer = DefaultDelayInFrmaes;
                 UnitsCount--;

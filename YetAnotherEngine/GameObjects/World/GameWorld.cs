@@ -214,6 +214,7 @@ namespace YetAnotherEngine.GameObjects.World
             IconsManager.GetInstance().RenderIcons();
             _towersManager.RenderTowerStats();
             LivesManager.GetInstance().RenderLivesCountHeart();
+            _wavesManager.RenderWaveText();
         }
 
 

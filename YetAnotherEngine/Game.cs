@@ -214,7 +214,6 @@ namespace YetAnotherEngine
         {
             base.OnMouseLeave(e);
             _camera.IsLocked = true;
-            GameState = GameState.InMainMenu;
         }
 
         protected override void OnMouseEnter(EventArgs e)
