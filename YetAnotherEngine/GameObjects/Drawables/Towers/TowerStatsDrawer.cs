@@ -14,7 +14,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
         private const float DefaultOffset = 1.5f;
 
-        public void RenderStats(int towerDamage, int towerPrice, int towerRange)
+        public void RenderStats(int towerDamage, int towerPrice, int towerRange, int towerShootingDelay)
         {
             TextLine.Instane().WriteTextAtRelativePosition($"{towerDamage}", 2.2, IconsConstants.DamageIconLocation.X +
                                                                                   IconsConstants.DamageIconSize,
@@ -25,6 +25,9 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             TextLine.Instane().WriteTextAtRelativePosition($"{towerRange}", 2.2, IconsConstants.RangeIconLocation.X +
                                                                                  IconsConstants.RangeIconSize,
                 IconsConstants.RangeIconLocation.Y + DefaultOffset);
+            TextLine.Instane().WriteTextAtRelativePosition($"{WorldConstants.TargetUpdateRate / (towerShootingDelay * 1f)} per second",
+                2.2, IconsConstants.TowerSpeedIconLocation.X + IconsConstants.TowerSpeedIconSize,
+                IconsConstants.TowerSpeedIconLocation.Y + DefaultOffset);
         }
     }
 }

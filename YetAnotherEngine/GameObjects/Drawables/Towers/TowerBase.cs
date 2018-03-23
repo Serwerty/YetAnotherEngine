@@ -16,6 +16,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public int Range { get; protected set; }
         public int Price { get; protected set; }
         public int Damage { get; protected set; }
+        public int ShootingDelay { get; protected set; }
 
         public float CurrentShootigDelay { get; set; }
 

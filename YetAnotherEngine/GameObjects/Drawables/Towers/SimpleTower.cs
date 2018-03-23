@@ -17,11 +17,10 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
         public const int TowerCenterX = 15;
         public const int TowerCenterY = 41;
 
-        private const int ShootingDelay = 50;
-
         private const int DefaultRange = 75;
         private const int DefaultPrice = 50;
         private const int DefaultDamage = 10;
+        private const int DefaultShootingDelay = 50;
 
         private UnitBase _currentTargetUnit;
 
@@ -30,11 +29,12 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             Range = DefaultRange;
             Price = DefaultPrice;
             Damage = DefaultDamage;
+            ShootingDelay = DefaultShootingDelay;
         }
 
         public override void ResetDelay()
         {
-            CurrentShootigDelay = ShootingDelay;
+            CurrentShootigDelay = DefaultShootingDelay;
         }
 
         public override UnitBase GetTargetUnit(SortedList<int, UnitBase> units)

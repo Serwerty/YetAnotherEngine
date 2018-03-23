@@ -13,10 +13,16 @@ namespace YetAnotherEngine.Constants
         public static Vector2 PriceIconLocation = new Vector2(3, 21);
         public const int PriceIconSize = 3;
 
+        public static Vector2 TowerSpeedIconLocation = new Vector2(3, 24);
+        public const int TowerSpeedIconSize = 3;
+
         public static Vector2 GoldIconLocation = new Vector2(88, 96.5f);
         public const int GoldIconSize = 3;
 
         public static Vector2 HeartIconLocation = new Vector2(83, 96.5f);
         public const int HeartIconSize = 3;
+
+        public static Vector2 TimerIconLocation = new Vector2(70, 93.5f);
+        public const int TimerIconSize = 3;
     }
 }

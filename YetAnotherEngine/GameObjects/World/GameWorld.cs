@@ -69,7 +69,8 @@ namespace YetAnotherEngine.GameObjects.World
             TowerButtons.GetInstance().Init(_mapTextures.TowerButtonTexture, _mapTextures.TowerTextures);
 
             IconsManager.GetInstance().Init(_mapTextures.GoldIconTexture, _mapTextures.DamageIconTexture,
-                _mapTextures.RangeIconTexture, _mapTextures.HeartIconTexture);
+                _mapTextures.RangeIconTexture, _mapTextures.HeartIconTexture, _mapTextures.TimerIconTexture,
+                _mapTextures.TowerSpeedIconTexture);
 
             LivesManager.GetInstance().Init();
 

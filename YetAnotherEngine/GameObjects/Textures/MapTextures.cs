@@ -24,6 +24,8 @@ namespace YetAnotherEngine.GameObjects.Textures
         private const string DamageIconTileFilePath = "Textures/Icons/damage.png";
         private const string RangeIconTileFilePath = "Textures/Icons/range.png";
         private const string HeartIconTileFilePath = "Textures/Icons/heart.png";
+        private const string TimerIconTileFilePath = "Textures/Icons/time.png";
+        private const string TowerSpeedIconTileFilePath = "Textures/Icons/speed.png";
 
         public int[] GroundTextures = new int[2]; //TODO: expand with map textures
         public int[] TowerTextures = new int[2]; //TODO: expand with tower textures
@@ -38,6 +40,8 @@ namespace YetAnotherEngine.GameObjects.Textures
         public int DamageIconTexture;
         public int RangeIconTexture;
         public int HeartIconTexture;
+        public int TimerIconTexture;
+        public int TowerSpeedIconTexture;
 
         public MapTextures()
         {
@@ -87,6 +91,12 @@ namespace YetAnotherEngine.GameObjects.Textures
 
             var heartIconTexture = new Bitmap(HeartIconTileFilePath);
             HeartIconTexture = TextureLoader.GenerateTexture(heartIconTexture, 256, 256, 0, 0);
+
+            var timerIconTexture = new Bitmap(TimerIconTileFilePath);
+            TimerIconTexture = TextureLoader.GenerateTexture(timerIconTexture, 200, 200, 0, 0);
+
+            var towerSpeedIconTexture = new Bitmap(TowerSpeedIconTileFilePath);
+            TowerSpeedIconTexture = TextureLoader.GenerateTexture(towerSpeedIconTexture, 512, 512, 0, 0);
         }
     }
 }

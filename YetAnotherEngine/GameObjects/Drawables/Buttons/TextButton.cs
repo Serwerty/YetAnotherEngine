@@ -1,13 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 using YetAnotherEngine.Constants;
 using YetAnotherEngine.Enums;
 using YetAnotherEngine.Utils;
-using YetAnotherEngine.Utils.Helpers;
 
 namespace YetAnotherEngine.GameObjects.Drawables.Buttons
 {

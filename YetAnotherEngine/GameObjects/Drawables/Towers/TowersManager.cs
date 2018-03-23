@@ -97,12 +97,12 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
             if (TowerButtons.GetInstance().FirstButtonSellected)
             {
                 TowerStatsDrawer.GetInstance().RenderStats(_simpleTowerToBePlaced.Damage, _simpleTowerToBePlaced.Price,
-                    _simpleTowerToBePlaced.Range);
+                    _simpleTowerToBePlaced.Range, _simpleTowerToBePlaced.ShootingDelay);
             }
             else if (TowerButtons.GetInstance().SecondButtonSellected)
             {
                 TowerStatsDrawer.GetInstance().RenderStats(_normalTowerToBePlaced.Damage, _normalTowerToBePlaced.Price,
-                    _normalTowerToBePlaced.Range);
+                    _normalTowerToBePlaced.Range, _normalTowerToBePlaced.ShootingDelay);
             }
         }
 
