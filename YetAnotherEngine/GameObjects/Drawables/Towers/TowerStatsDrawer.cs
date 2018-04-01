@@ -16,7 +16,7 @@ namespace YetAnotherEngine.GameObjects.Drawables.Towers
 
         public void RenderStats(int towerDamage, int towerPrice, int towerRange, int towerShootingDelay)
         {
-            TextLine.Instane().WriteTextAtRelativePosition($"{towerDamage}", 2.2, IconsConstants.DamageIconLocation.X +
+                    TextLine.Instane().WriteTextAtRelativePosition($"{towerDamage}", 2.2, IconsConstants.DamageIconLocation.X +
                                                                                   IconsConstants.DamageIconSize,
                 IconsConstants.DamageIconLocation.Y + DefaultOffset);
             TextLine.Instane().WriteTextAtRelativePosition($"{towerPrice}", 2.2, IconsConstants.PriceIconLocation.X +
